@@ -1,0 +1,7 @@
+*.iml
+/.idea/
+~*.xlsx
+/target/
+steam_appid.txt
+*.log
+*.jar

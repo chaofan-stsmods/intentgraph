@@ -1,0 +1,9 @@
+{
+  "chaofanmod:relic.Stool": {
+    "NAME": "Stool",
+    "FLAVOR": "The man with big nose hits enemies with this.",
+    "DESCRIPTIONS": [
+      "At the start of combat, add #yStrike to names of ALL Attacks in your draw pile."
+    ]
+  }
+}
