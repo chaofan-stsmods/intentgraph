@@ -9,17 +9,24 @@ import basemod.interfaces.EditCardsSubscriber;
 import basemod.interfaces.EditRelicsSubscriber;
 import basemod.interfaces.EditStringsSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.localization.*;
 import io.chaofan.sts.chaofanmod.cards.AhhMyEyes;
 import io.chaofan.sts.chaofanmod.relics.Stool;
+import io.chaofan.sts.intentgraph.IntentGraphMod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.lang.reflect.Type;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
 
 @SpireInitializer
 public class ChaofanMod implements
@@ -61,6 +68,13 @@ public class ChaofanMod implements
 
         Texture badgeTexture = ImageMaster.loadImage(MOD_ID + "/images/badge.png");
         BaseMod.registerModBadge(badgeTexture, "Better CN Font", "Chaofan", "", settingsPanel);
+
+        Gson gson = new Gson();
+        String json = Gdx.files.internal(getLocalizationFilePath("intents.json")).readString(String.valueOf(StandardCharsets.UTF_8));
+        Type intentType = (new TypeToken<Map<String, String>>() {}).getType();
+        IntentGraphMod sub = new IntentGraphMod(gson.fromJson(json, intentType));
+        BaseMod.subscribe(sub);
+        sub.receivePostInitialize();
     }
 
     private ModPanel initSettings() {

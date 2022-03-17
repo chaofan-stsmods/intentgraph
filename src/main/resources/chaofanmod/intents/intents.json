@@ -1,0 +1,144 @@
+{
+  "FuzzyLouseDefensive":  {
+    "width": 2,
+    "height": 2,
+    "a0": {
+      "damages": [
+        {
+          "min": 5,
+          "max": 7
+        }
+      ],
+      "icons": [
+        {
+          "name": "attack",
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 75,
+          "limit": 2,
+          "attackCount": 1
+        },
+        {
+          "name": "debuff",
+          "x": 1,
+          "y": 0,
+          "type": "DEBUFF",
+          "damageIndex": 0,
+          "percentage": 25,
+          "limit": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 0.5, 1, 1.5, 1.5, 1 ]
+        }
+      ],
+      "labels": []
+    },
+    "a1": {
+      "overwrite": false,
+      "damages": [
+        {
+          "min": 6,
+          "max": 8
+        }
+      ]
+    },
+    "a2": {
+      "overwrite": false,
+      "icons": [
+        null,
+        {
+          "name": "debuff",
+          "x": 2,
+          "y": 1,
+          "type": "DEBUFF",
+          "damageIndex": 0,
+          "percentage": 75,
+          "limit": 1
+        }
+      ]
+    }
+  },
+  "FuzzyLouseNormal": {
+    "width": 2,
+    "height": 2,
+    "a0": {
+      "damages": [
+        {
+          "min": 5,
+          "max": 7
+        }
+      ],
+      "icons": [
+        {
+          "name": "attack",
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 75,
+          "limit": 2,
+          "attackCount": 1
+        },
+        {
+          "name": "buff",
+          "x": 1,
+          "y": 0,
+          "type": "BUFF",
+          "damageIndex": 0,
+          "percentage": 25,
+          "limit": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 0.5, 1, 1.5, 1.5, 1 ]
+        }
+      ],
+      "labels": []
+    },
+    "a1": {
+      "overwrite": false,
+      "damages": [
+        {
+          "min": 6,
+          "max": 8
+        }
+      ]
+    },
+    "a2": {
+      "overwrite": false,
+      "icons": [
+        null,
+        {
+          "name": "debuff",
+          "x": 2,
+          "y": 1,
+          "type": "DEBUFF",
+          "damageIndex": 0,
+          "percentage": 75,
+          "limit": 1
+        }
+      ]
+    }
+  }
+}
