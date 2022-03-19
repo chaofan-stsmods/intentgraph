@@ -4,4 +4,5 @@ public class Label {
     public float x;
     public float y;
     public String label;
+    public String align;
 }

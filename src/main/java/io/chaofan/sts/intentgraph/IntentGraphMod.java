@@ -46,6 +46,7 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
     private static final TextureRegion ARROW_D = new TextureRegion(ARROW, 42, 11, 20, 15);
     private static final TextureRegion ARROW_R = new TextureRegion(ARROW, 21, 27, 15, 20);
     private static final TextureRegion ARROW_L = new TextureRegion(ARROW, 37, 27, 15, 20);
+    public static final Color INSTANT_COLOR = new Color(1, 0.2f, 0.2f, 1);
 
     private final TextureRegion BOX_TL = new TextureRegion(ImageMaster.KEYWORD_TOP, 32, 32);
     private final TextureRegion BOX_TM = new TextureRegion(ImageMaster.KEYWORD_TOP, 32, 0, 256, 32);
@@ -78,7 +79,7 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
         }
 
         for (AbstractMonster monster : room.monsters.monsters) {
-            if (monster.hb.hovered) {
+            if (monster.hb.hovered && !monster.isDeadOrEscaped()) {
                 renderIntentGraphForMonster(monster, spriteBatch);
                 break;
             }
@@ -105,30 +106,79 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
         float scale32 = 32 * scale;
 
         float x = monster.hb.cX - scale32 - graph.width * GRID_SIZE * scale / 2;
-        float y = Settings.HEIGHT - 120 * scale;
+        float y = Settings.HEIGHT - 80 * scale;
 
         renderBox(Color.WHITE, x, y, graph.width * GRID_SIZE * scale, (graph.height * GRID_SIZE + 32) * scale, sb);
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.tipHeaderFont, monster.name, x + 20 * scale, y - 20 * scale, Color.WHITE);
 
         MonsterGraphDetail graphDetail;
         int ascensionLevel = AbstractDungeon.ascensionLevel;
+        int renderAscensionLevel = 0;
         if (monster.type == AbstractMonster.EnemyType.NORMAL) {
             graphDetail = ascensionLevel < 2 ? graph.a0 : ascensionLevel < 17 ? graph.a1 : graph.a2;
+            renderAscensionLevel = ascensionLevel < 2 ? 0 : ascensionLevel < 17 ? 2 : 17;
         } else if (monster.type == AbstractMonster.EnemyType.ELITE) {
             graphDetail = ascensionLevel < 3 ? graph.a0 : ascensionLevel < 18 ? graph.a1 : graph.a2;
+            renderAscensionLevel = ascensionLevel < 3 ? 0 : ascensionLevel < 18 ? 3 : 18;
         } else if (monster.type == AbstractMonster.EnemyType.BOSS) {
             graphDetail = ascensionLevel < 4 ? graph.a0 : ascensionLevel < 19 ? graph.a1 : graph.a2;
+            renderAscensionLevel = ascensionLevel < 4 ? 0 : ascensionLevel < 19 ? 4 : 19;
         } else {
             return;
         }
 
+        if (renderAscensionLevel > 0) {
+            this.renderAscensionLevel(renderAscensionLevel, x + scale32 + (graph.width * GRID_SIZE + 12) * scale, y - 20 * scale, sb);
+        }
+
         renderGraphDetail(graphDetail, x + scale32, y - scale32 * 2, sb);
+    }
+
+    private void renderAscensionLevel(int renderAscensionLevel, float x, float y, SpriteBatch sb) {
+        float scale = Settings.scale;
+        float scale64 = 64 * scale;
+        FontHelper.renderFontRightTopAligned(sb, FontHelper.tipHeaderFont, Integer.toString(renderAscensionLevel), x, y, Settings.RED_TEXT_COLOR);
+        sb.draw(ImageMaster.TP_ASCENSION, x - 54 * scale - FontHelper.layout.width, y - 42 * scale, scale64, scale64);
     }
 
     private void renderGraphDetail(MonsterGraphDetail graphDetail, float x, float y, SpriteBatch sb) {
         renderIcons(graphDetail, x, y, sb);
         renderIconGroups(graphDetail.iconGroups, x, y, sb);
         renderArrows(graphDetail.arrows, x, y, sb);
+        renderLabels(graphDetail.labels, x, y, sb);
+    }
+
+    private void renderLabels(Label[] labels, float x, float y, SpriteBatch sb) {
+        if (labels == null) {
+            return;
+        }
+
+        for (Label label : labels) {
+            renderLabel(label, x, y, sb);
+        }
+    }
+
+    private void renderLabel(Label label, float x, float y, SpriteBatch sb) {
+        float scale = Settings.scale;
+        float labelX = x + label.x * scale * GRID_SIZE;
+        float labelY = y - label.y * scale * GRID_SIZE;
+
+        BitmapFont font = FontHelper.cardDescFont_L;
+        font.getData().setScale(0.8f);
+        String string = label.label;
+        String localizedString = intentStrings.get(string);
+        if (localizedString != null) {
+            string = localizedString;
+        }
+
+        if (label.align.equals("left")) {
+            FontHelper.renderFontLeftTopAligned(sb, font, string, labelX, labelY, Color.WHITE);
+        } else if (label.align.equals("right")){
+            FontHelper.renderFontRightTopAligned(sb, font, string, labelX, labelY, Color.WHITE);
+        } else {
+            FontHelper.renderFontCenteredTopAligned(sb, font, string, labelX, labelY, Color.WHITE);
+        }
+        font.getData().setScale(1);
     }
 
     private void renderArrows(Arrow[] arrows, float x, float y, SpriteBatch sb) {
@@ -146,6 +196,7 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
             return;
         }
 
+        sb.setColor(arrow.instant ? INSTANT_COLOR : Color.WHITE);
         float scale = Settings.scale;
         float[] path = arrow.path;
         boolean isHorizontal = path[0] == 0;
@@ -164,13 +215,13 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
                 boolean isRight = nextArrowX > arrowX;
                 nextDirection = isRight ? 1 : 3;
                 float dxs = x + arrowX * GRID_SIZE * scale + (isStart ? 0 : (isRight ? 1 : -1)) * 5 * scale;
-                float dxe = x + nextArrowX * GRID_SIZE * scale + ((isEnd ? 14 : 5) * (isRight ? -1 : 1) * scale);
+                float dxe = x + nextArrowX * GRID_SIZE * scale + ((isEnd ? 15 : 5) * (isRight ? -1 : 1) * scale);
                 sb.draw(ARROW_HORIZONTAL, Math.min(dxs, dxe), dy, Math.abs(dxs - dxe), ARROW_HORIZONTAL.getRegionHeight() * scale);
             } else {
                 boolean isDown = nextArrowY > arrowY;
                 nextDirection = isDown ? 2 : 0;
                 float dys = y - arrowY * GRID_SIZE * scale - (isStart ? 0 : (isDown ? 1 : -1)) * 5 * scale;
-                float dye = y - nextArrowY * GRID_SIZE * scale - ((isEnd ? 14 : 5) * (isDown ? -1 : 1) * scale);
+                float dye = y - nextArrowY * GRID_SIZE * scale - ((isEnd ? 15 : 5) * (isDown ? -1 : 1) * scale);
                 sb.draw(ARROW_VERTICAL, dx, Math.min(dys, dye), ARROW_VERTICAL.getRegionWidth() * scale, Math.abs(dys - dye));
             }
 
@@ -240,24 +291,27 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
         sb.setColor(Color.WHITE);
         
         float scale = Settings.scale;
-        float scale64 = scale * 64;
         float iconX = x + icon.x * scale * GRID_SIZE + 8 * scale;
         float iconY = y - (icon.y + 1) * scale * GRID_SIZE + 8 * scale;
-        boolean isAttack = renderIconImage(graphDetail, sb, icon, scale64, iconX, iconY);
+        boolean isAttack = renderIconImage(graphDetail, sb, icon, iconX, iconY);
 
         BitmapFont font = FontHelper.cardEnergyFont_L;
         font.getData().setScale(0.5f);
 
         if (isAttack) {
             Damage damage = graphDetail.damages[icon.damageIndex];
-            String damageString = damage.max == damage.min ? String.valueOf(damage.max) : String.format("%d~%d", damage.min, damage.max);
+            String damageString = damage.string != null ? damage.string :
+                    (damage.max <= damage.min ? String.valueOf(damage.min) : String.format("%d~%d", damage.min, damage.max));
             if (icon.attackCount > 1) {
-                damageString += "x" + icon.attackCount;
+                damageString += "x" + (icon.attackCountString != null ? icon.attackCountString : icon.attackCount);
             }
             FontHelper.renderFontLeftTopAligned(sb, font, damageString, iconX - 2 * scale, iconY + 16 * scale, Color.WHITE);
         }
 
-        FontHelper.renderFontLeftTopAligned(sb, font, icon.percentage + "%", iconX - 2 * scale, iconY + 62 * scale, Color.WHITE);
+        if (icon.percentage > 0) {
+            FontHelper.renderFontLeftTopAligned(sb, font, icon.percentage + "%", iconX - 2 * scale, iconY + 62 * scale, Color.WHITE);
+        }
+
         if (icon.limit >= 1) {
             FontHelper.renderFontLeftTopAligned(sb, font, "-", iconX + 45 * scale, iconY + 55 * scale, Color.WHITE);
             FontHelper.renderFontLeftTopAligned(sb, font, "<" + icon.limit, iconX + 45 * scale, iconY + 62 * scale, Color.WHITE);
@@ -266,26 +320,30 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
         font.getData().setScale(1);
     }
 
-    private boolean renderIconImage(MonsterGraphDetail graphDetail, SpriteBatch sb, Icon icon, float scale64, float iconX, float iconY) {
+    private boolean renderIconImage(MonsterGraphDetail graphDetail, SpriteBatch sb, Icon icon, float iconX, float iconY) {
+        float scale = Settings.scale;
+        float scale64 = scale * 64;
+        float scale4 = scale * 4;
+        float scale56 = scale * 56;
         boolean isAttack = false;
         switch (icon.type) {
             case ATTACK:
-                sb.draw(getAttackIntent(graphDetail.damages[icon.damageIndex].max * icon.attackCount), iconX, iconY, scale64, scale64);
+                sb.draw(getAttackIntent(graphDetail.damages[icon.damageIndex].max * icon.attackCount), iconX + scale4, iconY + scale4, scale56, scale56);
                 isAttack = true;
                 break;
             case ATTACK_BUFF:
                 sb.draw(ImageMaster.INTENT_BUFF, iconX, iconY, scale64, scale64);
-                sb.draw(getAttackIntent(graphDetail.damages[icon.damageIndex].max * icon.attackCount), iconX, iconY, scale64, scale64);
+                sb.draw(getAttackIntent(graphDetail.damages[icon.damageIndex].max * icon.attackCount), iconX + scale4, iconY + scale4, scale56, scale56);
                 isAttack = true;
                 break;
             case ATTACK_DEBUFF:
                 sb.draw(ImageMaster.INTENT_DEBUFF, iconX, iconY, scale64, scale64);
-                sb.draw(getAttackIntent(graphDetail.damages[icon.damageIndex].max * icon.attackCount), iconX, iconY, scale64, scale64);
+                sb.draw(getAttackIntent(graphDetail.damages[icon.damageIndex].max * icon.attackCount), iconX + scale4, iconY + scale4, scale56, scale56);
                 isAttack = true;
                 break;
             case ATTACK_DEFEND:
                 sb.draw(ImageMaster.INTENT_DEFEND, iconX, iconY, scale64, scale64);
-                sb.draw(getAttackIntent(graphDetail.damages[icon.damageIndex].max * icon.attackCount), iconX, iconY, scale64, scale64);
+                sb.draw(getAttackIntent(graphDetail.damages[icon.damageIndex].max * icon.attackCount), iconX + scale4, iconY + scale4, scale56, scale56);
                 isAttack = true;
                 break;
             case DEFEND:
@@ -318,6 +376,8 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
                 break;
             case UNKNOWN:
                 sb.draw(ImageMaster.INTENT_UNKNOWN, iconX, iconY, scale64, scale64);
+                sb.draw(ImageMaster.INTENT_UNKNOWN, iconX - 12 * scale, iconY + 6 * scale, scale * 48, scale * 48);
+                sb.draw(ImageMaster.INTENT_UNKNOWN, iconX + 28 * scale, iconY + 6 * scale, scale * 48, scale * 48);
                 break;
             case MAGIC:
                 sb.draw(ImageMaster.INTENT_MAGIC, iconX, iconY, scale64, scale64);

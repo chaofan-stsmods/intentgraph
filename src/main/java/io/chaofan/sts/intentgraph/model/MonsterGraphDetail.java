@@ -11,6 +11,10 @@ public class MonsterGraphDetail {
     public Label[] labels;
 
     public MonsterGraphDetail copyAndApply(MonsterGraphDetail another) {
+        if (another == null) {
+            return this;
+        }
+
         if (another.overwrite) {
             return another;
         }
@@ -48,5 +52,22 @@ public class MonsterGraphDetail {
             }
         }
         return v;
+    }
+
+    public void init() {
+        if (damages != null) {
+            for (Damage damage : damages) {
+                if (damage.max < damage.min) {
+                    damage.max = damage.min;
+                }
+            }
+        }
+        if (icons != null) {
+            for (Icon icon : icons) {
+                if (icon.attackCount == 0) {
+                    icon.attackCount = 1;
+                }
+            }
+        }
     }
 }
