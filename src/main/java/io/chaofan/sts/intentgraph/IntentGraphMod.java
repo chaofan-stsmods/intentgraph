@@ -1,5 +1,7 @@
 package io.chaofan.sts.intentgraph;
 
+import basemod.BaseMod;
+import basemod.devcommands.ConsoleCommand;
 import basemod.interfaces.PostRenderSubscriber;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -58,13 +60,17 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
     private final TextureRegion BOX_BM = new TextureRegion(ImageMaster.KEYWORD_BOT, 32, 0, 256, 32);
     private final TextureRegion BOX_BR = new TextureRegion(ImageMaster.KEYWORD_BOT, 288, 0, 32, 32);
 
-    private final Map<String, String> intentStrings;
+    private final String intentStringsPath;
+    private final Map<String, String> intentStrings = new HashMap<>();
     private final Map<String, MonsterIntentGraph> intents = new HashMap<>();
 
     private static final int GRID_SIZE = 80;
 
-    public IntentGraphMod(Map<String, String> intentStrings) {
-        this.intentStrings = intentStrings;
+    public static IntentGraphMod instance;
+    public int overwriteAscension = -1;
+
+    public IntentGraphMod(String intentStringsPath) {
+        this.intentStringsPath = intentStringsPath;
     }
 
     @Override
@@ -87,6 +93,14 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
     }
 
     public void receivePostInitialize() {
+        loadIntents();
+        ConsoleCommand.addCommand("reloadintents", ReloadIntentsCommand.class);
+    }
+
+    public void loadIntents() {
+        intentStrings.clear();
+        intents.clear();
+
         Gson gson = new Gson();
         String json = Gdx.files.internal("chaofanmod/intents/intents.json").readString(String.valueOf(StandardCharsets.UTF_8));
         Type intentType = (new TypeToken<Map<String, MonsterIntentGraph>>() {}).getType();
@@ -94,6 +108,10 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
         for (MonsterIntentGraph graph : intents.values()) {
             graph.initMonsterGraphDetail();
         }
+
+        json = Gdx.files.internal(intentStringsPath).readString(String.valueOf(StandardCharsets.UTF_8));
+        intentType = (new TypeToken<Map<String, String>>() {}).getType();
+        intentStrings.putAll(gson.fromJson(json, intentType));
     }
 
     private void renderIntentGraphForMonster(AbstractMonster monster, SpriteBatch sb) {
@@ -102,17 +120,8 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
             return;
         }
 
-        float scale = Settings.scale;
-        float scale32 = 32 * scale;
-
-        float x = monster.hb.cX - scale32 - graph.width * GRID_SIZE * scale / 2;
-        float y = Settings.HEIGHT - 80 * scale;
-
-        renderBox(Color.WHITE, x, y, graph.width * GRID_SIZE * scale, (graph.height * GRID_SIZE + 32) * scale, sb);
-        FontHelper.renderFontLeftTopAligned(sb, FontHelper.tipHeaderFont, monster.name, x + 20 * scale, y - 20 * scale, Color.WHITE);
-
         MonsterGraphDetail graphDetail;
-        int ascensionLevel = AbstractDungeon.ascensionLevel;
+        int ascensionLevel = overwriteAscension >= 0 ? overwriteAscension : AbstractDungeon.ascensionLevel;
         int renderAscensionLevel = 0;
         if (monster.type == AbstractMonster.EnemyType.NORMAL) {
             graphDetail = ascensionLevel < 2 ? graph.a0 : ascensionLevel < 17 ? graph.a1 : graph.a2;
@@ -127,8 +136,19 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
             return;
         }
 
+        float scale = Settings.scale;
+        float scale32 = 32 * scale;
+
+        float width = graphDetail.width > 0 ? graphDetail.width : graph.width;
+        float height = graphDetail.height > 0 ? graphDetail.height : graph.height;
+        float x = monster.hb.cX - scale32 - width * GRID_SIZE * scale / 2;
+        float y = Settings.HEIGHT - 80 * scale;
+
+        renderBox(Color.WHITE, x, y, width * GRID_SIZE * scale, (height * GRID_SIZE + 32) * scale, sb);
+        FontHelper.renderFontLeftTopAligned(sb, FontHelper.tipHeaderFont, monster.name, x + 20 * scale, y - 20 * scale, Color.WHITE);
+
         if (renderAscensionLevel > 0) {
-            this.renderAscensionLevel(renderAscensionLevel, x + scale32 + (graph.width * GRID_SIZE + 12) * scale, y - 20 * scale, sb);
+            this.renderAscensionLevel(renderAscensionLevel, x + scale32 + (width * GRID_SIZE + 12) * scale, y - 20 * scale, sb);
         }
 
         renderGraphDetail(graphDetail, x + scale32, y - scale32 * 2, sb);
@@ -171,9 +191,9 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
             string = localizedString;
         }
 
-        if (label.align.equals("left")) {
+        if (label.align != null && label.align.equals("left")) {
             FontHelper.renderFontLeftTopAligned(sb, font, string, labelX, labelY, Color.WHITE);
-        } else if (label.align.equals("right")){
+        } else if (label.align != null && label.align.equals("right")){
             FontHelper.renderFontRightTopAligned(sb, font, string, labelX, labelY, Color.WHITE);
         } else {
             FontHelper.renderFontCenteredTopAligned(sb, font, string, labelX, labelY, Color.WHITE);

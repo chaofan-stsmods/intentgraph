@@ -69,10 +69,8 @@ public class ChaofanMod implements
         Texture badgeTexture = ImageMaster.loadImage(MOD_ID + "/images/badge.png");
         BaseMod.registerModBadge(badgeTexture, "Better CN Font", "Chaofan", "", settingsPanel);
 
-        Gson gson = new Gson();
-        String json = Gdx.files.internal(getLocalizationFilePath("intents.json")).readString(String.valueOf(StandardCharsets.UTF_8));
-        Type intentType = (new TypeToken<Map<String, String>>() {}).getType();
-        IntentGraphMod sub = new IntentGraphMod(gson.fromJson(json, intentType));
+        IntentGraphMod sub = new IntentGraphMod(getLocalizationFilePath("intents.json"));
+        IntentGraphMod.instance = sub;
         BaseMod.subscribe(sub);
         sub.receivePostInitialize();
     }

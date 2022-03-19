@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 public class MonsterGraphDetail {
     public boolean overwrite;
+    public float width;
+    public float height;
     public Damage[] damages;
     public Icon[] icons;
     public IconGroup[] iconGroups;
