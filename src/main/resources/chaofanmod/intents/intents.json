@@ -1772,7 +1772,7 @@
           "type": "ATTACK_DEBUFF",
           "damageIndex": 1,
           "percentage": 55,
-          "limit": 2,
+          "limit": 1,
           "attackCount": 1
         }
       ],
@@ -4383,6 +4383,186 @@
           "type": "ATTACK",
           "damageIndex": 0,
           "attackCount": 1
+        }
+      ]
+    }
+  },
+  "GiantHead": {
+    "width": 7,
+    "height": 2.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 13
+        },
+        {
+          "min": 30
+        },
+        {
+          "min": 35
+        },
+        {
+          "min": 40
+        },
+        {
+          "min": 45
+        },
+        {
+          "min": 50
+        },
+        {
+          "min": 55
+        },
+        {
+          "min": 60
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 0,
+          "attackCount": 1,
+          "limit": 2
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "type": "DEBUFF",
+          "percentage": 50,
+          "limit": 2
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 3.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 2,
+          "attackCount": 1
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 3,
+          "attackCount": 1
+        },
+        {
+          "x": 6,
+          "y": 0.75,
+          "type": "ATTACK",
+          "damageIndex": 4,
+          "attackCount": 1
+        },
+        {
+          "x": 5,
+          "y": 1.5,
+          "type": "ATTACK",
+          "damageIndex": 5,
+          "attackCount": 1
+        },
+        {
+          "x": 3.5,
+          "y": 1.5,
+          "type": "ATTACK",
+          "damageIndex": 6,
+          "attackCount": 1
+        },
+        {
+          "x": 2,
+          "y": 1.5,
+          "type": "ATTACK",
+          "damageIndex": 7,
+          "attackCount": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 2 ]
+        },
+        {
+          "path": [ 0, 3, 0.5, 3.5 ]
+        },
+        {
+          "path": [ 0, 4.5, 0.5, 5 ]
+        },
+        {
+          "path": [ 0, 6, 0.5, 6.5, 0.75 ]
+        },
+        {
+          "path": [ 1, 6.5, 1.75, 2, 6 ]
+        },
+        {
+          "path": [ 0, 5, 2, 4.5 ]
+        },
+        {
+          "path": [ 0, 3.5, 2, 3 ]
+        },
+        {
+          "path": [ 0, 1, 0.8, 1.25, 1.7, 1 ]
+        },
+        {
+          "path": [ 0, 2, 1.8, 1.75, 2.2, 2 ]
+        }
+      ],
+      "labels": [
+        {
+          "x": 1.5,
+          "y": 0.25,
+          "label": "Turn 5"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 13
+        },
+        {
+          "min": 40
+        },
+        {
+          "min": 45
+        },
+        {
+          "min": 50
+        },
+        {
+          "min": 55
+        },
+        {
+          "min": 60
+        },
+        {
+          "min": 65
+        },
+        {
+          "min": 70
+        }
+      ]
+    },
+    "a2": {
+      "labels": [
+        {
+          "x": 1.5,
+          "y": 0.25,
+          "label": "Turn 4"
         }
       ]
     }
