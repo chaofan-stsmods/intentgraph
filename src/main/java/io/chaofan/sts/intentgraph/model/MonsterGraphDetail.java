@@ -34,6 +34,8 @@ public class MonsterGraphDetail {
         detail.iconGroups = apply(detail.iconGroups, another.iconGroups);
         detail.arrows = apply(detail.arrows, another.arrows);
         detail.labels = apply(detail.labels, another.labels);
+        detail.height = another.height != 0 ? another.height : detail.height;
+        detail.width = another.width != 0 ? another.width : detail.width;
 
         return detail;
     }

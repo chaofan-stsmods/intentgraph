@@ -288,6 +288,9 @@ public class IntentGraphMod implements PostRenderSubscriber /*, PostInitializeSu
 
         float scale = Settings.scale;
         for (IconGroup iconGroup : iconGroups) {
+            if (iconGroup.hide) {
+                continue;
+            }
             renderIconGroupBox(
                     x + iconGroup.x * scale * GRID_SIZE,
                     y - iconGroup.y * scale * GRID_SIZE,

@@ -134,8 +134,8 @@
     }
   },
   "Cultist": {
-    "width": 3.5,
-    "height": 1.5,
+    "width": 3,
+    "height": 1.3,
     "a0": {
       "damages": [
         {
@@ -161,7 +161,7 @@
           "path": [ 0, 1, 0.5, 2 ]
         },
         {
-          "path": [ 0, 3, 0.5, 3.5, 1.5, 2.5, 1 ]
+          "path": [ 1, 2.3, 1, 1.3, 2.7, 1 ]
         }
       ]
     }
@@ -1048,7 +1048,7 @@
   },
   "Hexaghost": {
     "width": 4,
-    "height": 5,
+    "height": 5.1,
     "a0": {
       "damages": [
         {
@@ -1087,40 +1087,40 @@
         },
         {
           "x": 3,
-          "y": 2,
+          "y": 1.5,
           "type": "ATTACK",
           "damageIndex": 0,
           "attackCount": 2
         },
         {
           "x": 3,
-          "y": 3.5,
+          "y": 2.8,
           "type": "ATTACK_DEBUFF",
           "damageIndex": 1,
           "attackCount": 1
         },
         {
-          "x": 1.5,
-          "y": 4,
+          "x": 2.25,
+          "y": 4.1,
           "type": "DEFEND_BUFF"
         },
         {
-          "x": 0,
-          "y": 3.5,
+          "x": 0.75,
+          "y": 4.1,
           "type": "ATTACK",
           "damageIndex": 0,
           "attackCount": 2
         },
         {
           "x": 0,
-          "y": 2,
+          "y": 2.8,
           "type": "ATTACK_DEBUFF",
           "damageIndex": 1,
           "attackCount": 1
         },
         {
-          "x": 1.5,
-          "y": 2.75,
+          "x": 0,
+          "y": 1.5,
           "type": "ATTACK_DEBUFF",
           "damageIndex": 3,
           "attackCount": 6
@@ -1134,22 +1134,33 @@
           "path": [ 1, 2, 1, 1.5 ]
         },
         {
-          "path": [ 0, 2.5, 2.25, 3 ]
+          "path": [ 0, 2.5, 2, 3 ]
         },
         {
-          "path": [ 1, 3.5, 3, 3.5 ]
+          "path": [ 1, 3.5, 2.5, 2.8 ]
         },
         {
-          "path": [ 0, 3, 4.25, 2.5 ]
+          "path": [ 1, 3.5, 3.8, 4.6, 3.25 ]
         },
         {
-          "path": [ 0, 1.5, 4.25, 1 ]
+          "path": [ 0, 2.25, 4.6, 1.75 ]
         },
         {
-          "path": [ 1, 0.5, 3.5, 3 ]
+          "path": [ 0, 0.75, 4.6, 0.5, 3.8 ]
         },
         {
-          "path": [ 1, 2, 2.8, 2.4 ]
+          "path": [ 1, 0.5, 2.8, 2.5 ]
+        },
+        {
+          "path": [ 0, 1, 2, 1.5 ]
+        }
+      ],
+      "labels": [
+        {
+          "x": 2.3,
+          "y": 0.4,
+          "label": "N=(YourHP/12)+1",
+          "align": "left"
         }
       ]
     },
@@ -1162,6 +1173,3216 @@
         null,
         {
           "min": 3
+        }
+      ]
+    }
+  },
+  "JawWorm": {
+    "width": 4,
+    "height": 2.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 11
+        },
+        {
+          "min": 7
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 25,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "type": "ATTACK_DEFEND",
+          "damageIndex": 1,
+          "percentage": 30,
+          "attackCount": 1,
+          "limit": 2
+        },
+        {
+          "x": 3,
+          "y": 0.5,
+          "type": "DEFEND_BUFF",
+          "percentage": 45,
+          "limit": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 2,
+          "y": 0,
+          "w": 2,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 2 ]
+        },
+        {
+          "path": [ 1, 2.5, 2, 2.5, 3.5, 2 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 12
+        }
+      ]
+    }
+  },
+  "Lagavulin": {
+    "width": 4,
+    "height": 3,
+    "a0": {
+      "damages": [
+        {
+          "min": 18
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "SLEEP"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "STUN"
+        },
+        {
+          "x": 0,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF"
+        },
+        {
+          "x": 1.5,
+          "y": 1.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 1.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.3, 3 ],
+          "instant": true
+        },
+        {
+          "path": [ 1, 0.3, 1, 1.3, 0.7, 1 ]
+        },
+        {
+          "path": [ 0, 1, 0.7, 1.8, 1.5 ]
+        },
+        {
+          "path": [ 0, 3, 0.7, 2.2, 1.5 ]
+        },
+        {
+          "path": [ 0, 1, 2, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 2, 3 ]
+        },
+        {
+          "path": [ 1, 3.5, 2.5, 3, 0.5, 2.5 ]
+        }
+      ],
+      "labels": [
+        {
+          "x": 2,
+          "y": 0.1,
+          "label": "Take Damage"
+        },
+        {
+          "x": 1.7,
+          "y": 0.85,
+          "label": "Turn 4",
+          "align": "right"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 20
+        }
+      ]
+    }
+  },
+  "Looter": {
+    "width": 5.5,
+    "height": 2,
+    "a0": {
+      "damages": [
+        {
+          "min": 10
+        },
+        {
+          "min": 12
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "type": "DEFEND",
+          "percentage": 50
+        },
+        {
+          "x": 4.5,
+          "y": 0,
+          "type": "DEFEND"
+        },
+        {
+          "x": 4.5,
+          "y": 1,
+          "type": "ESCAPE"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 3,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3 ]
+        },
+        {
+          "path": [ 0, 3.8, 0.5, 4.5 ]
+        },
+        {
+          "path": [ 0, 3.8, 1.5, 4.5 ]
+        },
+        {
+          "path": [ 1, 5, 0.85, 1.2 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 11
+        },
+        {
+          "min": 14
+        }
+      ]
+    }
+  },
+  "Sentry": {
+    "width": 2.5,
+    "height": 2.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 9
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0.3,
+          "type": "DEBUFF"
+        },
+        {
+          "x": 1.5,
+          "y": 0.3,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 1.5,
+          "type": "DEBUFF"
+        },
+        {
+          "x": 0,
+          "y": 1.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.6, 1.5 ]
+        },
+        {
+          "path": [ 0, 1.5, 1, 1 ]
+        },
+        {
+          "path": [ 0, 1, 1.8, 1.5 ]
+        },
+        {
+          "path": [ 0, 1.5, 2.2, 1 ]
+        }
+      ],
+      "labels": [
+        {
+          "x": 0,
+          "y": 0,
+          "align": "left",
+          "label": "The 1st or 3rd:"
+        },
+        {
+          "x": 0,
+          "y": 1.2,
+          "align": "left",
+          "label": "The 2nd:"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 10
+        }
+      ]
+    }
+  },
+  "SlaverBlue": {
+    "width": 2,
+    "height": 1.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 12
+        },
+        {
+          "min": 7
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 60,
+          "limit": 2,
+          "attackCount": 1
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "percentage": 40,
+          "limit": 2,
+          "attackCount": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 0.5, 1, 1.5, 1.5, 1 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 13
+        },
+        {
+          "min": 8
+        }
+      ]
+    },
+    "a2": {
+      "icons": [
+        null,
+        {
+          "x": 1,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "percentage": 40,
+          "limit": 1,
+          "attackCount": 1
+        }
+      ]
+    }
+  },
+  "SlaverRed": {
+    "width": 5.5,
+    "height": 4.25,
+    "a0": {
+      "damages": [
+        {
+          "min": 13
+        },
+        {
+          "min": 8
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "percentage": 75,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF",
+          "percentage": 25
+        },
+        {
+          "x": 3,
+          "y": 0.5,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "percentage": 75,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF",
+          "percentage": 25
+        },
+        {
+          "x": 4.5,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 75,
+          "attackCount": 1
+        },
+        {
+          "x": 4.5,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF",
+          "percentage": 25
+        },
+        {
+          "x": 0,
+          "y": 3,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 45,
+          "limit": 2,
+          "attackCount": 1
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "percentage": 55,
+          "limit": 2,
+          "attackCount": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 3,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 4.5,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 0,
+          "y": 3,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 1, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.3, 1, 3 ]
+        },
+        {
+          "path": [ 0, 3.8, 1, 4.5 ]
+        },
+        {
+          "path": [ 1, 5, 0.7, 0, 2, 0.5 ]
+        },
+        {
+          "path": [ 0, 1.7, 2, 1, 3 ]
+        },
+        {
+          "path": [ 1, 0.5, 4, 4.25, 1.5, 4 ]
+        },
+        {
+          "path": [ 1, 3.5, 2.3, 3.5, 2 ]
+        },
+        {
+          "path": [ 1, 5, 2.3, 3.5, 2 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 14
+        },
+        {
+          "min": 9
+        }
+      ]
+    },
+    "a2": {
+      "overwrite": true,
+      "width": 4,
+      "damages": [
+        {
+          "min": 14
+        },
+        {
+          "min": 9
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "percentage": 75,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF",
+          "percentage": 25
+        },
+        {
+          "x": 3,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 75,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF",
+          "percentage": 25
+        },
+        {
+          "x": 0,
+          "y": 3,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 45,
+          "limit": 2,
+          "attackCount": 1
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "percentage": 55,
+          "limit": 2,
+          "attackCount": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 3,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 0,
+          "y": 3,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 1, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.3, 1, 3 ]
+        },
+        {
+          "path": [ 1, 3.5, 0.7, 0, 2, 0.5 ]
+        },
+        {
+          "path": [ 0, 1.7, 2, 1, 3 ]
+        },
+        {
+          "path": [ 1, 0.5, 4, 4.25, 1.5, 4 ]
+        },
+        {
+          "path": [ 1, 3.5, 2.3, 3.5, 2 ]
+        }
+      ]
+    }
+  },
+  "SlimeBoss": {
+    "width": 4,
+    "height": 3,
+    "a0": {
+      "damages": [
+        {
+          "min": 35
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "STRONG_DEBUFF"
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "UNKNOWN"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0
+        },
+        {
+          "x": 1.5,
+          "y": 2,
+          "type": "UNKNOWN"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 4,
+          "h": 1.5
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3 ]
+        },
+        {
+          "path": [ 1, 3.5, 1, 1.25, 0.5, 1 ]
+        },
+        {
+          "path": [ 1, 2, 1.5, 2 ],
+          "instant": true
+        }
+      ],
+      "labels": [
+        {
+          "x": 2.2,
+          "y": 1.7,
+          "label": "HP<=50%",
+          "align": "left"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 38
+        }
+      ]
+    }
+  },
+  "SpikeSlime_L": {
+    "width": 4,
+    "height": 1.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 16
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 0,
+          "percentage": 30,
+          "limit": 2
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "type": "DEBUFF",
+          "percentage": 70,
+          "limit": 2
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "UNKNOWN"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 0.5, 1, 1.5, 1.5, 1 ]
+        },
+        {
+          "path": [ 0, 2, 0.5, 3 ],
+          "instant": true
+        }
+      ],
+      "labels": [
+        {
+          "x": 2.5,
+          "y": 0.30,
+          "label": "HP<=50%"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 18
+        }
+      ]
+    },
+    "a2": {
+      "icons": [
+        null,
+        {
+          "x": 1,
+          "y": 0,
+          "type": "DEBUFF",
+          "percentage": 70,
+          "limit": 1
+        }
+      ]
+    }
+  },
+  "SpikeSlime_M": {
+    "width": 2,
+    "height": 1.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 8
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 0,
+          "percentage": 30,
+          "limit": 2
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "type": "DEBUFF",
+          "percentage": 70,
+          "limit": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 0.5, 1, 1.5, 1.5, 1 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 10
+        }
+      ]
+    },
+    "a2": {
+      "icons": [
+        null,
+        {
+          "x": 1,
+          "y": 0,
+          "type": "DEBUFF",
+          "percentage": 70,
+          "limit": 1
+        }
+      ]
+    }
+  },
+  "SpikeSlime_S": {
+    "width": 2,
+    "height": 1,
+    "a0": {
+      "damages": [
+        {
+          "min": 5
+        }
+      ],
+      "icons": [
+        {
+          "x": 0.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 6
+        }
+      ]
+    }
+  },
+  "CorruptHeart": {
+    "width": 5.5,
+    "height": 2.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 2
+        },
+        {
+          "min": 40
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "STRONG_DEBUFF",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 0,
+          "attackCount": 12
+        },
+        {
+          "x": 1.5,
+          "y": 1,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 12
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 4.5,
+          "y": 1,
+          "type": "BUFF"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 1.5,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.3, 0.5, 3 ]
+        },
+        {
+          "path": [ 0, 2.3, 1.5, 3 ]
+        },
+        {
+          "path": [ 0, 4, 1.5, 4.5 ]
+        },
+        {
+          "path": [ 0, 4, 0.5, 5, 1 ]
+        },
+        {
+          "path": [ 1, 5, 2, 2.5, 2, 2 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        null,
+        {
+          "min": 45
+        }
+      ],
+      "icons": [
+        null,
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 0,
+          "attackCount": 15
+        },
+        null,
+        {
+          "x": 3,
+          "y": 1,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 15
+        }
+      ]
+    }
+  },
+  "SpireShield": {
+    "width": 4,
+    "height": 2.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 12
+        },
+        {
+          "min": 34
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 50,
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "type": "DEFEND",
+          "percentage": 50
+        },
+        {
+          "x": 1.5,
+          "y": 1,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "DEFEND"
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "type": "ATTACK_DEFEND",
+          "damageIndex": 1,
+          "attackCount": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 0.8, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 0.8, 1.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 1.5, 3 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3.5, 1 ]
+        },
+        {
+          "path": [ 1, 3.5, 2, 2.5, 0.5, 2 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 14
+        },
+        {
+          "min": 38
+        }
+      ]
+    }
+  },
+  "SpireSpear": {
+    "width": 5.5,
+    "height": 2.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 5
+        },
+        {
+          "min": 10
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0.5,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 0,
+          "attackCount": 2
+        },
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 1,
+          "attackCount": 3
+        },
+        {
+          "x": 3,
+          "y": 0.5,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 50,
+          "damageIndex": 0,
+          "attackCount": 2
+        },
+        {
+          "x": 3,
+          "y": 1.5,
+          "type": "BUFF",
+          "percentage": 50
+        },
+        {
+          "x": 4.5,
+          "y": 0.5,
+          "type": "BUFF"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 3,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 1, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 1, 3 ]
+        },
+        {
+          "path": [ 0, 3.2, 2, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 3.8, 1, 4.5 ]
+        },
+        {
+          "path": [ 1, 5, 0.5, 0, 2, 0.5 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 6
+        },
+        {
+          "min": 10
+        }
+      ],
+      "icons": [
+        null,
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 1,
+          "attackCount": 4
+        }
+      ]
+    }
+  },
+  "BanditBear": {
+    "width": 4,
+    "height": 1,
+    "a0": {
+      "damages": [
+        {
+          "min": 18
+        },
+        {
+          "min": 9
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "STRONG_DEBUFF"
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK_DEFEND",
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.3, 3 ]
+        },
+        {
+          "path": [ 0, 3, 0.7, 2.5 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 20
+        },
+        {
+          "min": 10
+        }
+      ]
+    }
+  },
+  "BanditLeader": {
+    "width": 4,
+    "height": 1,
+    "a0": {
+      "damages": [
+        {
+          "min": 15
+        },
+        {
+          "min": 10
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "UNKNOWN"
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.3, 3 ]
+        },
+        {
+          "path": [ 0, 3, 0.7, 2.5 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 17
+        },
+        {
+          "min": 12
+        }
+      ]
+    },
+    "a2": {
+      "width": 5.5,
+      "height": 1.5,
+      "overwrite": true,
+      "damages": [
+        {
+          "min": 17
+        },
+        {
+          "min": 12
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "UNKNOWN"
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 4.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3 ]
+        },
+        {
+          "path": [ 0, 4, 0.5, 4.5 ]
+        },
+        {
+          "path": [ 1, 5, 1, 1.5, 2, 1 ]
+        }
+      ]
+    }
+  },
+  "BanditChild": {
+    "width": 2,
+    "height": 1,
+    "a0": {
+      "damages": [
+        {
+          "min": 5
+        }
+      ],
+      "icons": [
+        {
+          "x": 0.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 2
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 6
+        }
+      ]
+    }
+  },
+  "BookOfStabbing": {
+    "width": 3,
+    "height": 2,
+    "a0": {
+      "damages": [
+        {
+          "min": 6
+        },
+        {
+          "min": 21
+        }
+      ],
+      "icons": [
+        {
+          "x": 0.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 85,
+          "limit": 2,
+          "attackCount": 2,
+          "attackCountString": "T"
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 15,
+          "damageIndex": 1,
+          "attackCount": 1,
+          "limit": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0.5,
+          "y": 0,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 1, 1, 1.5, 2, 1 ]
+        }
+      ],
+      "labels": [
+        {
+          "x": 0,
+          "y": 1.75,
+          "label": "T starts from 2, increases",
+          "align": "left"
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "label": "by 1 when Stab is used.",
+          "align": "left"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 7
+        },
+        {
+          "min": 24
+        }
+      ]
+    },
+    "a2": {
+      "labels": [
+        {
+          "x": 0,
+          "y": 1.9,
+          "label": "T=1+Turn number",
+          "align": "left"
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "label": ""
+        }
+      ]
+    }
+  },
+  "BronzeAutomaton": {
+    "width": 5.5,
+    "height": 2.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 7
+        },
+        {
+          "min": 45
+        }
+      ],
+      "icons": [
+        {
+          "x": 1.5,
+          "y": 1.5,
+          "type": "STUN"
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "type": "UNKNOWN"
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 2
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "DEFEND_BUFF"
+        },
+        {
+          "x": 4.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 2
+        },
+        {
+          "x": 4.5,
+          "y": 1.5,
+          "type": "DEFEND_BUFF"
+        },
+        {
+          "x": 3,
+          "y": 1.5,
+          "type": "ATTACK",
+          "damageIndex": 1,
+          "attackCount": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3 ]
+        },
+        {
+          "path": [ 0, 4, 0.5, 4.5 ]
+        },
+        {
+          "path": [ 1, 5, 1, 1.5 ]
+        },
+        {
+          "path": [ 0, 3, 2, 2.5 ]
+        },
+        {
+          "path": [ 0, 4.5, 2, 4 ]
+        },
+        {
+          "path": [ 1, 2, 1.5, 1 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 8
+        },
+        {
+          "min": 50
+        }
+      ]
+    },
+    "a2": {
+      "icons": [
+        {
+          "x": 1.5,
+          "y": 1.5,
+          "type": "DEFEND_BUFF"
+        }
+      ]
+    }
+  },
+  "BronzeOrb": {
+    "width": 4,
+    "height": 4.25,
+    "a0": {
+      "damages": [
+        {
+          "min": 8
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 25,
+          "attackCount": 1
+        },
+        {
+          "x": 0,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF",
+          "percentage": 75
+        },
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 25,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF",
+          "percentage": 75
+        },
+        {
+          "x": 3,
+          "y": 0.5,
+          "type": "DEFEND",
+          "percentage": 25
+        },
+        {
+          "x": 3,
+          "y": 1.5,
+          "type": "STRONG_DEBUFF",
+          "percentage": 75
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 30,
+          "limit": 2,
+          "attackCount": 1
+        },
+        {
+          "x": 2,
+          "y": 3,
+          "type": "DEFEND",
+          "percentage": 70,
+          "limit": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 3,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 0,
+          "y": 0.5,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 0.8, 1, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.3, 1, 3 ]
+        },
+        {
+          "path": [ 1, 3.5, 0.7, 0, 0.5, 0.5 ]
+        },
+        {
+          "path": [ 1, 2, 2.3, 3 ]
+        },
+        {
+          "path": [ 1, 1.5, 4, 4.25, 2.5, 4 ]
+        },
+        {
+          "path": [ 1, 3.5, 2.3, 3.5, 3 ]
+        },
+        {
+          "path": [ 1, 0.5, 2.3, 3.5, 1 ]
+        }
+      ]
+    }
+  },
+  "Byrd": {
+    "width": 4,
+    "height": 3.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 1
+        },
+        {
+          "min": 12
+        },
+        {
+          "min": 3
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 62,
+          "damageIndex": 0,
+          "attackCount": 5
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "type": "BUFF",
+          "percentage": 38
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 0,
+          "attackCount": 5,
+          "limit": 2
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 20,
+          "damageIndex": 1,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 2.5,
+          "y": 1,
+          "type": "BUFF",
+          "percentage": 30,
+          "limit": 1
+        },
+        {
+          "x": 0,
+          "y": 2.5,
+          "type": "STUN"
+        },
+        {
+          "x": 1.5,
+          "y": 2.5,
+          "type": "ATTACK",
+          "damageIndex": 2,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 2.5,
+          "type": "UNKNOWN"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "x": -0.1,
+          "y": -0.1,
+          "w": 4.2,
+          "h": 2.2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [0, 1, 0.3, 2]
+        },
+        {
+          "path": [0, 2, 0.7, 1.5, 1.7, 2]
+        },
+        {
+          "path": [1, 0.5, 2.1, 2.5],
+          "instant": true
+        },
+        {
+          "path": [0, 1, 3, 1.5]
+        },
+        {
+          "path": [0, 2.5, 3, 3]
+        },
+        {
+          "path": [1, 3.5, 2.5, 2]
+        }
+      ],
+      "labels": [
+        {
+          "x": 0.7,
+          "y": 2.2,
+          "label": "Fall",
+          "align": "left"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        null,
+        {
+          "min": 14
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 62,
+          "damageIndex": 0,
+          "attackCount": 6
+        },
+        null,
+        {
+          "x": 2,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 0,
+          "attackCount": 6,
+          "limit": 2
+        }
+      ]
+    }
+  },
+  "Centurion": {
+    "width": 3,
+    "height": 2.3,
+    "a0": {
+      "damages": [
+        {
+          "min": 12
+        },
+        {
+          "min": 6
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 65,
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "percentage": 35,
+          "type": "DEFEND"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 65,
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "type": "ATTACK",
+          "percentage": 35,
+          "damageIndex": 1,
+          "attackCount": 3
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 1, 2 ]
+        },
+        {
+          "path": [ 1, 0.3, 2, 2.3, 0.7, 2 ]
+        },
+        {
+          "path": [ 1, 2.3, 2, 2.3, 2.7, 2 ]
+        }
+      ],
+      "labels": [
+        {
+          "x": 1.5,
+          "y": 0.8,
+          "label": "Is Alone"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 14
+        },
+        {
+          "min": 7
+        }
+      ]
+    }
+  },
+  "Healer": {
+    "width": 3,
+    "height": 3,
+    "a0": {
+      "damages": [
+        {
+          "min": 8
+        }
+      ],
+      "icons": [
+        {
+          "x": 1,
+          "y": 0.5,
+          "type": "BUFF",
+          "limit": 2
+        },
+        {
+          "x": 0.5,
+          "y": 1.75,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 60,
+          "damageIndex": 0,
+          "attackCount": 1,
+          "limit": 2
+        },
+        {
+          "x": 1.5,
+          "y": 1.75,
+          "type": "BUFF",
+          "percentage": 40,
+          "limit": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 3,
+          "h": 2.75
+        }
+      ],
+      "labels": [
+        {
+          "x": 0.1,
+          "y": 0.1,
+          "align": "left",
+          "label": "If all enemies have lost"
+        },
+        {
+          "x": 0.1,
+          "y": 0.34,
+          "align": "left",
+          "label": "16 HP in total,"
+        },
+        {
+          "x": 0.1,
+          "y": 1.45,
+          "align": "left",
+          "label": "otherwise,"
+        },
+        {
+          "x": 1.8,
+          "y": 1.1,
+          "align": "left",
+          "label": "Heal"
+        },
+        {
+          "x": 2.3,
+          "y": 2.35,
+          "align": "left",
+          "label": "Buff"
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 0.5, 2.75, 3, 2.5, 2.75 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 9
+        }
+      ]
+    },
+    "a2": {
+      "icons": [
+        null,
+        {
+          "x": 0.5,
+          "y": 1.75,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 60,
+          "damageIndex": 0,
+          "attackCount": 1,
+          "limit": 1
+        }
+      ],
+      "labels": [
+        {
+          "x": 0.1,
+          "y": 0.1,
+          "align": "left",
+          "label": "A17_If all enemies have lost"
+        },
+        {
+          "x": 0.1,
+          "y": 0.34,
+          "align": "left",
+          "label": "21 HP in total,"
+        }
+      ]
+    }
+  },
+  "Champ": {
+    "width": 5,
+    "height": 6.7,
+    "a0": {
+      "damages": [
+        {
+          "min": 16
+        },
+        {
+          "min": 10
+        },
+        {
+          "min": 12
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "DEFEND_BUFF",
+          "percentage": 30,
+          "limit": 1
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 25,
+          "damageIndex": 2,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 45,
+          "damageIndex": 0,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "type": "DEBUFF"
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "type": "BUFF"
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "type": "ATTACK",
+          "damageIndex": 1,
+          "attackCount": 2
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "type": "DEFEND_BUFF",
+          "percentage": 30,
+          "limit": 1
+        },
+        {
+          "x": 2,
+          "y": 3,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 25,
+          "damageIndex": 2,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "type": "ATTACK",
+          "percentage": 45,
+          "damageIndex": 0,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "type": "DEFEND_BUFF",
+          "percentage": 30,
+          "limit": 1
+        },
+        {
+          "x": 4,
+          "y": 3,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 25,
+          "damageIndex": 2,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "type": "ATTACK",
+          "percentage": 45,
+          "damageIndex": 0,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 0,
+          "y": 5.6,
+          "type": "DEFEND_BUFF"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 3,
+          "h": 1
+        },
+        {
+          "x": -0.1,
+          "y": -0.1,
+          "w": 5.2,
+          "h": 1.7
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "w": 1,
+          "h": 3
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "w": 1,
+          "h": 3
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 3, 0.3, 4 ]
+        },
+        {
+          "path": [ 0, 4, 0.7, 3 ]
+        },
+        {
+          "path": [ 1, 0.5, 1, 1.25, 2.5, 1 ]
+        },
+        {
+          "path": [ 1, 0.5, 1.6, 2 ]
+        },
+        {
+          "path": [ 1, 0.5, 3, 4 ]
+        },
+        {
+          "path": [ 0, 1, 4.5, 1.5, 3.5, 2 ]
+        },
+        {
+          "path": [ 0, 3, 3.5, 4 ]
+        },
+        {
+          "path": [ 1, 4.5, 5, 5.5, 0.5, 5 ]
+        }
+      ],
+      "labels": [
+        {
+          "x": 1,
+          "y": 5.8,
+          "label": "50% of Defensive Stance is replaced",
+          "align": "left"
+        },
+        {
+          "x": 1,
+          "y": 6.05,
+          "label": "with Buff. Defensive Stance can",
+          "align": "left"
+        },
+        {
+          "x": 1,
+          "y": 6.3,
+          "label": "only be casted twice. After that,",
+          "align": "left"
+        },
+        {
+          "x": 1,
+          "y": 6.55,
+          "label": "it's replaced with Buff, too.",
+          "align": "left"
+        },
+        {
+          "x": 3.05,
+          "y": -0.02,
+          "label": "Turn 4, 8, ...",
+          "align": "left"
+        },
+        {
+          "x": 0.65,
+          "y": 1.7,
+          "label": "HP<=50%",
+          "align": "left"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 18
+        },
+        {
+          "min": 10
+        },
+        {
+          "min": 14
+        }
+      ]
+    },
+    "a2": {
+      "height": 6.5,
+      "labels": [
+        {
+          "x": 1,
+          "y": 5.8,
+          "label": "Defensive Stance can only be casted",
+          "align": "left"
+        },
+        {
+          "x": 1,
+          "y": 6.05,
+          "label": "twice. After that, it's replaced",
+          "align": "left"
+        },
+        {
+          "x": 1,
+          "y": 6.3,
+          "label": "with Buff.",
+          "align": "left"
+        },
+        {
+          "x": 1,
+          "y": 6.55,
+          "label": "",
+          "align": "left"
+        }
+      ]
+    }
+  },
+  "Chosen": {
+    "width": 5.5,
+    "height": 2,
+    "a0": {
+      "damages": [
+        {
+          "min": 18
+        },
+        {
+          "min": 10
+        },
+        {
+          "min": 5
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 2,
+          "attackCount": 2
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "STRONG_DEBUFF"
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 50,
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "type": "DEBUFF",
+          "percentage": 50
+        },
+        {
+          "x": 4.5,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 40,
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 4.5,
+          "y": 1,
+          "type": "ATTACK",
+          "percentage": 60,
+          "damageIndex": 2,
+          "attackCount": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 3,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 4.5,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3 ]
+        },
+        {
+          "path": [ 0, 4, 0.5, 4.5 ]
+        },
+        {
+          "path": [ 0, 4.5, 1.5, 4 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 21
+        },
+        {
+          "min": 12
+        },
+        {
+          "min": 6
+        }
+      ]
+    },
+    "a2": {
+      "overwrite": true,
+      "width": 4,
+      "damages": [
+        {
+          "min": 21
+        },
+        {
+          "min": 12
+        },
+        {
+          "min": 6
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "STRONG_DEBUFF"
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 50,
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 1,
+          "type": "DEBUFF",
+          "percentage": 50
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 40,
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "type": "ATTACK",
+          "percentage": 60,
+          "damageIndex": 2,
+          "attackCount": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 1.5,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3 ]
+        },
+        {
+          "path": [ 0, 3, 1.5, 2.5 ]
+        }
+      ]
+    }
+  },
+  "GremlinLeader": {
+    "width": 3,
+    "height": 4.25,
+    "a0": {
+      "damages": [
+        {
+          "min": 6
+        }
+      ],
+      "icons": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "type": "UNKNOWN",
+          "percentage": 75,
+          "limit": 1
+        },
+        {
+          "x": 1.5,
+          "y": 0.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 3,
+          "percentage": 25,
+          "limit": 1
+        },
+        {
+          "x": 0,
+          "y": 1.75,
+          "type": "UNKNOWN",
+          "percentage": 50,
+          "limit": 1
+        },
+        {
+          "x": 1,
+          "y": 1.75,
+          "type": "DEFEND_BUFF",
+          "percentage": 30,
+          "limit": 1
+        },
+        {
+          "x": 2,
+          "y": 1.75,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 3,
+          "percentage": 20,
+          "limit": 1
+        },
+        {
+          "x": 0.5,
+          "y": 3,
+          "type": "DEFEND_BUFF",
+          "percentage": 66,
+          "limit": 1
+        },
+        {
+          "x": 1.5,
+          "y": 3,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 3,
+          "percentage": 34,
+          "limit": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 3,
+          "h": 4
+        }
+      ],
+      "labels": [
+        {
+          "x": 0.1,
+          "y": 0.1,
+          "align": "left",
+          "label": "If minion count is"
+        },
+        {
+          "x": 0.1,
+          "y": 0.34,
+          "align": "left",
+          "label": "0:"
+        },
+        {
+          "x": 0.1,
+          "y": 1.45,
+          "align": "left",
+          "label": "1:"
+        },
+        {
+          "x": 0.1,
+          "y": 2.7,
+          "align": "left",
+          "label": "2 or more:"
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 0.5, 4, 4.25, 2.5, 4 ]
+        }
+      ]
+    }
+  },
+  "Mugger": {
+    "width": 5.5,
+    "height": 2,
+    "a0": {
+      "damages": [
+        {
+          "min": 10
+        },
+        {
+          "min": 16
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "type": "DEFEND",
+          "percentage": 50
+        },
+        {
+          "x": 4.5,
+          "y": 0,
+          "type": "DEFEND"
+        },
+        {
+          "x": 4.5,
+          "y": 1,
+          "type": "ESCAPE"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 3,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3 ]
+        },
+        {
+          "path": [ 0, 3.8, 0.5, 4.5 ]
+        },
+        {
+          "path": [ 0, 3.8, 1.5, 4.5 ]
+        },
+        {
+          "path": [ 1, 5, 0.85, 1.2 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 11
+        },
+        {
+          "min": 18
+        }
+      ]
+    }
+  },
+  "Shelled Parasite": {
+    "width": 4,
+    "height": 3.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 6
+        },
+        {
+          "min": 18
+        },
+        {
+          "min": 10
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 50,
+          "damageIndex": 0,
+          "attackCount": 2
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "type": "ATTACK_BUFF",
+          "percentage": 50,
+          "damageIndex": 2,
+          "attackCount": 1
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 40,
+          "damageIndex": 0,
+          "attackCount": 2,
+          "limit": 2
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK_BUFF",
+          "percentage": 40,
+          "damageIndex": 2,
+          "attackCount": 1,
+          "limit": 2
+        },
+        {
+          "x": 2.5,
+          "y": 1,
+          "type": "ATTACK_DEBUFF",
+          "percentage": 20,
+          "damageIndex": 1,
+          "attackCount": 1,
+          "limit": 1
+        },
+        {
+          "x": 0,
+          "y": 2.5,
+          "type": "STUN"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "w": 2,
+          "h": 2
+        },
+        {
+          "x": -0.1,
+          "y": -0.1,
+          "w": 4.2,
+          "h": 2.2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [0, 1, 0.5, 2]
+        },
+        {
+          "path": [0, 2, 0.9, 1.5, 1.7, 2]
+        },
+        {
+          "path": [1, 0.5, 2.1, 2.5],
+          "instant": true
+        },
+        {
+          "path": [0, 1, 3, 3.5, 2]
+        }
+      ],
+      "labels": [
+        {
+          "x": 0.7,
+          "y": 2.2,
+          "label": "Lose all plated armor",
+          "align": "left"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 7
+        },
+        {
+          "min": 21
+        },
+        {
+          "min": 12
+        }
+      ]
+    },
+    "a2": {
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "attackCount": 1
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "type": "NONE"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 2,
+          "hide": true
+        }
+      ]
+    }
+  },
+  "SnakePlant": {
+    "width": 2,
+    "height": 1.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 7
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "STRONG_DEBUFF",
+          "percentage": 35,
+          "limit": 1
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 65,
+          "damageIndex": 0,
+          "attackCount": 3,
+          "limit": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 1, 0.5, 1, 1.5, 1.5, 1 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 8
+        }
+      ]
+    },
+    "a2": {
+      "overwrite": true,
+      "width": 4,
+      "height": 3.75,
+      "damages": [
+        {
+          "min": 8
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 65,
+          "damageIndex": 0,
+          "attackCount": 3
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "type": "STRONG_DEBUFF",
+          "percentage": 35
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK",
+          "percentage": 65,
+          "damageIndex": 0,
+          "attackCount": 3
+        },
+        {
+          "x": 1.5,
+          "y": 1,
+          "type": "STRONG_DEBUFF",
+          "percentage": 35
+        },
+        {
+          "x": 0,
+          "y": 2.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 3
+        },
+        {
+          "x": 1.5,
+          "y": 2.5,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 3
+        },
+        {
+          "x": 3,
+          "y": 2.5,
+          "type": "STRONG_DEBUFF"
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "w": 1,
+          "h": 2
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 0.8, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.3, 0.5, 3.5, 2.5 ]
+        },
+        {
+          "path": [ 0, 1, 3, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 3, 3 ]
+        },
+        {
+          "path": [ 1, 0.5, 1.8, 2.5 ]
+        },
+        {
+          "path": [ 1, 2, 1.8, 2.2, 0.5, 2.5 ]
+        },
+        {
+          "path": [ 1, 3.5, 3.5, 3.75, 0.5, 3.5 ]
+        }
+      ]
+    }
+  },
+  "Snecko": {
+    "width": 4,
+    "height": 1.5,
+    "a0": {
+      "damages": [
+        {
+          "min": 15
+        },
+        {
+          "min": 8
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "STRONG_DEBUFF"
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 1,
+          "percentage": 40,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "percentage": 60,
+          "attackCount": 1,
+          "limit": 2
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 2,
+          "y": 0,
+          "w": 2,
+          "h": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 2 ]
+        },
+        {
+          "path": [ 1, 2.5, 1, 1.5, 3.5, 1 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 18
+        },
+        {
+          "min": 10
+        }
+      ]
+    }
+  },
+  "SphericGuardian": {
+    "width": 5.5,
+    "height": 1,
+    "a0": {
+      "damages": [
+        {
+          "min": 10
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "DEFEND"
+        },
+        {
+          "x": 1.5,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 0,
+          "attackCount": 1
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 2
+        },
+        {
+          "x": 4.5,
+          "y": 0,
+          "type": "ATTACK_DEFEND",
+          "damageIndex": 0,
+          "attackCount": 1
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 1.5 ]
+        },
+        {
+          "path": [ 0, 2.5, 0.5, 3 ]
+        },
+        {
+          "path": [ 0, 4, 0.3, 4.5 ]
+        },
+        {
+          "path": [ 0, 4.5, 0.7, 4 ]
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 11
+        }
+      ]
+    }
+  },
+  "SlaverBoss": {
+    "width": 2,
+    "height": 1,
+    "a0": {
+      "damages": [
+        {
+          "min": 7
+        }
+      ],
+      "icons": [
+        {
+          "x": 0.5,
+          "y": 0,
+          "type": "ATTACK_DEBUFF",
+          "damageIndex": 0,
+          "attackCount": 1
+        }
+      ]
+    }
+  },
+  "TheCollector": {
+    "width": 5,
+    "height": 3.25,
+    "a0": {
+      "damages": [
+        {
+          "min": 18
+        }
+      ],
+      "icons": [
+        {
+          "x": 0,
+          "y": 0,
+          "type": "UNKNOWN"
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "type": "STRONG_DEBUFF"
+        },
+        {
+          "x": 2,
+          "y": 0.4,
+          "type": "UNKNOWN",
+          "percentage": 25,
+          "limit": 1
+        },
+        {
+          "x": 3,
+          "y": 0.4,
+          "type": "ATTACK",
+          "percentage": 45,
+          "damageIndex": 0,
+          "attackCount": 1,
+          "limit": 2
+        },
+        {
+          "x": 4,
+          "y": 0.4,
+          "type": "DEFEND_BUFF",
+          "percentage": 30,
+          "limit": 1
+        },
+        {
+          "x": 2.5,
+          "y": 1.7,
+          "type": "ATTACK",
+          "percentage": 70,
+          "damageIndex": 0,
+          "attackCount": 1,
+          "limit": 2
+        },
+        {
+          "x": 3.5,
+          "y": 1.7,
+          "type": "DEFEND_BUFF",
+          "percentage": 30,
+          "limit": 1
+        }
+      ],
+      "iconGroups": [
+        {
+          "x": 2,
+          "y": 0,
+          "w": 3,
+          "h": 3
+        }
+      ],
+      "arrows": [
+        {
+          "path": [ 0, 1, 0.5, 2 ]
+        },
+        {
+          "path": [ 0, 2, 2.3, 1 ]
+        },
+        {
+          "path": [ 0, 1, 2.7, 2 ]
+        },
+        {
+          "path": [ 1, 2.5, 3, 3.25, 4.5, 3 ]
+        }
+      ],
+      "labels": [
+        {
+          "x": 2.1,
+          "y": 0.1,
+          "align": "left",
+          "label": "If a minion has died,"
+        },
+        {
+          "x": 2.1,
+          "y": 1.45,
+          "align": "left",
+          "label": "otherwise,"
+        },
+        {
+          "x": 1.5,
+          "y": 2.05,
+          "label": "Turn 4"
+        }
+      ]
+    },
+    "a1": {
+      "damages": [
+        {
+          "min": 21
+        }
+      ]
+    }
+  },
+  "TorchHead": {
+    "width": 2,
+    "height": 1,
+    "a0": {
+      "damages": [
+        {
+          "min": 7
+        }
+      ],
+      "icons": [
+        {
+          "x": 0.5,
+          "y": 0,
+          "type": "ATTACK",
+          "damageIndex": 0,
+          "attackCount": 1
         }
       ]
     }

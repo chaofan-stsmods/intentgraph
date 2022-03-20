@@ -2,5 +2,6 @@
   "attack": "Attack",
   "debuff": "Debuff",
   "buff": "Buff",
-  "defend": "Defend"
+  "defend": "Defend",
+  "A17_If all enemies have lost": "If all enemies have lost"
 }

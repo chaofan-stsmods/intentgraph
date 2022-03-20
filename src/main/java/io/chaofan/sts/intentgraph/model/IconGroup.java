@@ -5,4 +5,5 @@ public class IconGroup {
     public float y;
     public float w;
     public float h;
+    public boolean hide;
 }
