@@ -31,5 +31,13 @@
   "If minion count is": "如果爪牙数为",
   "2 or more:": "2或更多:",
   "Lose all plated armor": "失去所有多层护甲",
-  "If a minion has died,": "如果有爪牙已死亡，"
+  "If a minion has died,": "如果有爪牙已死亡，",
+  "T=(Turn+1)/2": "T=(回合数+1)/2",
+  "If minion count is 0~3,": "如果爪牙数为 0~3，",
+  "Has used Spike": "已使用过钉刺",
+  "6 times": "6次",
+  "You are not constricted": "你未被缠绕",
+  "Serpent_You are not": "你未被缠绕",
+  "constricted": "",
+  "Has used Implant": "已使用过寄生"
 }
