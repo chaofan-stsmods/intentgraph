@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.chaofan.sts.chaofanmod</groupId>
-    <artifactId>chaofanmod</artifactId>
-    <version>1.0.0</version>
-    <name>Chaofan Mod</name>
-    <description>Some relic and cards.</description>
+    <groupId>io.chaofan.sts.intentgraph</groupId>
+    <artifactId>intentgraph</artifactId>
+    <version>0.1.0</version>
+    <name>Intent Graph</name>
+    <description>Monster intent as a state machine.</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -46,6 +46,16 @@
     <build>
         <finalName>${project.artifactId}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.4</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.xcf</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>

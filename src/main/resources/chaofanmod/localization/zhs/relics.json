@@ -1,9 +1,0 @@
-{
-  "chaofanmod:relic.Stool": {
-    "NAME": "板凳",
-    "FLAVOR": "有个大鼻子的人常用这个打人。",
-    "DESCRIPTIONS": [
-      "战斗开始时，给抽牌堆里所有攻击牌的名字中都加入 #y打击 。"
-    ]
-  }
-}

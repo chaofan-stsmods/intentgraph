@@ -1,5 +1,8 @@
 package io.chaofan.sts.intentgraph.model;
 
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import io.chaofan.sts.intentgraph.IntentGraphMod;
+
 import java.util.Arrays;
 
 public class MonsterGraphDetail {
@@ -72,6 +75,56 @@ public class MonsterGraphDetail {
                     icon.attackCount = 1;
                 }
             }
+        }
+    }
+
+    public void render(float x, float y, SpriteBatch sb) {
+        renderIcons(x, y, sb);
+        renderIconGroups(iconGroups, x, y, sb);
+        renderArrows(arrows, x, y, sb);
+        renderLabels(labels, x, y, sb);
+    }
+
+    public void renderIcons(float x, float y, SpriteBatch sb) {
+        if (icons == null) {
+            return;
+        }
+
+        for (Icon icon : icons) {
+            icon.render(this, x, y, sb);
+        }
+    }
+
+    private void renderLabels(Label[] labels, float x, float y, SpriteBatch sb) {
+        if (labels == null) {
+            return;
+        }
+
+        for (Label label : labels) {
+            label.render(x, y, sb);
+        }
+    }
+
+    private void renderArrows(Arrow[] arrows, float x, float y, SpriteBatch sb) {
+        if (arrows == null) {
+            return;
+        }
+
+        for (Arrow arrow : arrows) {
+            arrow.render(x, y, sb);
+        }
+    }
+
+    private void renderIconGroups(IconGroup[] iconGroups, float x, float y, SpriteBatch sb) {
+        if (iconGroups == null) {
+            return;
+        }
+
+        for (IconGroup iconGroup : iconGroups) {
+            if (iconGroup.hide) {
+                continue;
+            }
+            iconGroup.render(x, y, sb);
         }
     }
 }
