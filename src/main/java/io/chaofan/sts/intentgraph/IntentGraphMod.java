@@ -8,6 +8,8 @@ import basemod.interfaces.PostRenderSubscriber;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.evacipated.cardcrawl.modthespire.Loader;
+import com.evacipated.cardcrawl.modthespire.ModInfo;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -20,6 +22,9 @@ import io.chaofan.sts.intentgraph.model.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -96,17 +101,60 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
         intentStrings.clear();
         intents.clear();
 
+        for (ModInfo modinfo : Loader.MODINFOS) {
+            Map<String, MonsterIntentGraph> intentsFromModJar = loadIntentsFromModJar(modinfo.jarURL);
+            if (intentsFromModJar != null) {
+                intents.putAll(intentsFromModJar);
+            }
+
+            Map<String, String> stringsFromModJar = loadIntentStringsFromModJar(modinfo.jarURL);
+            if (stringsFromModJar != null) {
+                intentStrings.putAll(stringsFromModJar);
+            }
+        }
+
         Gson gson = new Gson();
-        String json = Gdx.files.internal("intentgraph/intents/intents.json").readString(String.valueOf(StandardCharsets.UTF_8));
-        Type intentType = (new TypeToken<Map<String, MonsterIntentGraph>>() {}).getType();
-        intents.putAll(gson.fromJson(json, intentType));
+        try {
+            String json = Gdx.files.internal("intentgraph-intents-dev.json").readString(String.valueOf(StandardCharsets.UTF_8));
+            Type intentType = (new TypeToken<Map<String, MonsterIntentGraph>>() {}).getType();
+            intents.putAll(gson.fromJson(json, intentType));
+        } catch (Exception ignored) { }
+
+        try {
+            String json = Gdx.files.internal("intentgraph-intentStrings-dev.json").readString(String.valueOf(StandardCharsets.UTF_8));
+            Type intentType = (new TypeToken<Map<String, String>>() {}).getType();
+            intentStrings.putAll(gson.fromJson(json, intentType));
+        } catch (Exception ignored) { }
+
         for (MonsterIntentGraph graph : intents.values()) {
             graph.initMonsterGraphDetail();
         }
+    }
 
-        json = Gdx.files.internal(intentStringsPath).readString(String.valueOf(StandardCharsets.UTF_8));
-        intentType = (new TypeToken<Map<String, String>>() {}).getType();
-        intentStrings.putAll(gson.fromJson(json, intentType));
+    private Map<String, String> loadIntentStringsFromModJar(URL jarURL) {
+        Gson gson = new Gson();
+        Type intentType = (new TypeToken<Map<String, String>>() {}).getType();
+
+        try {
+            URL eyeLocations = new URL("jar", "", jarURL + "!/" + intentStringsPath);
+            try (InputStream in = eyeLocations.openStream()) {
+                return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), intentType);
+            }
+        } catch (IOException ignored) {}
+        return null;
+    }
+
+    private Map<String, MonsterIntentGraph> loadIntentsFromModJar(URL jarURL) {
+        Gson gson = new Gson();
+        Type intentType = (new TypeToken<Map<String, MonsterIntentGraph>>() {}).getType();
+
+        try {
+            URL eyeLocations = new URL("jar", "", jarURL + "!/intentgraph/intents/intents.json");
+            try (InputStream in = eyeLocations.openStream()) {
+                return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), intentType);
+            }
+        } catch (IOException ignored) {}
+        return null;
     }
 
     private void renderIntentGraphForMonster(AbstractMonster monster, SpriteBatch sb) {
