@@ -5042,25 +5042,24 @@
           "x": 1.5,
           "y": 1,
           "type": "ATTACK",
-          "percentage": 25,
-          "damageIndex": 1,
-          "attackCount": 1
-        },
-        {
-          "x": 1.5,
-          "y": 2,
-          "type": "ATTACK",
-          "percentage": 25,
+          "percentage": 50,
           "damageIndex": 1,
           "attackCount": 1
         },
         {
           "x": 3,
-          "y": 2,
+          "y": 1,
           "type": "ATTACK",
+          "percentage": 50,
           "damageIndex": 0,
           "attackCount": 2,
           "attackCountString": "T"
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "type": "BUFF",
+          "percentage": 50
         },
         {
           "x": 4.5,
@@ -5073,7 +5072,13 @@
           "x": 1.5,
           "y": 0,
           "w": 1,
-          "h": 3
+          "h": 2
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "w": 1,
+          "h": 2
         }
       ],
       "arrows": [
@@ -5084,16 +5089,16 @@
           "path": [0, 2.3, 0.5, 5, 2]
         },
         {
-          "path": [0, 2.3, 1.5, 5, 2]
+          "path": [0, 2.3, 1.5, 3]
         },
         {
-          "path": [0, 2.3, 2.5, 3]
+          "path": [0, 3.8, 1.5, 5, 2]
         },
         {
-          "path": [0, 4, 2.5, 4.5]
+          "path": [0, 3.2, 2.5, 2, 2]
         },
         {
-          "path": [1, 5, 3, 3.5, 2, 3]
+          "path": [1, 5, 3, 3.5, 2, 2]
         }
       ],
       "labels": [
