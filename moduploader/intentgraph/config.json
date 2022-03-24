@@ -1,0 +1,13 @@
+{
+  "steamPublishedID": "2783861904",
+  "title": "Intent Graph",
+  "description": "Show monster intents as a state graph.\n\n[h1]Intent[/h1]\nAn icon that showing next action of the monster.\n\n[h1]Intent set[/h1]\nA group of icons wrapped in a blue rectangle that showing next possible actions of the monster.\nIn the top left corner of the icon is the possibility of that intent.\nIn the top right corner of the icon is the maximum times that the intent can be used in a row.\n\n[h1]Transfer[/h1]\n* Start from the top left intent or intent set.\n* Next turn, follow yellow arrow to next intent or intent set.\n* If condition on a red arrow is met, follow it to next intent or intent set.\n",
+  "visibility": "public",
+  "changeNote": "Initial publish.",
+  "tags": [
+    "Utility",
+    "Qol",
+    "English",
+    "Simplified Chinese"
+  ]
+}

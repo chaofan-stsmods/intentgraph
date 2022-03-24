@@ -1,0 +1,29 @@
+Show monster intents as a state graph.
+
+[h1]Intent[/h1]
+An icon that showing next action of the monster.
+
+[h1]Intent set[/h1]
+A group of icons wrapped in a blue rectangle that showing next possible actions of the monster.
+In the top left corner of the icon is the possibility of that intent.
+In the top right corner of the icon is the maximum times that the intent can be used in a row.
+
+[h1]Transfer[/h1]
+* Start from the top left intent or intent set.
+* Next turn, follow yellow arrow to next intent or intent set.
+* If condition on a red arrow is met, follow it to next intent or intent set instantly.
+
+将怪物意图显示为状态机。
+
+[h1]意图[/h1]
+显示怪物下次的行动。
+
+[h1]意图组[/h1]
+用蓝色方框框起来的一组意图，是怪物下次所有可能的行动。
+左上角是概率。
+右上角是这个意图最多能连续使用的次数。
+
+[h1]意图变化[/h1]
+* 总是从左上角的意图或意图组开始。
+* 下回合，沿黄色箭头去下个意图或意图组。
+* 如果红色箭头的条件满足，立刻去它指向的下个意图。

@@ -74,6 +74,36 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-install-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.chaofan.sts.mavenplugin</groupId>
+                <artifactId>sts-upload-workshop-plugin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>upload</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <stsInstallPath>${Steam.path}/common/SlayTheSpire</stsInstallPath>
+                    <uploadModPath>moduploader/intentgraph</uploadModPath>
+                </configuration>
+            </plugin>
         </plugins>
 
         <resources>
