@@ -5,6 +5,7 @@ import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
 import basemod.devcommands.ConsoleCommand;
 import basemod.interfaces.PostBattleSubscriber;
+import basemod.interfaces.PostDeathSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import basemod.interfaces.PostRenderSubscriber;
 import com.badlogic.gdx.Gdx;
@@ -39,7 +40,11 @@ import java.util.Map;
 import java.util.Set;
 
 @SpireInitializer
-public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubscriber, PostBattleSubscriber {
+public class IntentGraphMod implements
+        PostRenderSubscriber,
+        PostInitializeSubscriber,
+        PostBattleSubscriber,
+        PostDeathSubscriber {
 
     public static final String MOD_ID = "intentgraph";
     public static final Logger logger = LogManager.getLogger(IntentGraphMod.class.getName());
@@ -108,6 +113,15 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
 
     @Override
     public void receivePostBattle(AbstractRoom abstractRoom) {
+        unlockMonstersInCurrentCombat();
+    }
+
+    @Override
+    public void receivePostDeath() {
+        unlockMonstersInCurrentCombat();
+    }
+
+    private void unlockMonstersInCurrentCombat() {
         for (String monsterId : unlockMonsterInNextCombat) {
             setMonsterUnlocked(monsterId);
         }
