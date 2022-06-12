@@ -1,8 +1,10 @@
 package io.chaofan.sts.intentgraph;
 
 import basemod.BaseMod;
+import basemod.ModLabeledToggleButton;
 import basemod.ModPanel;
 import basemod.devcommands.ConsoleCommand;
+import basemod.interfaces.PostBattleSubscriber;
 import basemod.interfaces.PostInitializeSubscriber;
 import basemod.interfaces.PostRenderSubscriber;
 import com.badlogic.gdx.Gdx;
@@ -10,18 +12,21 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.evacipated.cardcrawl.modthespire.Loader;
 import com.evacipated.cardcrawl.modthespire.ModInfo;
+import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
-import io.chaofan.sts.intentgraph.model.*;
+import io.chaofan.sts.intentgraph.model.MonsterIntentGraph;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -29,13 +34,17 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @SpireInitializer
-public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubscriber {
+public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubscriber, PostBattleSubscriber {
 
     public static final String MOD_ID = "intentgraph";
     public static final Logger logger = LogManager.getLogger(IntentGraphMod.class.getName());
+
+    private static final String UNLOCK_ALL = "UnlockAll";
 
     public static String getImagePath(String file) {
         return MOD_ID + "/images/" + file;
@@ -46,6 +55,10 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
     }
 
     public static final int GRID_SIZE = 80;
+
+    private static SpireConfig config;
+    private static boolean unlockAll = false;
+    private static final Set<String> unlockMonsterInNextCombat = new HashSet<>();
 
     public static void initialize() {
         logger.info("Initializing IntentGraphMod");
@@ -93,8 +106,53 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
         }
     }
 
+    @Override
+    public void receivePostBattle(AbstractRoom abstractRoom) {
+        for (String monsterId : unlockMonsterInNextCombat) {
+            setMonsterUnlocked(monsterId);
+        }
+
+        trySaveConfig(config);
+        unlockMonsterInNextCombat.clear();
+    }
+
     private ModPanel initSettings() {
-        return new ModPanel();
+        if (config == null) {
+            config = tryCreateConfig();
+        }
+
+        if (config != null) {
+            unlockAll = config.has(UNLOCK_ALL) ? config.getBool(UNLOCK_ALL) : unlockAll;
+        }
+
+        ModPanel settingsPanel = new ModPanel();
+
+        Gson gson = new Gson();
+        String json = Gdx.files.internal(getLocalizationFilePath("config.json")).readString(String.valueOf(StandardCharsets.UTF_8));
+        Type configType = (new TypeToken<Map<String, String>>() {}).getType();
+        Map<String, String> configStrings = gson.fromJson(json, configType);
+
+        float yPos = 750f;
+
+        ModLabeledToggleButton unlockAllButton = new ModLabeledToggleButton(
+                configStrings.get(UNLOCK_ALL),
+                350.0f,
+                yPos,
+                Settings.CREAM_COLOR,
+                FontHelper.charDescFont,
+                unlockAll,
+                settingsPanel,
+                (label) -> {},
+                (button) -> {
+                    unlockAll = button.enabled;
+                    if (config != null) {
+                        config.setBool(UNLOCK_ALL, unlockAll);
+                        trySaveConfig(config);
+                    }
+                });
+
+        settingsPanel.addUIElement(unlockAllButton);
+        return settingsPanel;
     }
 
     public void loadIntents() {
@@ -118,16 +176,20 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
             String json = Gdx.files.internal("intentgraph-intents-dev.json").readString(String.valueOf(StandardCharsets.UTF_8));
             Type intentType = (new TypeToken<Map<String, MonsterIntentGraph>>() {}).getType();
             intents.putAll(gson.fromJson(json, intentType));
-        } catch (Exception ignored) { }
+        } catch (Exception ex) {
+            if (!ex.getMessage().contains("File not found")) {
+                logger.warn("Failed to load from intentgraph-intents-dev.json.", ex);
+            }
+        }
 
         try {
             String json = Gdx.files.internal("intentgraph-intentStrings-dev.json").readString(String.valueOf(StandardCharsets.UTF_8));
             Type intentType = (new TypeToken<Map<String, String>>() {}).getType();
             intentStrings.putAll(gson.fromJson(json, intentType));
-        } catch (Exception ignored) { }
-
-        for (MonsterIntentGraph graph : intents.values()) {
-            graph.initMonsterGraphDetail();
+        } catch (Exception ex) {
+            if (!ex.getMessage().contains("File not found")) {
+                logger.warn("Failed to load from intentgraph-intentStrings-dev.json.", ex);
+            }
         }
     }
 
@@ -140,7 +202,11 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
             try (InputStream in = eyeLocations.openStream()) {
                 return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), intentType);
             }
-        } catch (IOException ignored) {}
+        } catch (Exception ex) {
+            if (!(ex instanceof FileNotFoundException)) {
+                logger.warn("Failed to load intent strings from " + jarURL, ex);
+            }
+        }
         return null;
     }
 
@@ -153,7 +219,11 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
             try (InputStream in = eyeLocations.openStream()) {
                 return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), intentType);
             }
-        } catch (IOException ignored) {}
+        } catch (Exception ex) {
+            if (!(ex instanceof FileNotFoundException)) {
+                logger.warn("Failed to load intents from " + jarURL, ex);
+            }
+        }
         return null;
     }
 
@@ -163,7 +233,20 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
             return;
         }
 
+        if (!unlockAll && !isMonsterUnlocked(monster.id)) {
+            graph = intents.get("intentgraph:Locked");
+            unlockMonsterInNextCombat.add(monster.id);
+        }
+
         graph.render(monster, sb, overwriteAscension);
+    }
+
+    private boolean isMonsterUnlocked(String monsterId) {
+        return config.getBool("intent_unlocked_" + monsterId);
+    }
+
+    private void setMonsterUnlocked(String monsterId) {
+        config.setBool("intent_unlocked_" + monsterId, true);
     }
 
     private static String getLocalizationFilePath(String file) {
@@ -176,6 +259,24 @@ public class IntentGraphMod implements PostRenderSubscriber, PostInitializeSubsc
             return path;
         } else {
             return getLocalizationPath("eng/" + file);
+        }
+    }
+
+    private static SpireConfig tryCreateConfig() {
+        String configFileName = MOD_ID + "config";
+        try {
+            return new SpireConfig(MOD_ID, configFileName);
+        } catch (IOException e) {
+            logger.warn(e);
+            return null;
+        }
+    }
+
+    private static void trySaveConfig(SpireConfig config) {
+        try {
+            config.save();
+        } catch (IOException e) {
+            logger.warn(e);
         }
     }
 }

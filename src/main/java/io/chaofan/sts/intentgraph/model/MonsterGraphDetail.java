@@ -1,11 +1,12 @@
 package io.chaofan.sts.intentgraph.model;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import io.chaofan.sts.intentgraph.IntentGraphMod;
 
 import java.util.Arrays;
 
 public class MonsterGraphDetail {
+    private boolean initialized = false;
+
     public boolean overwrite;
     public float width;
     public float height;
@@ -62,6 +63,11 @@ public class MonsterGraphDetail {
     }
 
     public void init() {
+        if (initialized) {
+            return;
+        }
+
+        initialized = true;
         if (damages != null) {
             for (Damage damage : damages) {
                 if (damage.max < damage.min) {
