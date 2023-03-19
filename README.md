@@ -5,9 +5,9 @@
 1. Create file at `intentgraph/intents/intents.json` in your resource folder.
    Make sure it's in that path of your `.jar` file after packaging.
 2. Add your intent graph info in that file.
-3. If needed, create `intentgraph/localization/<eng or zhs>/intents.json` for localization.
+3. If needed, create `intentgraph/localization/{eng or zhs}/intents.json` for localization.
 
-## Format of intents.json
+## Format of intents/intents.json
 
 ```json5
 {
@@ -26,8 +26,8 @@
                {
                   "x": 2,
                   "y": 0,
-                  "type": "ATTACK",
-                  "damageIndex": 0,
+                  "type": "ATTACK", // Available values are in AbstractMonster.Intent
+                  "damageIndex": 0, // Index in damages array above
                   "attackCount": 1,
                   "percentage": 100,
                   "limit": 1
@@ -39,6 +39,7 @@
                }
             ],
             "iconGroups": [
+               // Wrap a set of icon into a cyan square
                {
                   "x": 0,
                   "y": 0,
@@ -50,10 +51,10 @@
                {
                   // Format [ start_direction, start_x, start_y, ... ]
                   // If start_direction is 0, it starts horizontally, 1 is vertically.
-                  // So [ 0, x_0, y_0, x_1, y_2, x_3, y_4, ... ]
-                  // y_1 = y_0, x_2 = x_1, y_3 = y_2, ...
-                  // [ 1, x_0, y_0, y_1, x_2, y_3, ... ]
-                  // x_1 = x_0, y_2 = y_1, x_3 = x_2, ...
+                  // So [ 0, x0, y0, x1, y2, x3, y4, ... ] creates arrow at
+                  // (x0, y0) -> (x1, y0) -> (x1, y2) -> (x3, y2) -> ...
+                  // [ 1, x0, y0, y1, x2, y3, ... ] creates arrow at
+                  // (x0, y0) -> (x0, y1) -> (x2, y1) -> (x2, y3) -> ...
                   "path": [ 0, 1, 0.5, 2 ]
                },
                {
@@ -67,6 +68,7 @@
                   "x": 0.5,
                   "y": 1,
                   "align": "left|right|middle", // Default is middle
+                  // If key is not found, show key directly
                   "label": "key in localization/{lang}/intents.json"
                }
             ]
@@ -85,3 +87,28 @@
    }
 }
 ```
+
+## Format of localization/{lang}/intents.json
+
+```json5
+{
+   "key used in intents/intents.json": "label value",
+   "key2 used in intents/intents.json": "label value2",
+}
+```
+
+## Debug your change
+
+It takes much time to rebuild mod and reopen game. Instead of doing that, you can
+Create a dev version of intent graph and reload it during game running.
+
+1. Open root folder of Slay the Spire game. You can see `desktop-1.0.jar` here.
+2. Create `intentgraph-intents-dev.json` here, which use same format as `intentgraph/intents/intents.json`.
+3. Create `intentgraph-intentStrings-dev.json` here, which use same format as `intentgraph/localization/<eng or zhs>/intents.json`.
+4. Run game, with intent graph mod enabled.
+5. Modify the `*-dev.json` while the game running.
+6. Return to game, use `` ` `` opening console, then use command `reloadintents [overwrite ascension level]`
+   to reload intent graph.
+   1. You can use `reloadintents -1` to reset to actual ascension level.
+7. Once debug is done, copy content of `*-dev.json` to `intents.json` file in your mod.
+8. Remove `*-dev.json`, rebuild your mod and test it.
