@@ -252,7 +252,7 @@ public class IntentGraphMod implements
             unlockMonsterInNextCombat.add(monster.id);
         }
 
-        graph.render(monster, sb, overwriteAscension);
+        graph.render(monster, sb);
     }
 
     private boolean isMonsterUnlocked(String monsterId) {

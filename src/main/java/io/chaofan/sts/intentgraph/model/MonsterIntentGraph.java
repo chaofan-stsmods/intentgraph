@@ -4,14 +4,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.Settings;
-import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
+import io.chaofan.sts.intentgraph.GraphLibrary;
 import io.chaofan.sts.intentgraph.IntentGraphMod;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class MonsterIntentGraph {
 
@@ -26,12 +25,12 @@ public class MonsterIntentGraph {
     private static final TextureRegion BOX_BR = new TextureRegion(ImageMaster.KEYWORD_BOT, 288, 0, 32, 32);
 
     private boolean initialized = false;
-    private final Map<Integer, Integer> lastAvailableAscensions = new HashMap<>();
+    private GraphLibrary graphLibrary;
 
     public float width;
     public float height;
-    public boolean isCommonGraph;
     public Map<Integer, MonsterGraphDetail> graphs = new HashMap<>();
+    public List<MonsterGraphDetail> graphList = new ArrayList<>();
     public MonsterGraphDetail a0;
     public MonsterGraphDetail a1;
     public MonsterGraphDetail a2;
@@ -51,20 +50,12 @@ public class MonsterIntentGraph {
             if (a2 != null) {
                 graphs.put(17, a2);
             }
-            if (!isCommonGraph) {
-                lastAvailableAscensions.put(2, 2);
-                lastAvailableAscensions.put(17, 17);
-            }
         } else if (type == AbstractMonster.EnemyType.ELITE) {
             if (a1 != null) {
                 graphs.put(3, a1);
             }
             if (a2 != null) {
                 graphs.put(18, a2);
-            }
-            if (!isCommonGraph) {
-                lastAvailableAscensions.put(3, 3);
-                lastAvailableAscensions.put(18, 18);
             }
         } else if (type == AbstractMonster.EnemyType.BOSS) {
             if (a1 != null) {
@@ -73,50 +64,37 @@ public class MonsterIntentGraph {
             if (a2 != null) {
                 graphs.put(19, a2);
             }
-            if (!isCommonGraph) {
-                lastAvailableAscensions.put(4, 4);
-                lastAvailableAscensions.put(19, 19);
-            }
         }
 
-        a0 = graphs.get(0);
-        if (a0 == null) {
-            throw new RuntimeException("intent graph of " + monster.id + " is not present for ascension 0.");
-        }
-        MonsterGraphDetail last = a0;
-        int lastAvailableAscension = 0;
-        lastAvailableAscensions.put(0, 0);
-        for (int i = 1; i <= 20; i++) {
-            MonsterGraphDetail detail = graphs.get(i);
-            MonsterGraphDetail next = last.copyAndApply(detail);
-            graphs.put(i, next);
-            if (next != last) {
-                lastAvailableAscension = i;
-            }
-            if (!lastAvailableAscensions.containsKey(i)) {
-                lastAvailableAscensions.put(i, lastAvailableAscension);
-            } else {
-                lastAvailableAscension = i;
-            }
-            last = next;
-        }
-
+        Collections.reverse(graphList);
+        int last = -1;
+        int insertLocation = graphList.size();
         for (int i = 0; i <= 20; i++) {
-            graphs.get(i).init();
+            MonsterGraphDetail detail = graphs.get(i);
+            if (detail != null) {
+                if (detail.extend == null && !detail.overwrite && last >= 0) {
+                    detail.extend = String.valueOf(last);
+                }
+                detail.ascensionLevel = i;
+                detail.id = String.valueOf(i);
+                detail.condition = i == 0 ? "true" : "ascension >= " + i;
+                last = i;
+                graphList.add(insertLocation, detail);
+            }
         }
+
+        graphLibrary = new GraphLibrary(graphList);
     }
 
-    public void render(AbstractMonster monster, SpriteBatch sb, int overwriteAscension) {
+    public void render(AbstractMonster monster, SpriteBatch sb) {
         if (!initialized) {
             initMonsterGraphDetail(monster);
         }
 
-        int ascensionLevel = overwriteAscension >= 0 ? overwriteAscension : AbstractDungeon.ascensionLevel;
-        Integer renderAscensionLevel = lastAvailableAscensions.get(ascensionLevel);
-        if (renderAscensionLevel == null) {
-            renderAscensionLevel = ascensionLevel >= 20 ? 20 : 0;
+        MonsterGraphDetail graphDetail = graphLibrary.get(monster);
+        if (graphDetail == null) {
+            return;
         }
-        MonsterGraphDetail graphDetail = graphs.get(renderAscensionLevel);
 
         float scale = Settings.scale;
         float scale32 = 32 * scale;
@@ -129,6 +107,7 @@ public class MonsterIntentGraph {
         renderBox(Color.WHITE, x, y, width * IntentGraphMod.GRID_SIZE * scale, (height * IntentGraphMod.GRID_SIZE + 32) * scale, sb);
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.tipHeaderFont, monster.name, x + 20 * scale, y - 20 * scale, Color.WHITE);
 
+        int renderAscensionLevel = graphDetail.ascensionLevel;
         if (renderAscensionLevel > 0) {
             this.renderAscensionLevel(renderAscensionLevel, x + scale32 + (width * IntentGraphMod.GRID_SIZE + 12) * scale, y - 20 * scale, sb);
         }

@@ -83,12 +83,10 @@
       "icons": [
         null,
         {
-          "name": "debuff",
           "x": 1,
           "y": 0,
           "type": "DEBUFF",
-          "damageIndex": 0,
-          "percentage": 75,
+          "percentage": 25,
           "limit": 1
         }
       ]
@@ -150,12 +148,10 @@
       "icons": [
         null,
         {
-          "name": "debuff",
           "x": 1,
           "y": 0,
-          "type": "DEBUFF",
-          "damageIndex": 0,
-          "percentage": 75,
+          "type": "BUFF",
+          "percentage": 25,
           "limit": 1
         }
       ]
@@ -1208,159 +1204,288 @@
   "JawWorm": {
     "width": 4,
     "height": 2.5,
-    "a0": {
-      "damages": [
-        {
-          "min": 11
-        },
-        {
-          "min": 7
-        }
-      ],
-      "icons": [
-        {
-          "x": 0,
-          "y": 0,
-          "type": "ATTACK",
-          "damageIndex": 0,
-          "attackCount": 1
-        },
-        {
-          "x": 2,
-          "y": 0,
-          "type": "ATTACK",
-          "damageIndex": 0,
-          "percentage": 25,
-          "attackCount": 1,
-          "limit": 1
-        },
-        {
-          "x": 2,
-          "y": 1,
-          "type": "ATTACK_DEFEND",
-          "damageIndex": 1,
-          "percentage": 30,
-          "attackCount": 1,
-          "limit": 2
-        },
-        {
-          "x": 3,
-          "y": 0.5,
-          "type": "DEFEND_BUFF",
-          "percentage": 45,
-          "limit": 1
-        }
-      ],
-      "iconGroups": [
-        {
-          "x": 2,
-          "y": 0,
-          "w": 2,
-          "h": 2
-        }
-      ],
-      "arrows": [
-        {
-          "path": [ 0, 1, 0.5, 2 ]
-        },
-        {
-          "path": [ 1, 2.5, 2, 2.5, 3.5, 2 ]
-        }
-      ]
-    },
-    "a1": {
-      "damages": [
-        {
-          "min": 12
-        }
-      ]
-    }
+    "graphList": [
+      {
+        "id": "a0",
+        "damages": [
+          {
+            "min": 11
+          },
+          {
+            "min": 7
+          }
+        ],
+        "icons": [
+          {
+            "x": 0,
+            "y": 0,
+            "type": "ATTACK",
+            "damageIndex": 0,
+            "attackCount": 1
+          },
+          {
+            "x": 2,
+            "y": 0,
+            "type": "ATTACK",
+            "damageIndex": 0,
+            "percentage": 25,
+            "attackCount": 1,
+            "limit": 1
+          },
+          {
+            "x": 2,
+            "y": 1,
+            "type": "ATTACK_DEFEND",
+            "damageIndex": 1,
+            "percentage": 30,
+            "attackCount": 1,
+            "limit": 2
+          },
+          {
+            "x": 3,
+            "y": 0.5,
+            "type": "DEFEND_BUFF",
+            "percentage": 45,
+            "limit": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 2,
+            "y": 0,
+            "w": 2,
+            "h": 2
+          }
+        ],
+        "arrows": [
+          {
+            "path": [ 0, 1, 0.5, 2 ]
+          },
+          {
+            "path": [ 1, 2.5, 2, 2.5, 3.5, 2 ]
+          }
+        ]
+      },
+      {
+        "condition": "ascension>=2",
+        "extend": "a0",
+        "ascensionLevel": 2,
+        "damages": [
+          {
+            "min": 12
+          }
+        ]
+      },
+      {
+        "id": "act3a0",
+        "condition": "m.hardMode",
+        "width": 2,
+        "height": 2.5,
+        "damages": [
+          {
+            "min": 11
+          },
+          {
+            "min": 7
+          }
+        ],
+        "icons": [
+          {
+            "x": 0,
+            "y": 0,
+            "type": "ATTACK",
+            "damageIndex": 0,
+            "percentage": 25,
+            "attackCount": 1,
+            "limit": 1
+          },
+          {
+            "x": 0,
+            "y": 1,
+            "type": "ATTACK_DEFEND",
+            "damageIndex": 1,
+            "percentage": 30,
+            "attackCount": 1,
+            "limit": 2
+          },
+          {
+            "x": 1,
+            "y": 0.5,
+            "type": "DEFEND_BUFF",
+            "percentage": 45,
+            "limit": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 0,
+            "y": 0,
+            "w": 2,
+            "h": 2
+          }
+        ],
+        "arrows": [
+          {
+            "path": [ 1, 0.5, 2, 2.5, 1.5, 2 ]
+          }
+        ]
+      },
+      {
+        "condition": "m.hardMode && ascension>=2",
+        "extend": "act3a0",
+        "ascensionLevel": 2,
+        "damages": [
+          {
+            "min": 12
+          }
+        ]
+      }
+    ]
   },
   "Lagavulin": {
     "width": 4,
     "height": 3,
-    "a0": {
-      "damages": [
-        {
-          "min": 18
-        }
-      ],
-      "icons": [
-        {
-          "x": 0,
-          "y": 0,
-          "type": "SLEEP"
-        },
-        {
-          "x": 3,
-          "y": 0,
-          "type": "STUN"
-        },
-        {
-          "x": 0,
-          "y": 1.5,
-          "type": "STRONG_DEBUFF"
-        },
-        {
-          "x": 1.5,
-          "y": 1.5,
-          "type": "ATTACK",
-          "damageIndex": 0,
-          "attackCount": 1
-        },
-        {
-          "x": 3,
-          "y": 1.5,
-          "type": "ATTACK",
-          "damageIndex": 0,
-          "attackCount": 1
-        }
-      ],
-      "arrows": [
-        {
-          "path": [ 0, 1, 0.3, 3 ],
-          "instant": true
-        },
-        {
-          "path": [ 1, 0.3, 1, 1.3, 0.7, 1 ]
-        },
-        {
-          "path": [ 0, 1, 0.7, 1.8, 1.5 ]
-        },
-        {
-          "path": [ 0, 3, 0.7, 2.2, 1.5 ]
-        },
-        {
-          "path": [ 0, 1, 2, 1.5 ]
-        },
-        {
-          "path": [ 0, 2.5, 2, 3 ]
-        },
-        {
-          "path": [ 1, 3.5, 2.5, 3, 0.5, 2.5 ]
-        }
-      ],
-      "labels": [
-        {
-          "x": 2,
-          "y": 0.1,
-          "label": "Take Damage"
-        },
-        {
-          "x": 1.7,
-          "y": 0.85,
-          "label": "Turn 4",
-          "align": "right"
-        }
-      ]
-    },
-    "a1": {
-      "damages": [
-        {
-          "min": 20
-        }
-      ]
-    }
+    "graphList": [
+      {
+        "id": "a0",
+        "damages": [
+          {
+            "min": 18
+          }
+        ],
+        "icons": [
+          {
+            "x": 0,
+            "y": 0,
+            "type": "SLEEP"
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "type": "STUN"
+          },
+          {
+            "x": 0,
+            "y": 1.5,
+            "type": "STRONG_DEBUFF"
+          },
+          {
+            "x": 1.5,
+            "y": 1.5,
+            "type": "ATTACK",
+            "damageIndex": 0,
+            "attackCount": 1
+          },
+          {
+            "x": 3,
+            "y": 1.5,
+            "type": "ATTACK",
+            "damageIndex": 0,
+            "attackCount": 1
+          }
+        ],
+        "arrows": [
+          {
+            "path": [ 0, 1, 0.3, 3 ],
+            "instant": true
+          },
+          {
+            "path": [ 1, 0.3, 1, 1.3, 0.7, 1 ]
+          },
+          {
+            "path": [ 0, 1, 0.7, 1.8, 1.5 ]
+          },
+          {
+            "path": [ 0, 3, 0.7, 2.2, 1.5 ]
+          },
+          {
+            "path": [ 0, 1, 2, 1.5 ]
+          },
+          {
+            "path": [ 0, 2.5, 2, 3 ]
+          },
+          {
+            "path": [ 1, 3.5, 2.5, 3, 0.5, 2.5 ]
+          }
+        ],
+        "labels": [
+          {
+            "x": 2,
+            "y": 0.1,
+            "label": "Take Damage"
+          },
+          {
+            "x": 1.7,
+            "y": 0.85,
+            "label": "Turn 4",
+            "align": "right"
+          }
+        ]
+      },
+      {
+        "extend": "a0",
+        "condition": "ascension>=3",
+        "ascensionLevel": 3,
+        "damages": [
+          {
+            "min": 20
+          }
+        ]
+      },
+      {
+        "width": 4,
+        "height": 1.5,
+        "id": "eventa0",
+        "condition": "!m.asleep",
+        "damages": [
+          {
+            "min": 18
+          }
+        ],
+        "icons": [
+          {
+            "x": 0,
+            "y": 0,
+            "type": "STRONG_DEBUFF"
+          },
+          {
+            "x": 1.5,
+            "y": 0,
+            "type": "ATTACK",
+            "damageIndex": 0,
+            "attackCount": 1
+          },
+          {
+            "x": 3,
+            "y": 0,
+            "type": "ATTACK",
+            "damageIndex": 0,
+            "attackCount": 1
+          }
+        ],
+        "arrows": [
+          {
+            "path": [ 0, 1, 0.5, 1.5 ]
+          },
+          {
+            "path": [ 0, 2.5, 0.5, 3 ]
+          },
+          {
+            "path": [ 1, 3.5, 1, 1.5, 0.5, 1 ]
+          }
+        ]
+      },
+      {
+        "extend": "eventa0",
+        "condition": "ascension>=3 && !m.asleep",
+        "ascensionLevel": 3,
+        "damages": [
+          {
+            "min": 20
+          }
+        ]
+      }
+    ]
   },
   "Looter": {
     "width": 5.5,

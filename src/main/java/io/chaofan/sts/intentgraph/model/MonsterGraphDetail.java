@@ -7,7 +7,13 @@ import java.util.Arrays;
 public class MonsterGraphDetail {
     private boolean initialized = false;
 
+    private static int nextId = 0;
+
+    public String id = "default" + (++nextId);
+    public String condition = "true";
+    public String extend;
     public boolean overwrite;
+    public int ascensionLevel;
     public float width;
     public float height;
     public Damage[] damages;
@@ -26,7 +32,11 @@ public class MonsterGraphDetail {
         }
 
         MonsterGraphDetail detail = new MonsterGraphDetail();
+        detail.id = another.id;
+        detail.condition = another.condition;
+        detail.extend = null;
         detail.overwrite = this.overwrite;
+        detail.ascensionLevel = another.ascensionLevel;
         detail.damages = this.damages == null ? null : this.damages.clone();
         detail.icons = this.icons == null ? null : this.icons.clone();
         detail.iconGroups = this.iconGroups == null ? null : this.iconGroups.clone();
@@ -38,8 +48,8 @@ public class MonsterGraphDetail {
         detail.iconGroups = apply(detail.iconGroups, another.iconGroups);
         detail.arrows = apply(detail.arrows, another.arrows);
         detail.labels = apply(detail.labels, another.labels);
-        detail.height = another.height != 0 ? another.height : detail.height;
-        detail.width = another.width != 0 ? another.width : detail.width;
+        detail.height = another.height != 0 ? another.height : this.height;
+        detail.width = another.width != 0 ? another.width : this.width;
 
         return detail;
     }
