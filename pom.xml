@@ -82,6 +82,27 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.5.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.antlr.v4.runtime</pattern>
+                                    <shadedPattern>io.chaofan.lib.org.antlr.v4.runtime</shadedPattern>
+                                </relocation>
+                            </relocations>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.8</version>
                 <executions>
@@ -89,7 +110,7 @@
                         <phase>package</phase>
                         <configuration>
                             <target>
-                                <copy file="target/${project.artifactId}-jar-with-dependencies.jar"
+                                <copy file="target/${project.artifactId}.jar"
                                       tofile="${Steam.path}/common/SlayTheSpire/mods/${project.artifactId}.jar"/>
                             </target>
                         </configuration>
@@ -139,7 +160,7 @@
                 <configuration>
                     <stsInstallPath>${Steam.path}/common/SlayTheSpire</stsInstallPath>
                     <uploadModPath>moduploader/intentgraph</uploadModPath>
-                    <targetJarPath>target/${project.artifactId}-jar-with-dependencies.jar</targetJarPath>
+                    <targetJarPath>target/${project.artifactId}.jar</targetJarPath>
                 </configuration>
             </plugin>
         </plugins>
