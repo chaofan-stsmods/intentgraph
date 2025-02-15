@@ -2,6 +2,7 @@ package io.chaofan.sts.intentgraph.model.editor;
 
 import io.chaofan.sts.intentgraph.GraphLibrary;
 import io.chaofan.sts.intentgraph.model.*;
+import io.chaofan.sts.intentgraph.ui.LabelPropertiesControl;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -53,14 +54,24 @@ public class EditableMonsterIntentGraph {
     }
 
     public Map<String, String> getLocalizedStrings() {
-        Map<String, String> localizedStrings = new HashMap<>();
-        for (EditableMonsterGraphDetail detail : graphs.values()) {
-            for (EditableLabel label : detail.labels) {
-                localizedStrings.put(label.label, label.getLocalizedString(label.label));
+        boolean oldShowLocalizedText = LabelPropertiesControl.showLocalizedText;
+        LabelPropertiesControl.showLocalizedText = true;
+        try {
+            Map<String, String> localizedStrings = new HashMap<>();
+            for (EditableMonsterGraphDetail detail : graphs.values()) {
+                for (EditableLabel label : detail.labels) {
+                    String labelKey = label.label;
+                    String labelValue = label.getLocalizedString(labelKey);
+                    if (labelKey != null && !labelKey.equals(labelValue)) {
+                        localizedStrings.put(labelKey, labelValue);
+                    }
+                }
             }
+            return localizedStrings;
         }
-        localizedStrings.entrySet().removeIf(entry -> entry.getKey().equals(entry.getValue()));
-        return localizedStrings;
+        finally {
+            LabelPropertiesControl.showLocalizedText = oldShowLocalizedText;
+        }
     }
 
     private MonsterGraphDetail saveDetail(EditableMonsterGraphDetail editableDetail) {

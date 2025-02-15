@@ -69,13 +69,11 @@ public class EditorCanvas {
         this.hoveredItem = null;
         Toolbox.Tool tool = toolbox.getSelectedTool();
         if (tool != lastTool) {
-            this.selectedItems.clear();
-            this.selectedItemsChanged = true;
+            this.setSingleSelectedItem(null);
             lastTool = tool;
         }
         if (InputHelper.justClickedRight && mouseInCanvas()) {
-            this.selectedItems.clear();
-            this.selectedItemsChanged = true;
+            this.setSingleSelectedItem(null);
         }
         if (this.graphDetail != null) {
             switch (tool) {
@@ -341,7 +339,9 @@ public class EditorCanvas {
 
     private void setSingleSelectedItem(EditableItem item) {
         this.selectedItems.clear();
-        this.selectedItems.add(item);
+        if (item != null) {
+            this.selectedItems.add(item);
+        }
         this.selectedItemsChanged = true;
     }
 
@@ -361,9 +361,7 @@ public class EditorCanvas {
                         }
                     }
                 });
-        this.hoveredItem = item;
-        this.selectedItems.clear();
-        this.selectedItemsChanged = true;
+        this.setSingleSelectedItem(item);
     }
 
     private void updateDeleteTool() {
