@@ -29,6 +29,7 @@ public class EditableIcon extends Icon implements EditableItem {
         this.damageIndex = icon.damageIndex;
         this.percentage = icon.percentage;
         this.limit = icon.limit;
+        this.limitType = icon.limitType;
         this.attackCount = icon.attackCount;
         this.attackCountString = icon.attackCountString;
         this.renderX = renderX;
@@ -80,6 +81,7 @@ public class EditableIcon extends Icon implements EditableItem {
         icon.damageIndex = damageIndex;
         icon.percentage = percentage;
         icon.limit = limit;
+        icon.limitType = limitType;
         icon.attackCount = attackCount;
         icon.attackCountString = attackCountString;
         return icon;

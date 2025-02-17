@@ -12,6 +12,7 @@ import io.chaofan.sts.intentgraph.model.editor.EditableIcon;
 import io.chaofan.sts.intentgraph.model.editor.EditableMonsterGraphDetail;
 import io.chaofan.sts.intentgraph.model.editor.UndoRedoHelper;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
     private final TextField iconY;
     private final TextField percentage;
     private final TextField limit;
+    private final ComboBox limitType;
     private final TextField attackCount;
     private final TextField attackCountString;
     private final ComboBox damage;
@@ -42,7 +44,8 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
         this.iconX = new TextField("X", x, top - TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
         this.iconY = new TextField("Y", x, top - 2 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
         this.percentage = new TextField(TEXT[2], x, top - 3 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
-        this.limit = new TextField(TEXT[3], x, top - 4 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
+        this.limit = new TextField(TEXT[3], x, top - 4 * TEXT_FIELD_HEIGHT, 350 * Settings.scale, 100 * Settings.scale);
+        this.limitType = new ComboBox("", x, top - 4 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 145 * Settings.scale);
         this.attackCount = new TextField(TEXT[4], x, top - 5 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
         this.attackCountString = new TextField(TEXT[5], x, top - 6 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
         this.damage = new ComboBox(TEXT[6], x, top - 7 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale - 2 * TEXT_FIELD_HEIGHT);
@@ -52,10 +55,13 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
         this.addDamage = new Button(EditIntentGraphScreen.getButtonImage(9), x + 450 * Settings.scale - 2 * TEXT_FIELD_HEIGHT, top - 7 * TEXT_FIELD_HEIGHT, TEXT_FIELD_HEIGHT, TEXT_FIELD_HEIGHT);
         this.removeDamage = new Button(EditIntentGraphScreen.getButtonImage(2), x + 450 * Settings.scale - TEXT_FIELD_HEIGHT, top - 7 * TEXT_FIELD_HEIGHT, TEXT_FIELD_HEIGHT, TEXT_FIELD_HEIGHT);
 
+        this.limitType.setOptions(Arrays.asList(TEXT[22], TEXT[23]));
+
         this.iconX.setOnChange(changeFloatListener(() -> icon, (i) -> i.x, (i, value) -> i.x = value));
         this.iconY.setOnChange(changeFloatListener(() -> icon, (i) -> i.y, (i, value) -> i.y = value));
         this.percentage.setOnChange(changeIntListener(() -> icon, (i) -> i.percentage, (i, value) -> i.percentage = value));
         this.limit.setOnChange(changeIntListener(() -> icon, (i) -> i.limit, (i, value) -> i.limit = value));
+        this.limitType.setOnChange(this::onChangeLimitType);
         this.attackCount.setOnChange(changeIntListener(() -> icon, (i) -> i.attackCount, (i, value) -> i.attackCount = value));
         this.attackCountString.setOnChange(changeStringListener(() -> icon, (i) -> i.attackCountString, (i, value) -> i.attackCountString = value.isEmpty() ? null : value));
         this.damage.setOnChange(this::onChangeDamage);
@@ -98,6 +104,7 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
         this.iconY.setText(String.valueOf(icon.y));
         this.percentage.setText(String.valueOf(icon.percentage));
         this.limit.setText(String.valueOf(icon.limit));
+        this.limitType.setSelection(icon.limitType == null ? 0 : icon.limitType.ordinal());
         this.attackCount.setText(String.valueOf(icon.attackCount));
         this.attackCountString.setText(icon.attackCountString != null ? icon.attackCountString : "");
         this.updateDamageIfCurrentIconIs(icon);
@@ -108,6 +115,7 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
         iconY.update();
         percentage.update();
         limit.update();
+        limitType.update();
         if (icon.isAttack()) {
             attackCount.update();
             attackCountString.update();
@@ -128,6 +136,7 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
         iconY.render(sb);
         percentage.render(sb);
         limit.render(sb);
+        limitType.render(sb);
         if (icon.isAttack()) {
             attackCount.render(sb);
             attackCountString.render(sb);
@@ -153,6 +162,24 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
     @Override
     public Damage getDamage(int index) {
         return this.renderingDamage;
+    }
+
+    private void onChangeLimitType(ComboBox comboBox) {
+        EditableIcon target = icon;
+        Icon.LimitType oldType = target.limitType;
+        int selection = comboBox.getSelection();
+        Icon.LimitType newType = selection == 0 ? null : Icon.LimitType.values()[selection];
+        undoRedoHelper.runAndPush(() -> {
+            target.limitType = newType;
+            if (icon == target) {
+                comboBox.setSelection(selection);
+            }
+        }, () -> {
+            target.limitType = oldType;
+            if (icon == target) {
+                comboBox.setSelection(oldType == null ? 0 : oldType.ordinal());
+            }
+        });
     }
 
     private void updateDamageList() {

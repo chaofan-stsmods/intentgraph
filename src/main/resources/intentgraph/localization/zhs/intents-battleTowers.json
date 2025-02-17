@@ -1,0 +1,22 @@
+{
+  "Turn 2": "第2回合",
+  "or alone": "或者落单",
+  "If you don\u0027t have Onus, the following intents will be replaced:": "如果你没有职权，以下意图会被替换：",
+  "can\u0027t be used in 2 turns after it\u0027s used": "在使用后2回合内不能再使用",
+  "Used both intents": "使用过所有意图",
+  "One of:": "以下之一：",
+  "Turn 5, 9, ...": "回合数为5, 9, ...",
+  "Turn 4": "第4回合",
+  "Block less than 30": "格挡小于30",
+  "Alone": "落单",
+  "Lose all block": "失去所有格挡",
+  "or after several turns": "或者经过几回合",
+  "If an enemy lost 10 HP,": "如果有敌人已失去10生命,",
+  "If no minion": "如果没有爪牙",
+  "can only be used if lost \u003e\u003d 10 HP": "只有在已失去10生命后才能使用",
+  "can only be used if lost \u003e\u003d 13 HP": "只有在已失去13生命后才能使用",
+  "The 1st:": "第1个：",
+  "N\u003d2*(Times Summon is used)": "N\u003d2*召唤使用次数",
+  "If an enemy lost 11 HP,": "如果有敌人已失去11生命,",
+  "can only be used 3 times": "只能使用3次"
+}

@@ -96,7 +96,6 @@ public class IntentGraphMod implements
         iconRenderers.remove(iconRenderer);
     }
 
-    private String intentStringsPath;
     public final Map<String, String> intentStrings = new HashMap<>();
     private final Map<String, MonsterIntentGraph> intents = new HashMap<>();
 
@@ -105,7 +104,6 @@ public class IntentGraphMod implements
 
     @Override
     public void receivePostInitialize() {
-        this.intentStringsPath = getLocalizationFilePath("intents.json");
         ModPanel settingsPanel = initSettings();
 
         Texture badgeTexture = ImageMaster.loadImage(MOD_ID + "/images/badge.png");
@@ -267,6 +265,9 @@ public class IntentGraphMod implements
         intentStrings.clear();
         intents.clear();
 
+        ModInfo intentGraph = Arrays.stream(Loader.MODINFOS).filter(m -> m.ID.equals(MOD_ID)).findFirst().orElse(null);
+        loadAdditionalIntents(intentGraph);
+
         for (ModInfo modinfo : Loader.MODINFOS) {
             Map<String, MonsterIntentGraph> intentsFromModJar = loadIntentsFromModJar(modinfo.jarURL);
             if (intentsFromModJar != null) {
@@ -301,12 +302,31 @@ public class IntentGraphMod implements
         }
     }
 
+    private void loadAdditionalIntents(ModInfo intentGraph) {
+        String[] files = { "intents-battleTowers" };
+        for (String file : files) {
+            Map<String, MonsterIntentGraph> intentsFromModJar = loadIntentsFromModJar(intentGraph.jarURL, file);
+            if (intentsFromModJar != null) {
+                intents.putAll(intentsFromModJar);
+            }
+
+            Map<String, String> stringsFromModJar = loadIntentStringsFromModJar(intentGraph.jarURL, file);
+            if (stringsFromModJar != null) {
+                intentStrings.putAll(stringsFromModJar);
+            }
+        }
+    }
+
     private Map<String, String> loadIntentStringsFromModJar(URL jarURL) {
+        return loadIntentStringsFromModJar(jarURL, "intents");
+    }
+
+    private Map<String, String> loadIntentStringsFromModJar(URL jarURL, String filename) {
         Gson gson = new Gson();
         Type intentType = (new TypeToken<Map<String, String>>() {}).getType();
 
         try {
-            URL eyeLocations = new URL("jar", "", jarURL + "!/" + intentStringsPath);
+            URL eyeLocations = new URL("jar", "", jarURL + "!/" + getLocalizationFilePath(filename + ".json"));
             try (InputStream in = eyeLocations.openStream()) {
                 return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), intentType);
             }
@@ -319,11 +339,15 @@ public class IntentGraphMod implements
     }
 
     private Map<String, MonsterIntentGraph> loadIntentsFromModJar(URL jarURL) {
+        return loadIntentsFromModJar(jarURL, "intents");
+    }
+
+    private Map<String, MonsterIntentGraph> loadIntentsFromModJar(URL jarURL, String filename) {
         Gson gson = new Gson();
         Type intentType = (new TypeToken<Map<String, MonsterIntentGraph>>() {}).getType();
 
         try {
-            URL eyeLocations = new URL("jar", "", jarURL + "!/intentgraph/intents/intents.json");
+            URL eyeLocations = new URL("jar", "", jarURL + "!/intentgraph/intents/" + filename + ".json");
             try (InputStream in = eyeLocations.openStream()) {
                 return gson.fromJson(new InputStreamReader(in, StandardCharsets.UTF_8), intentType);
             }

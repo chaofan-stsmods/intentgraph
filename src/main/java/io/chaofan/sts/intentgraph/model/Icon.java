@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
@@ -12,12 +13,16 @@ import io.chaofan.sts.intentgraph.IntentGraphMod;
 import io.chaofan.sts.intentgraph.utils.IconRenderer;
 
 public class Icon {
+    private static final Texture ICONS = ImageMaster.loadImage(IntentGraphMod.getImagePath("ui/icon.png"));
+    private static final TextureRegion TIME_ICON = new TextureRegion(ICONS, 0, 0, 18, 20);
+
     public float x;
     public float y;
     public AbstractMonster.Intent type;
     public int damageIndex;
     public int percentage;
     public int limit;
+    public LimitType limitType;
     public int attackCount;
     public String attackCountString;
 
@@ -47,8 +52,13 @@ public class Icon {
         }
 
         if (limit >= 1) {
-            FontHelper.renderFontLeftTopAligned(sb, font, "-", iconX + 45 * scale, iconY + 55 * scale, Color.WHITE);
-            FontHelper.renderFontLeftTopAligned(sb, font, "<" + limit, iconX + 45 * scale, iconY + 62 * scale, Color.WHITE);
+            if (limitType == LimitType.COOLDOWN) {
+                sb.draw(TIME_ICON, iconX + 42 * scale, iconY + 44 * scale, TIME_ICON.getRegionWidth() * scale, TIME_ICON.getRegionHeight() * scale);
+                FontHelper.renderFontLeftTopAligned(sb, font, String.valueOf(limit), iconX + 57 * scale, iconY + 62 * scale, Color.WHITE);
+            } else {
+                FontHelper.renderFontLeftTopAligned(sb, font, "-", iconX + 45 * scale, iconY + 55 * scale, Color.WHITE);
+                FontHelper.renderFontLeftTopAligned(sb, font, "<" + limit, iconX + 45 * scale, iconY + 62 * scale, Color.WHITE);
+            }
         }
 
         font.getData().setScale(1);
@@ -145,5 +155,10 @@ public class Icon {
         } else {
             return ImageMaster.INTENT_ATK_TIP_7;
         }
+    }
+
+    public enum LimitType {
+        MAX,
+        COOLDOWN,
     }
 }

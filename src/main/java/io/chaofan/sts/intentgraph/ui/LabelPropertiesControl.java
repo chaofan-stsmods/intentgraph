@@ -62,7 +62,7 @@ public class LabelPropertiesControl extends PropertiesControl {
         int index = ALIGN.indexOf(label.align);
         this.align.setSelection(index == -1 ? 1 : index);
         this.text.setText(label.label);
-        this.localizedText.setText(label.getLocalizedString(label.label));
+        this.localizedText.setText(label.localizedText == null ? label.getLocalizedString(label.label) : label.localizedText);
     }
 
     public void update() {

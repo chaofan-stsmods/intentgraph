@@ -52,7 +52,9 @@
       "Point %d",
       "Left",
       "Middle",
-      "Right"
+      "Right",
+      "Max",
+      "Cooldown"
     ]
   }
 }
