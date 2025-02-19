@@ -23,6 +23,7 @@ import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.localization.UIStrings;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
+import io.chaofan.sts.intentgraph.crossovers.BattleTowers;
 import io.chaofan.sts.intentgraph.model.MonsterIntentGraph;
 import io.chaofan.sts.intentgraph.ui.EditIntentGraphScreen;
 import io.chaofan.sts.intentgraph.utils.IconRenderer;
@@ -79,6 +80,7 @@ public class IntentGraphMod implements
     private static final Set<String> unlockMonsterInNextCombat = new HashSet<>();
 
     public static List<IconRenderer> iconRenderers = new ArrayList<>();
+    public static String visibleGraphMonsterId = null;
 
     public static void initialize() {
         logger.info("Initializing IntentGraphMod");
@@ -116,6 +118,10 @@ public class IntentGraphMod implements
 
         ConsoleCommand.addCommand("reloadintents", ReloadIntentsCommand.class);
         ConsoleCommand.addCommand("editintent", EditIntentCommand.class);
+
+        if (Loader.isModLoaded("BattleTowers")) {
+            registerIconRenderer(BattleTowers::renderIcon);
+        }
     }
 
     @Override
@@ -139,7 +145,9 @@ public class IntentGraphMod implements
 
         for (AbstractMonster monster : room.monsters.monsters) {
             if (monster.hb.hovered && !monster.isDeadOrEscaped()) {
+                visibleGraphMonsterId = monster.id;
                 renderIntentGraphForMonster(monster, spriteBatch);
+                visibleGraphMonsterId = null;
                 break;
             }
         }

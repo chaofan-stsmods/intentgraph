@@ -132,6 +132,12 @@ public class EditorControl {
     }
 
     public int getAscension() {
+        if (ascension < 0) {
+            return 0;
+        }
+        if (ascension > 20) {
+            return 20;
+        }
         return ascension;
     }
 }

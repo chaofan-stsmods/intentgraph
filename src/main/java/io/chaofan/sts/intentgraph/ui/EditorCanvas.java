@@ -30,6 +30,7 @@ public class EditorCanvas {
     private final float width;
     private final Toolbox toolbox;
     private final UndoRedoHelper undoHelper;
+    private String monsterId;
     private EditableMonsterGraphDetail graphDetail;
 
     private EditableItem hoveredItem;
@@ -53,7 +54,8 @@ public class EditorCanvas {
         this.undoHelper = undoHelper;
     }
 
-    public void setGraphDetail(EditableMonsterGraphDetail graphDetail) {
+    public void setGraphDetail(String monsterId, EditableMonsterGraphDetail graphDetail) {
+        this.monsterId = monsterId;
         if (this.graphDetail != graphDetail) {
             this.graphDetail = graphDetail;
             this.hoveredItem = null;
@@ -118,7 +120,9 @@ public class EditorCanvas {
         } while (vLineFloat < vLineEnd);
 
         if (this.graphDetail != null) {
+            IntentGraphMod.visibleGraphMonsterId = this.monsterId;
             this.graphDetail.render(sb);
+            IntentGraphMod.visibleGraphMonsterId = null;
         }
 
         int mouseX = InputHelper.mX;

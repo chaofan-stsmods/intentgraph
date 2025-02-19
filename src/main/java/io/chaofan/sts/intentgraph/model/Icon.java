@@ -34,6 +34,7 @@ public class Icon {
         float iconY = y - (this.y + 1) * scale * IntentGraphMod.GRID_SIZE + 8 * scale;
         boolean isAttack = renderIconImage(damageProvider, sb, this, iconX, iconY);
 
+        sb.setColor(Color.WHITE);
         BitmapFont font = FontHelper.cardEnergyFont_L;
         font.getData().setScale(0.5f);
 

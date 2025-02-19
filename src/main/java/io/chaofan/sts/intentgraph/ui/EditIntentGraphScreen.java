@@ -228,7 +228,7 @@ public class EditIntentGraphScreen extends CustomScreen {
 
     private void onAscensionChange(int ascension) {
         EditableMonsterGraphDetail graphDetail = monsterIntentGraph.graphs.get(ascension);
-        editorCanvas.setGraphDetail(graphDetail);
+        editorCanvas.setGraphDetail(editingMonsterId, graphDetail);
         editorControl.setShowAdd(graphDetail.ascensionLevel != ascension);
     }
 
