@@ -1,11 +1,14 @@
 package io.chaofan.sts.intentgraph.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.screens.charSelect.CharacterSelectScreen;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.IntConsumer;
 
 public class EditorControl {
@@ -17,6 +20,7 @@ public class EditorControl {
     private final Button ascensionUp;
     private final Button undo;
     private final Button redo;
+    private final List<Button> ascensionButtons = new ArrayList<>();
     private final float x;
     private final float y;
     private int ascension = 0;
@@ -24,12 +28,12 @@ public class EditorControl {
     private boolean showAdd = true;
 
     public EditorControl(float x, float y) {
-        this.save = new Button(EditIntentGraphScreen.getButtonImage(1), x, y + 146 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
-        this.exit = new Button(EditIntentGraphScreen.getButtonImage(2), x + 210 * Settings.scale, y + 146 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
-        this.add = new Button(EditIntentGraphScreen.getButtonImage(9), x + 70 * Settings.scale, y + 146 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
-        this.remove = new Button(EditIntentGraphScreen.getButtonImage(10), x + 70 * Settings.scale, y + 146 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
-        this.undo = new Button(EditIntentGraphScreen.getButtonImage(11), x, y + 76 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
-        this.redo = new Button(EditIntentGraphScreen.getButtonImage(12), x + 70 * Settings.scale, y + 76 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
+        this.save = new Button(EditIntentGraphScreen.getButtonImage(1), x, y + 186 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
+        this.exit = new Button(EditIntentGraphScreen.getButtonImage(2), x + 210 * Settings.scale, y + 186 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
+        this.add = new Button(EditIntentGraphScreen.getButtonImage(9), x + 70 * Settings.scale, y + 186 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
+        this.remove = new Button(EditIntentGraphScreen.getButtonImage(10), x + 70 * Settings.scale, y + 186 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
+        this.undo = new Button(EditIntentGraphScreen.getButtonImage(11), x, y + 116 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
+        this.redo = new Button(EditIntentGraphScreen.getButtonImage(12), x + 70 * Settings.scale, y + 116 * Settings.scale, 64 * Settings.scale, 64 * Settings.scale);
         this.ascensionDown = new Button(ImageMaster.CF_LEFT_ARROW, x + 8 * Settings.scale, y + 14 * Settings.scale, 48 * Settings.scale, 48 * Settings.scale);
         this.ascensionUp = new Button(ImageMaster.CF_RIGHT_ARROW, x + 218 * Settings.scale, y + 14 * Settings.scale, 48 * Settings.scale, 48 * Settings.scale);
         this.x = x;
@@ -44,6 +48,20 @@ public class EditorControl {
 
         this.ascensionUp.setOnClick(this::onClickAscension);
         this.ascensionDown.setOnClick(this::onClickAscension);
+
+        int[] buttonAscensions = {0, 2, 3, 4, 17, 18, 19};
+        for (int i = 0; i < buttonAscensions.length; i++) {
+            int buttonAscension = buttonAscensions[i];
+            Button button = new Button(String.valueOf(buttonAscension), x + i * 40 * Settings.scale, y + 72 * Settings.scale, 40 * Settings.scale, 40 * Settings.scale);
+            button.setOnClick(b -> {
+                ascension = buttonAscension;
+                if (onAscensionChange != null) {
+                    onAscensionChange.accept(ascension);
+                }
+            });
+            button.setTooltip(String.format(EditIntentGraphScreen.TEXT[26], buttonAscension), String.format(EditIntentGraphScreen.TEXT[27], buttonAscension));
+            ascensionButtons.add(button);
+        }
     }
 
     private void onClickAscension(Button button) {
@@ -77,6 +95,9 @@ public class EditorControl {
         ascensionUp.update();
         undo.update();
         redo.update();
+        for (Button button : ascensionButtons) {
+            button.update();
+        }
     }
 
     public void render(SpriteBatch sb) {
@@ -97,6 +118,9 @@ public class EditorControl {
 
         undo.render(sb);
         redo.render(sb);
+        for (Button button : ascensionButtons) {
+            button.render(sb);
+        }
     }
 
     public void setOnSave(Runnable onSave) {
@@ -132,12 +156,6 @@ public class EditorControl {
     }
 
     public int getAscension() {
-        if (ascension < 0) {
-            return 0;
-        }
-        if (ascension > 20) {
-            return 20;
-        }
-        return ascension;
+        return MathUtils.clamp(ascension, 0, 20);
     }
 }

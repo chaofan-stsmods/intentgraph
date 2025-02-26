@@ -76,7 +76,7 @@ public class TextField {
             pressTimer -= Gdx.graphics.getDeltaTime();
             if (pressTimer <= 0) {
                 this.keyPressed(pressingKey);
-                pressTimer = 0.1f;
+                pressTimer = 0.05f;
             }
         }
 
@@ -142,6 +142,11 @@ public class TextField {
     }
 
     public boolean keyDown(int keycode) {
+        if (keycode == Input.Keys.V && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
+            insertText(Gdx.app.getClipboard().getContents());
+            return true;
+        }
+
         if (pressingKey != keycode) {
             pressingKey = keycode;
             pressTimer = 0.8f;

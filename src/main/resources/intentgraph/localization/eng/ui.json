@@ -26,7 +26,9 @@
       "Delete",
       "Click to delete any items.",
       "Saved",
-      "Failed to save"
+      "Failed to save",
+      "Ascension %d",
+      "Set ascension level to %d"
     ]
   },
   "intentgraph:EditIntentScreenProperties": {

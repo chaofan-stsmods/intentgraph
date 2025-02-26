@@ -2,9 +2,11 @@ package io.chaofan.sts.intentgraph.ui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.megacrit.cardcrawl.core.Settings;
+import com.megacrit.cardcrawl.helpers.FontHelper;
 import com.megacrit.cardcrawl.helpers.Hitbox;
 import com.megacrit.cardcrawl.helpers.TipHelper;
 import com.megacrit.cardcrawl.helpers.input.InputHelper;
@@ -14,6 +16,7 @@ import java.util.function.Consumer;
 
 public class Button {
     private final TextureRegion img;
+    private final String text;
     private final float x;
     private final float y;
     private final float width;
@@ -27,7 +30,16 @@ public class Button {
     protected final Color inactiveColor = new Color(0.6f, 0.6f, 0.6f, 1F);
 
     public Button(TextureRegion img, float x, float y, float width, float height) {
+        this(img, null, x, y, width, height);
+    }
+
+    public Button(String text, float x, float y, float width, float height) {
+        this(null, text, x, y, width, height);
+    }
+
+    public Button(TextureRegion img, String text, float x, float y, float width, float height) {
         this.img = img;
+        this.text = text;
         this.x = x;
         this.y = y;
         this.width = width;
@@ -76,14 +88,22 @@ public class Button {
     }
 
     public void render(SpriteBatch sb) {
+        Color color;
         if (this.hb.hovered) {
-            sb.setColor(1.0F, 1.0F, 1.0F, 1F);
+            color = Color.WHITE;
         } else {
-            sb.setColor(this.inactiveColor);
+            color = this.inactiveColor;
         }
+
+        sb.setColor(color);
 
         if (this.img != null) {
             sb.draw(this.img, this.x, this.y, this.width, this.height);
+        }
+
+        if (this.text != null) {
+            BitmapFont labelFont = FontHelper.cardTitleFont;
+            FontHelper.renderFontCentered(sb, labelFont, text, x + width / 2, y + height / 2, color);
         }
 
         if (this.onRender != null) {

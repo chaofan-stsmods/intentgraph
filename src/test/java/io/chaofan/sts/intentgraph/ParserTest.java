@@ -7,6 +7,7 @@ import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.*;
 
 public class ParserTest {
+
     public static void main(String[] args) {
         RuleLexer lexer = new RuleLexer(CharStreams.fromString("m.a < (5 && a) > 10 >"));
         CommonTokenStream tokenStream = new CommonTokenStream(lexer);

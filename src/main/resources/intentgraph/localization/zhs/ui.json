@@ -26,7 +26,9 @@
       "删除",
       "单击以删除任何项目。",
       "已保存",
-      "保存失败"
+      "保存失败",
+      "进阶 %d",
+      "将进阶等级设置为 %d"
     ]
   },
   "intentgraph:EditIntentScreenProperties": {

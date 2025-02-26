@@ -45,8 +45,8 @@ public class EditIntentGraphScreen extends CustomScreen {
 
     private final UndoRedoHelper undoHelper = new UndoRedoHelper();
 
-    private final EditorControl editorControl = new EditorControl(50 * Settings.scale, Settings.HEIGHT - 460 * Settings.scale);
-    private final Toolbox toolbox = new Toolbox(50 * Settings.scale, Settings.HEIGHT - 460 * Settings.scale);
+    private final EditorControl editorControl = new EditorControl(50 * Settings.scale, Settings.HEIGHT - 500 * Settings.scale);
+    private final Toolbox toolbox = new Toolbox(50 * Settings.scale, Settings.HEIGHT - 500 * Settings.scale);
     private final EditorCanvas editorCanvas = new EditorCanvas(350 * Settings.scale, Settings.HEIGHT - 250 * Settings.scale, Settings.WIDTH - 870 * Settings.scale, toolbox, undoHelper);
     private final GraphPropertiesControl graphPropertiesControl = new GraphPropertiesControl(Settings.WIDTH - 500 * Settings.scale, Settings.HEIGHT - 250 * Settings.scale, undoHelper);
     private final IconPropertiesControl iconPropertiesControl = new IconPropertiesControl(Settings.WIDTH - 500 * Settings.scale, Settings.HEIGHT - 250 * Settings.scale, undoHelper);
@@ -93,7 +93,7 @@ public class EditIntentGraphScreen extends CustomScreen {
                 monsterIntentGraph = new EditableMonsterIntentGraph();
                 EditableMonsterGraphDetail graphDetail = new EditableMonsterGraphDetail(editorCanvas.getGraphRenderX(), editorCanvas.getGraphRenderY(), monsterName);
                 graphDetail.damages.add(new Damage());
-                for (int i = 0; i < 20; i++) {
+                for (int i = 0; i <= 20; i++) {
                     monsterIntentGraph.graphs.put(i, graphDetail);
                 }
             } else {
