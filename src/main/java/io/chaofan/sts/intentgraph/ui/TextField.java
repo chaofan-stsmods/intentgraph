@@ -21,6 +21,8 @@ public class TextField {
 
     private static final float TEXT_Y_OFFSET = 27 * Settings.scale;
     public static TextField hoverField;
+    private static TextField previousTextField;
+    private static boolean pressedTab = false;
 
     private final String label;
     private String text = "";
@@ -34,9 +36,9 @@ public class TextField {
     private int pressingKey = Input.Keys.ANY_KEY;
     private float pressTimer;
 
+    private int selectCursor = 0;
     private int cursor = 0;
     private float cursorTimer;
-    private float cursorRenderX = -1;
     private float textOffsetX = 0;
 
     private Consumer<TextField> onChange;
@@ -70,6 +72,17 @@ public class TextField {
             }
         }
 
+        if (pressedTab) {
+            if (TextField.hoverField == null) {
+                pressedTab = false;
+            } else if (TextField.hoverField == previousTextField) {
+                TextField.hoverField.triggerOnChange();
+                TextField.hoverField = this;
+                this.cursorTimer = 1.5f;
+                pressedTab = false;
+            }
+        }
+
         if (TextField.hoverField != this) {
             pressingKey = Input.Keys.ANY_KEY;
         } else if (pressingKey != Input.Keys.ANY_KEY) {
@@ -84,6 +97,8 @@ public class TextField {
         if (cursorTimer <= 0) {
             cursorTimer = 1.5f;
         }
+
+        previousTextField = this;
     }
 
     public void render(SpriteBatch sb) {
@@ -104,24 +119,6 @@ public class TextField {
         BitmapFont textFont = FontHelper.cardDescFont_L;
         textFont.getData().setScale(1);
 
-        if (TextField.hoverField == this) {
-            if (cursorRenderX < 0) {
-                cursorRenderX = FontHelper.getWidth(textFont, text.substring(0, cursor), 1);
-                if (cursorRenderX + textOffsetX > textWidth) {
-                    textOffsetX = textWidth - cursorRenderX;
-                } else if (cursorRenderX + textOffsetX < 0) {
-                    textOffsetX = -cursorRenderX;
-                }
-                if (textOffsetX > 0) {
-                    textOffsetX = 0;
-                }
-            }
-            if (cursorTimer >= 0.75f) {
-                sb.setColor(Color.WHITE);
-                sb.draw(ImageMaster.WHITE_SQUARE_IMG, x + labelWidth + cursorRenderX + textOffsetX, y, 2, height);
-            }
-        }
-
         loadShader();
         if (shader != null) {
             sb.setShader(shader);
@@ -129,22 +126,70 @@ public class TextField {
             shader.setUniformf("u_boxRightTop", x + labelWidth + textWidth, y + height);
         }
 
-        FontHelper.renderFontLeftTopAligned(sb, textFont, text, x + labelWidth + textOffsetX, y + TEXT_Y_OFFSET, color);
-        if (FontHelper.layout.width + textOffsetX < textWidth) {
-            textOffsetX = Math.min(0, textWidth - FontHelper.layout.width);
+        int cursorMin = Math.min(cursor, selectCursor);
+        int cursorMax = Math.max(cursor, selectCursor);
+        FontHelper.renderFontLeftTopAligned(sb, textFont, text.substring(0, cursorMin), x + labelWidth + textOffsetX, y + TEXT_Y_OFFSET, color);
+        float minCursorX = FontHelper.layout.width;
+        if (cursorMin != cursorMax) {
+            FontHelper.renderFontLeftTopAligned(sb, textFont, text.substring(cursorMin, cursorMax), x + labelWidth + minCursorX + textOffsetX, y + TEXT_Y_OFFSET, color);
+            float oldAlpha = color.a;
+            color.a = 0.3f;
+            sb.setColor(color);
+            sb.draw(ImageMaster.WHITE_SQUARE_IMG, x + labelWidth + minCursorX + textOffsetX, y, FontHelper.layout.width, height);
+            color.a = oldAlpha;
+        } else {
+            FontHelper.layout.width = 0;
         }
+        float maxCursorX = minCursorX + FontHelper.layout.width;
+        FontHelper.renderFontLeftTopAligned(sb, textFont, text.substring(cursorMax), x + labelWidth + maxCursorX + textOffsetX, y + TEXT_Y_OFFSET, color);
+        float fullWidth = FontHelper.layout.width + maxCursorX;
+        if (fullWidth + textOffsetX < textWidth) {
+            textOffsetX = Math.min(0, textWidth - fullWidth);
+        }
+        float cursorRenderX = cursor == cursorMin ? minCursorX : maxCursorX;
 
         if (shader != null) {
             sb.setShader(null);
+        }
+
+        if (TextField.hoverField == this) {
+            sb.setColor(color);
+            if (cursorTimer >= 0.75f) {
+                sb.setColor(Color.WHITE);
+                sb.draw(ImageMaster.WHITE_SQUARE_IMG, x + labelWidth + cursorRenderX + textOffsetX, y, 2, height);
+            }
         }
 
         this.hb.render(sb);
     }
 
     public boolean keyDown(int keycode) {
-        if (keycode == Input.Keys.V && (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT))) {
-            insertText(Gdx.app.getClipboard().getContents());
-            return true;
+        if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
+            if (keycode == Input.Keys.V) {
+                insertText(Gdx.app.getClipboard().getContents());
+                return true;
+            } else if (keycode == Input.Keys.C) {
+                if (cursor != selectCursor) {
+                    int cursorMin = Math.min(cursor, selectCursor);
+                    int cursorMax = Math.max(cursor, selectCursor);
+                    String text = this.text.substring(cursorMin, cursorMax);
+                    Gdx.app.getClipboard().setContents(text);
+                }
+                return true;
+            } else if (keycode == Input.Keys.X) {
+                if (cursor != selectCursor) {
+                    int cursorMin = Math.min(cursor, selectCursor);
+                    int cursorMax = Math.max(cursor, selectCursor);
+                    String text = this.text.substring(cursorMin, cursorMax);
+                    Gdx.app.getClipboard().setContents(text);
+                    this.deleteText();
+                }
+                return true;
+            } else if (keycode == Input.Keys.A) {
+                cursor = 0;
+                selectCursor = this.text.length();
+                return true;
+            }
         }
 
         if (pressingKey != keycode) {
@@ -186,24 +231,32 @@ public class TextField {
             case Input.Keys.LEFT:
                 if (cursor > 0) {
                     cursor--;
-                    cursorRenderX = -1;
+                }
+                if (!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+                    selectCursor = cursor;
                 }
                 break;
             case Input.Keys.RIGHT:
                 if (cursor < text.length()) {
                     cursor++;
-                    cursorRenderX = -1;
+                }
+                if (!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+                    selectCursor = cursor;
                 }
                 break;
             case Input.Keys.HOME:
             case Input.Keys.UP:
                 cursor = 0;
-                cursorRenderX = -1;
+                if (!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+                    selectCursor = cursor;
+                }
                 break;
             case Input.Keys.END:
             case Input.Keys.DOWN:
                 cursor = text.length();
-                cursorRenderX = -1;
+                if (!Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) && !Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+                    selectCursor = cursor;
+                }
                 break;
             case Input.Keys.ESCAPE:
                 triggerOnChange();
@@ -211,6 +264,14 @@ public class TextField {
                 break;
             case Input.Keys.ENTER:
                 triggerOnChange();
+                break;
+            case Input.Keys.TAB:
+                if (Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+                    triggerOnChange();
+                    TextField.hoverField = previousTextField;
+                } else {
+                    pressedTab = true;
+                }
                 break;
         }
     }
@@ -222,23 +283,32 @@ public class TextField {
     }
 
     private void insertText(String text) {
-        this.text = this.text.substring(0, cursor) + text + this.text.substring(cursor);
+        int cursorMin = Math.min(cursor, selectCursor);
+        int cursorMax = Math.max(cursor, selectCursor);
+        this.text = this.text.substring(0, cursorMin) + text + this.text.substring(cursorMax);
         cursor += text.length();
-        cursorRenderX = -1;
+        selectCursor = cursor;
     }
 
     private void backspaceText() {
-        if (cursor > 0) {
+        if (cursor != selectCursor) {
+            deleteText();
+        } else if (cursor > 0) {
             this.text = this.text.substring(0, cursor - 1) + this.text.substring(cursor);
             cursor--;
-            cursorRenderX = -1;
+            selectCursor = cursor;
         }
     }
 
     private void deleteText() {
-        if (cursor < this.text.length()) {
+        if (cursor != selectCursor) {
+            int cursorMin = Math.min(cursor, selectCursor);
+            int cursorMax = Math.max(cursor, selectCursor);
+            this.text = this.text.substring(0, cursorMin) + this.text.substring(cursorMax);
+            cursor = cursorMin;
+            selectCursor = cursor;
+        } else if (cursor < this.text.length()) {
             this.text = this.text.substring(0, cursor) + this.text.substring(cursor + 1);
-            cursorRenderX = -1;
         }
     }
 
@@ -272,8 +342,7 @@ public class TextField {
             }
         }
 
-        cursor = estimatedCursor;
-        cursorRenderX = estimatedCursorOffset;
+        cursor = selectCursor = estimatedCursor;
     }
 
     public void setOnChange(Consumer<TextField> onChange) {
@@ -283,7 +352,7 @@ public class TextField {
     public void setText(String text) {
         this.text = text;
         this.cursor = Math.min(cursor, text.length());
-        cursorRenderX = -1;
+        this.selectCursor = this.cursor;
     }
 
     public String getText() {

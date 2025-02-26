@@ -143,33 +143,38 @@ public class EditIntentGraphScreen extends CustomScreen {
             return;
         }
 
-        editorControl.update();
-        toolbox.update();
-        editorCanvas.update();
         if (propertyControl != null) {
             propertyControl.update();
         }
+        editorControl.update();
+        toolbox.update();
+        editorCanvas.update();
 
         updateShortcuts();
     }
 
     private void updateShortcuts() {
         Input input = Gdx.input;
+        boolean isTextFieldInactive = TextField.hoverField == null;
         if (input.isKeyPressed(Input.Keys.CONTROL_LEFT) || input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
             if (input.isKeyJustPressed(Input.Keys.Z)) {
-                if (input.isKeyPressed(Input.Keys.SHIFT_LEFT) || input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
-                    undoHelper.redo();
-                } else {
-                    undoHelper.undo();
+                if (isTextFieldInactive) {
+                    if (input.isKeyPressed(Input.Keys.SHIFT_LEFT) || input.isKeyPressed(Input.Keys.SHIFT_RIGHT)) {
+                        undoHelper.redo();
+                    } else {
+                        undoHelper.undo();
+                    }
                 }
             } else if (input.isKeyJustPressed(Input.Keys.Y)) {
-                undoHelper.redo();
+                if (isTextFieldInactive) {
+                    undoHelper.redo();
+                }
             } else if (input.isKeyJustPressed(Input.Keys.S)) {
                 save();
             }
         }
 
-        if (TextField.hoverField == null) {
+        if (isTextFieldInactive) {
             boolean updated = false;
             if (input.isKeyJustPressed(Input.Keys.LEFT)) {
                 editorCanvas.moveSelected(-0.25f, 0);
@@ -196,12 +201,12 @@ public class EditIntentGraphScreen extends CustomScreen {
     @Override
     public void render(SpriteBatch sb) {
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        editorControl.render(sb);
-        toolbox.render(sb);
-        editorCanvas.render(sb);
         if (propertyControl != null) {
             propertyControl.render(sb);
         }
+        editorControl.render(sb);
+        toolbox.render(sb);
+        editorCanvas.render(sb);
 
         if (saveTimer > 1) {
             FontHelper.renderFontLeftDownAligned(sb, FontHelper.cardTitleFont, saveString,
