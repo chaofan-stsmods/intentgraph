@@ -36,6 +36,7 @@ public class TextField {
     private int pressingKey = Input.Keys.ANY_KEY;
     private float pressTimer;
 
+    private boolean draggingCursor = false;
     private int selectCursor = 0;
     private int cursor = 0;
     private float cursorTimer;
@@ -55,10 +56,18 @@ public class TextField {
 
     public void update() {
         this.hb.update(this.hb.x, this.hb.y);
+        if (draggingCursor) {
+            if (!InputHelper.isMouseDown) {
+                draggingCursor = false;
+            } else {
+                cursor = getCursorLocationFromMouseX(InputHelper.mX, cursor);
+            }
+        }
+
         if (InputHelper.justClickedLeft) {
             if (this.hb.hovered) {
                 InputHelper.justClickedLeft = false;
-                clickToSetCursorLocation(InputHelper.mX);
+                cursor = selectCursor = getCursorLocationFromMouseX(InputHelper.mX);
                 if (TextField.hoverField != this) {
                     if (TextField.hoverField != null) {
                         TextField.hoverField.triggerOnChange();
@@ -66,6 +75,7 @@ public class TextField {
                     TextField.hoverField = this;
                     this.cursorTimer = 1.5f;
                 }
+                draggingCursor = true;
             } else if (TextField.hoverField == this) {
                 triggerOnChange();
                 TextField.hoverField = null;
@@ -143,10 +153,18 @@ public class TextField {
         float maxCursorX = minCursorX + FontHelper.layout.width;
         FontHelper.renderFontLeftTopAligned(sb, textFont, text.substring(cursorMax), x + labelWidth + maxCursorX + textOffsetX, y + TEXT_Y_OFFSET, color);
         float fullWidth = FontHelper.layout.width + maxCursorX;
+        float cursorRenderX = cursor == cursorMin ? minCursorX : maxCursorX;
+        if (cursorRenderX + textOffsetX > textWidth) {
+            textOffsetX = textWidth - cursorRenderX;
+        } else if (cursorRenderX + textOffsetX < 0) {
+            textOffsetX = -cursorRenderX;
+        }
+        if (textOffsetX > 0) {
+            textOffsetX = 0;
+        }
         if (fullWidth + textOffsetX < textWidth) {
             textOffsetX = Math.min(0, textWidth - fullWidth);
         }
-        float cursorRenderX = cursor == cursorMin ? minCursorX : maxCursorX;
 
         if (shader != null) {
             sb.setShader(null);
@@ -164,6 +182,7 @@ public class TextField {
     }
 
     public boolean keyDown(int keycode) {
+        this.cursorTimer = 1.5f;
         if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
             if (keycode == Input.Keys.V) {
                 insertText(Gdx.app.getClipboard().getContents());
@@ -221,6 +240,7 @@ public class TextField {
     }
 
     private void keyPressed(int keycode) {
+        this.cursorTimer = 1.5f;
         switch (keycode) {
             case Input.Keys.BACKSPACE:
                 backspaceText();
@@ -312,10 +332,15 @@ public class TextField {
         }
     }
 
-    private void clickToSetCursorLocation(float mouseX) {
+    private int getCursorLocationFromMouseX(float mouseX) {
         float xInText = mouseX - (x + labelWidth + textOffsetX);
         float roughTextWidth = textWidth + textOffsetX;
         int estimatedCursor = Math.max(Math.min(Math.round(xInText / roughTextWidth * text.length()), text.length()), 0);
+        return getCursorLocationFromMouseX(mouseX, estimatedCursor);
+    }
+
+    private int getCursorLocationFromMouseX(float mouseX, int estimatedCursor) {
+        float xInText = mouseX - (x + labelWidth + textOffsetX);
         BitmapFont textFont = FontHelper.cardDescFont_L;
 
         float lastCharWidth = 0;
@@ -328,7 +353,6 @@ public class TextField {
             }
             if (lastCharWidth > 0 && (xInText - estimatedCursorOffset) / lastCharWidth > 0.5f) {
                 estimatedCursor++;
-                estimatedCursorOffset += lastCharWidth;
             }
         } else if (estimatedCursorOffset < xInText) {
             while (estimatedCursor < text.length() && estimatedCursorOffset < xInText) {
@@ -338,11 +362,10 @@ public class TextField {
             }
             if (lastCharWidth > 0 && (estimatedCursorOffset - xInText) / lastCharWidth > 0.5f) {
                 estimatedCursor--;
-                estimatedCursorOffset -= lastCharWidth;
             }
         }
 
-        cursor = selectCursor = estimatedCursor;
+        return estimatedCursor;
     }
 
     public void setOnChange(Consumer<TextField> onChange) {

@@ -359,6 +359,13 @@ public class EditIntentGraphScreen extends CustomScreen {
         }
     }
 
+    public boolean scrolled(int amount) {
+        if (propertyControl != null) {
+            return propertyControl.scrolled(amount);
+        }
+        return false;
+    }
+
     public static class Enums {
         @SpireEnum
         public static AbstractDungeon.CurrentScreen EDIT_INTENT_GRAPH_SCREEN;

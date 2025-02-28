@@ -2,8 +2,12 @@ package io.chaofan.sts.intentgraph.ui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Matrix4;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.helpers.ImageMaster;
+import com.megacrit.cardcrawl.helpers.MathHelper;
+import com.megacrit.cardcrawl.helpers.input.InputHelper;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import io.chaofan.sts.intentgraph.model.Damage;
 import io.chaofan.sts.intentgraph.model.DamageProvider;
@@ -18,6 +22,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class IconPropertiesControl extends PropertiesControl implements DamageProvider {
+    private static final Matrix4 oldProjectionMatrix = new Matrix4();
+    private static final Matrix4 tmpMatrix = new Matrix4();
+
+    private final float x;
     private final TextField iconX;
     private final TextField iconY;
     private final TextField percentage;
@@ -39,8 +47,13 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
     private final Icon renderingIcon = new Icon();
     private final Damage renderingDamage = new Damage();
 
+    private final float maxScroll;
+    private float currentScroll = 0;
+    private float targetScroll = 0;
+
     public IconPropertiesControl(float x, float top, UndoRedoHelper undoRedoHelper) {
         super(undoRedoHelper);
+        this.x = x;
         this.iconX = new TextField("X", x, top - TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
         this.iconY = new TextField("Y", x, top - 2 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
         this.percentage = new TextField(TEXT[2], x, top - 3 * TEXT_FIELD_HEIGHT, 200 * Settings.scale, 250 * Settings.scale);
@@ -71,9 +84,10 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
         this.addDamage.setOnClick(this::onAddDamage);
         this.removeDamage.setOnClick(this::onRemoveDamage);
 
+        int intentsPerRow = 5;
         for (int i = 0; i < AbstractMonster.Intent.values().length; i++) {
-            int intentX = i % 5;
-            int intentY = i / 5;
+            int intentX = i % intentsPerRow;
+            int intentY = i / intentsPerRow;
             intentButtons[i] = new Button((TextureRegion) null, x + (25 + intentX * 80) * Settings.scale, top - (80 + intentY * 80) * Settings.scale - 10 * TEXT_FIELD_HEIGHT, 80 * Settings.scale, 80 * Settings.scale);
             int intentIndex = i;
             intentButtons[i].setOnClick((button) -> {
@@ -89,6 +103,9 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
                 Icon.renderIconImage(this, sb, renderingIcon, button.getX() + 8 * Settings.scale, button.getY() + 8 * Settings.scale);
             });
         }
+
+        float maxY = intentButtons[intentButtons.length - 1].getY();
+        this.maxScroll = Math.max(0, -maxY + 50 * Settings.scale);
     }
 
     public void setIcon(EditableMonsterGraphDetail graphDetail, EditableIcon icon) {
@@ -111,6 +128,10 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
     }
 
     public void update() {
+        currentScroll = MathHelper.scrollSnapLerpSpeed(currentScroll, targetScroll);
+        int oldMouseY = InputHelper.mY;
+        InputHelper.mY -= (int) currentScroll;
+
         iconX.update();
         iconY.update();
         percentage.update();
@@ -129,9 +150,16 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
         for (Button intentButton : intentButtons) {
             intentButton.update();
         }
+
+        InputHelper.mY = oldMouseY;
     }
 
     public void render(SpriteBatch sb) {
+        oldProjectionMatrix.set(sb.getProjectionMatrix());
+        tmpMatrix.set(oldProjectionMatrix);
+        tmpMatrix.translate(0, currentScroll, 0);
+        sb.setProjectionMatrix(tmpMatrix);
+
         iconX.render(sb);
         iconY.render(sb);
         percentage.render(sb);
@@ -157,11 +185,22 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
             }
             intentButton.render(sb);
         }
+
+        sb.setProjectionMatrix(oldProjectionMatrix);
     }
 
     @Override
     public Damage getDamage(int index) {
         return this.renderingDamage;
+    }
+
+    @Override
+    public boolean scrolled(int amount) {
+        if (InputHelper.mX > this.x) {
+            targetScroll = MathUtils.clamp(targetScroll + amount * 40, 0, maxScroll);
+            return true;
+        }
+        return false;
     }
 
     private void onChangeLimitType(ComboBox comboBox) {

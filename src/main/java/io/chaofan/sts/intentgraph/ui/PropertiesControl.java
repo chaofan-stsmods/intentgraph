@@ -18,6 +18,10 @@ public abstract class PropertiesControl {
     public abstract void render(SpriteBatch sb);
     public abstract void refresh();
 
+    public boolean scrolled(int amount) {
+        return false;
+    }
+
     public PropertiesControl(UndoRedoHelper undoRedoHelper) {
         this.undoRedoHelper = undoRedoHelper;
     }

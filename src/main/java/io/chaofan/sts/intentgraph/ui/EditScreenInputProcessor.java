@@ -1,6 +1,7 @@
 package io.chaofan.sts.intentgraph.ui;
 
 import com.badlogic.gdx.InputProcessor;
+import io.chaofan.sts.intentgraph.IntentGraphMod;
 
 public class EditScreenInputProcessor implements InputProcessor {
     @Override
@@ -52,6 +53,6 @@ public class EditScreenInputProcessor implements InputProcessor {
 
     @Override
     public boolean scrolled(int amount) {
-        return false;
+        return IntentGraphMod.editIntentGraphScreen.scrolled(amount);
     }
 }
