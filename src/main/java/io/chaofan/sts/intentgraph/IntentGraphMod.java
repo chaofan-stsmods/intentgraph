@@ -14,6 +14,8 @@ import com.evacipated.cardcrawl.modthespire.lib.SpireConfig;
 import com.evacipated.cardcrawl.modthespire.lib.SpireInitializer;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.megacrit.cardcrawl.core.CardCrawlGame;
+import com.megacrit.cardcrawl.core.GameCursor;
 import com.megacrit.cardcrawl.core.Settings;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.helpers.FontHelper;
@@ -25,6 +27,7 @@ import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import com.megacrit.cardcrawl.rooms.AbstractRoom;
 import io.chaofan.sts.intentgraph.crossovers.BattleTowers;
 import io.chaofan.sts.intentgraph.model.MonsterIntentGraph;
+import io.chaofan.sts.intentgraph.patches.TipHelperPatch;
 import io.chaofan.sts.intentgraph.ui.EditIntentGraphScreen;
 import io.chaofan.sts.intentgraph.utils.IconRenderer;
 import org.apache.logging.log4j.LogManager;
@@ -126,30 +129,42 @@ public class IntentGraphMod implements
 
     @Override
     public void receivePostRender(SpriteBatch spriteBatch) {
-        if (AbstractDungeon.getCurrMapNode() == null || AbstractDungeon.isScreenUp) {
-            return;
-        }
-
-        AbstractRoom room = AbstractDungeon.getCurrRoom();
-        if (room == null || room.monsters == null) {
-            return;
-        }
-
-        if (Gdx.input.isKeyJustPressed(toggleKey)) {
-            showIntentGraph = !showIntentGraph;
-        }
-
-        if (!showIntentGraph) {
-            return;
-        }
-
-        for (AbstractMonster monster : room.monsters.monsters) {
-            if (monster.hb.hovered && !monster.isDeadOrEscaped()) {
-                visibleGraphMonsterId = monster.id;
-                renderIntentGraphForMonster(monster, spriteBatch);
-                visibleGraphMonsterId = null;
-                break;
+        try {
+            if (AbstractDungeon.getCurrMapNode() == null || AbstractDungeon.isScreenUp) {
+                return;
             }
+
+            AbstractRoom room = AbstractDungeon.getCurrRoom();
+            if (room == null || room.monsters == null) {
+                return;
+            }
+
+            if (Gdx.input.isKeyJustPressed(toggleKey)) {
+                showIntentGraph = !showIntentGraph;
+            }
+
+            if (!showIntentGraph) {
+                return;
+            }
+
+            for (AbstractMonster monster : room.monsters.monsters) {
+                if (monster.hb.hovered && (!monster.isDeadOrEscaped() || monster.halfDead)) {
+                    visibleGraphMonsterId = monster.id;
+                    renderIntentGraphForMonster(monster, spriteBatch);
+                    visibleGraphMonsterId = null;
+
+                    if (!GameCursor.hidden && !Settings.isControllerMode && !Settings.isTouchScreen) {
+                        GameCursor cursor = CardCrawlGame.cursor;
+                        Texture img = ReflectionHacks.getPrivate(cursor, GameCursor.class, "img");
+                        float rotation = ReflectionHacks.getPrivate(cursor, GameCursor.class, "rotation");
+                        spriteBatch.draw(img, InputHelper.mX - 32.0F + 24.0F * Settings.scale, InputHelper.mY - 32.0F - 24.0F * Settings.scale, 32.0F, 32.0F, 64.0F, 64.0F, Settings.scale, Settings.scale, rotation, 0, 0, 64, 64, false, false);
+                    }
+
+                    break;
+                }
+            }
+        } finally {
+            TipHelperPatch.rendered = false;
         }
     }
 
@@ -311,14 +326,18 @@ public class IntentGraphMod implements
     }
 
     private void loadAdditionalIntents(ModInfo intentGraph) {
-        String[] files = { "intents-battleTowers" };
-        for (String file : files) {
-            Map<String, MonsterIntentGraph> intentsFromModJar = loadIntentsFromModJar(intentGraph.jarURL, file);
+        String[] mods = { "BattleTowers", "downfall" };
+        for (String mod : mods) {
+            if (!Loader.isModLoadedOrSideloaded(mod)) {
+                continue;
+            }
+
+            Map<String, MonsterIntentGraph> intentsFromModJar = loadIntentsFromModJar(intentGraph.jarURL, "intents-" + mod);
             if (intentsFromModJar != null) {
                 intents.putAll(intentsFromModJar);
             }
 
-            Map<String, String> stringsFromModJar = loadIntentStringsFromModJar(intentGraph.jarURL, file);
+            Map<String, String> stringsFromModJar = loadIntentStringsFromModJar(intentGraph.jarURL, "intents-" + mod);
             if (stringsFromModJar != null) {
                 intentStrings.putAll(stringsFromModJar);
             }

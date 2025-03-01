@@ -1,0 +1,1807 @@
+{
+  "downfall:NeowBoss": {
+    "width": 2.5,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 2.5,
+        "height": 1.0,
+        "damages": [
+          {}
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "DEBUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.3,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              1.5,
+              0.7,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:FaceTrader": {
+    "width": 3.0,
+    "height": 2.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 3.0,
+        "height": 2.0,
+        "damages": [
+          {
+            "min": 15
+          },
+          {
+            "min": 10
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK_DEBUFF",
+            "percentage": 33,
+            "attackCount": 1
+          },
+          {
+            "x": 0.0,
+            "y": 1.0,
+            "type": "ATTACK_DEBUFF",
+            "damageIndex": 1,
+            "percentage": 67,
+            "attackCount": 1
+          },
+          {
+            "x": 2.0,
+            "y": 0.5,
+            "type": "DEFEND_BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.8,
+              2.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.0,
+              1.2,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:GauntletDefect": {
+    "width": 4.0,
+    "height": 2.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 4.0,
+        "height": 2.0,
+        "damages": [
+          {
+            "min": 6
+          },
+          {
+            "min": 11
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "percentage": 25,
+            "attackCount": 2
+          },
+          {
+            "x": 1.0,
+            "y": 0.0,
+            "type": "ATTACK_DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 0.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 1.0,
+            "y": 1.0,
+            "type": "ATTACK_BUFF",
+            "damageIndex": 1,
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 2.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              2.0,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              3.5,
+              1.0,
+              1.5,
+              2.0
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "x": 2.5,
+            "y": 0.2,
+            "label": "Turn 5",
+            "align": "middle"
+          }
+        ]
+      }
+    ]
+  },
+  "downfall:MuggerAlt": {
+    "width": 5.5,
+    "height": 2.5,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 5.5,
+        "height": 2.5,
+        "damages": [
+          {
+            "min": 10
+          },
+          {
+            "min": 16
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "damageIndex": 1,
+            "percentage": 50,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 50,
+            "attackCount": 1
+          },
+          {
+            "x": 4.5,
+            "y": 0.0,
+            "type": "DEFEND",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.5,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.8,
+              0.5,
+              4.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.2,
+              1.5,
+              0.5,
+              1.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              5.0,
+              1.0,
+              2.5,
+              0.5,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      },
+      {
+        "condition": "ascension \u003e\u003d 2",
+        "ascensionLevel": 2,
+        "width": 5.5,
+        "height": 2.5,
+        "damages": [
+          {
+            "min": 11
+          },
+          {
+            "min": 18
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "damageIndex": 1,
+            "percentage": 50,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 50,
+            "attackCount": 1
+          },
+          {
+            "x": 4.5,
+            "y": 0.0,
+            "type": "DEFEND",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.5,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.8,
+              0.5,
+              4.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.2,
+              1.5,
+              0.5,
+              1.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              5.0,
+              1.0,
+              2.5,
+              0.5,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:FleeingMerchant": {
+    "width": 5.5,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 5.5,
+        "height": 1.0,
+        "damages": [
+          {
+            "min": 2
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "DEFEND",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 5
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          },
+          {
+            "x": 4.5,
+            "y": 0.0,
+            "type": "ESCAPE",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.5,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              4.0,
+              0.5,
+              4.5
+            ]
+          }
+        ],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:GauntletWatcher": {
+    "width": 4.0,
+    "height": 2.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 4.0,
+        "height": 2.0,
+        "damages": [
+          {
+            "min": 6
+          },
+          {
+            "min": 9
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "percentage": 25,
+            "attackCount": 2
+          },
+          {
+            "x": 1.0,
+            "y": 0.0,
+            "type": "ATTACK_DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 0.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 1.0,
+            "y": 1.0,
+            "type": "ATTACK_DEFEND",
+            "damageIndex": 1,
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 2.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              2.0,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              3.5,
+              1.0,
+              1.5,
+              2.0
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "x": 2.5,
+            "y": 0.2,
+            "label": "Turn 5",
+            "align": "middle"
+          }
+        ]
+      }
+    ]
+  },
+  "downfall:MushroomPurple": {
+    "width": 2.0,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 2.0,
+        "height": 1.0,
+        "damages": [
+          {}
+        ],
+        "icons": [
+          {
+            "x": 0.5,
+            "y": 0.0,
+            "type": "DEBUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:MushroomRed": {
+    "width": 2.0,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 2.0,
+        "height": 1.0,
+        "damages": [
+          {
+            "min": 10
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.5,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:NeowBossFinal": {
+    "width": 5.5,
+    "height": 1.5,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 5.5,
+        "height": 1.5,
+        "damages": [
+          {
+            "min": 20
+          },
+          {
+            "min": 7
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "STRONG_DEBUFF",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "damageIndex": 1,
+            "attackCount": 3
+          },
+          {
+            "x": 4.5,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.5,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              4.0,
+              0.5,
+              4.5
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              5.0,
+              1.0,
+              1.5,
+              1.5,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      },
+      {
+        "condition": "ascension \u003e\u003d 4",
+        "ascensionLevel": 4,
+        "width": 5.5,
+        "height": 1.5,
+        "damages": [
+          {
+            "min": 25
+          },
+          {
+            "min": 9
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "STRONG_DEBUFF",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "damageIndex": 1,
+            "attackCount": 3
+          },
+          {
+            "x": 4.5,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.5,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              4.0,
+              0.5,
+              4.5
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              5.0,
+              1.0,
+              1.5,
+              1.5,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:GauntletSilent": {
+    "width": 4.0,
+    "height": 2.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 4.0,
+        "height": 2.0,
+        "damages": [
+          {
+            "min": 6
+          },
+          {
+            "min": 11
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "percentage": 25,
+            "attackCount": 2
+          },
+          {
+            "x": 1.0,
+            "y": 0.0,
+            "type": "ATTACK_DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 0.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 1.0,
+            "y": 1.0,
+            "type": "DEFEND_DEBUFF",
+            "damageIndex": 1,
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 2.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              2.0,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              3.5,
+              1.0,
+              1.5,
+              2.0
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "x": 2.5,
+            "y": 0.2,
+            "label": "Turn 5",
+            "align": "middle"
+          }
+        ]
+      }
+    ]
+  },
+  "downfall:LadyInBlue": {
+    "width": 6.0,
+    "height": 3.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 6.0,
+        "height": 3.0,
+        "damages": [
+          {
+            "min": 10
+          },
+          {
+            "min": 20
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK_DEFEND",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "ATTACK_BUFF",
+            "damageIndex": 1,
+            "attackCount": 1
+          },
+          {
+            "x": 5.0,
+            "y": 0.0,
+            "type": "STRONG_DEBUFF",
+            "attackCount": 1
+          },
+          {
+            "x": 2.5,
+            "y": 2.25,
+            "type": "BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 6.0,
+            "h": 1.8
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.5,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              4.0,
+              0.5,
+              5.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              3.5,
+              1.0,
+              1.5,
+              0.5,
+              1.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              5.5,
+              1.0,
+              1.5,
+              0.5,
+              1.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              0.5,
+              1.8,
+              2.75,
+              2.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.5,
+              2.75,
+              5.5,
+              1.8
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "x": 4.5,
+            "y": 0.2,
+            "label": "Turn 4",
+            "align": "middle"
+          },
+          {
+            "x": 0.75,
+            "y": 2.0,
+            "label": "HP\u003c\u003d50%",
+            "align": "left"
+          }
+        ]
+      }
+    ]
+  },
+  "downfall:GauntletHermit": {
+    "width": 4.0,
+    "height": 2.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 4.0,
+        "height": 2.0,
+        "damages": [
+          {
+            "min": 6
+          },
+          {
+            "min": 11
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "percentage": 25,
+            "attackCount": 2
+          },
+          {
+            "x": 1.0,
+            "y": 0.0,
+            "type": "ATTACK_DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 0.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 1.0,
+            "y": 1.0,
+            "type": "BUFF",
+            "damageIndex": 1,
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 2.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              2.0,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              3.5,
+              1.0,
+              1.5,
+              2.0
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "x": 2.5,
+            "y": 0.2,
+            "label": "Turn 5",
+            "align": "middle"
+          }
+        ]
+      }
+    ]
+  },
+  "downfall:GrowingTotem": {
+    "width": 2.0,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 2.0,
+        "height": 1.0,
+        "damages": [
+          {
+            "min": 5
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.5,
+            "y": 0.0,
+            "type": "ATTACK_BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [],
+        "labels": []
+      },
+      {
+        "condition": "ascension \u003e\u003d 4",
+        "ascensionLevel": 4,
+        "width": 2.0,
+        "height": 1.0,
+        "damages": [
+          {
+            "min": 6
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.5,
+            "y": 0.0,
+            "type": "ATTACK_BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [],
+        "labels": []
+      }
+    ]
+  },
+  "BronzeOrbWhoReallyLikesDefectForSomeReason": {
+    "width": 4.0,
+    "height": 4.25,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 4.0,
+        "height": 4.25,
+        "damages": [
+          {
+            "min": 8
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.5,
+            "type": "ATTACK",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 0.0,
+            "y": 1.5,
+            "type": "STRONG_DEBUFF",
+            "percentage": 75,
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.5,
+            "type": "ATTACK",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 1.5,
+            "type": "STRONG_DEBUFF",
+            "percentage": 75,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.5,
+            "type": "DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 1.5,
+            "type": "STRONG_DEBUFF",
+            "percentage": 75,
+            "attackCount": 1
+          },
+          {
+            "x": 1.0,
+            "y": 3.0,
+            "type": "ATTACK",
+            "percentage": 30,
+            "limit": 2,
+            "attackCount": 1
+          },
+          {
+            "x": 2.0,
+            "y": 3.0,
+            "type": "DEFEND",
+            "percentage": 70,
+            "limit": 2,
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 1.5,
+            "y": 0.5,
+            "w": 1.0,
+            "h": 2.0
+          },
+          {
+            "x": 3.0,
+            "y": 0.5,
+            "w": 1.0,
+            "h": 2.0
+          },
+          {
+            "x": 0.0,
+            "y": 0.5,
+            "w": 1.0,
+            "h": 2.0
+          },
+          {
+            "x": 1.0,
+            "y": 3.0,
+            "w": 2.0,
+            "h": 1.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              0.8,
+              1.0,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.3,
+              1.0,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              3.5,
+              0.7,
+              0.0,
+              0.5,
+              0.5
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              2.0,
+              2.3,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              1.5,
+              4.0,
+              4.25,
+              2.5,
+              4.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              3.5,
+              2.3,
+              3.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              0.5,
+              2.3,
+              3.5,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:MushroomWhite": {
+    "width": 2.0,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 2.0,
+        "height": 1.0,
+        "damages": [
+          {}
+        ],
+        "icons": [
+          {
+            "x": 0.5,
+            "y": 0.0,
+            "type": "DEFEND",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:ChangingTotem": {
+    "width": 2.0,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 2.0,
+        "height": 1.0,
+        "damages": [
+          {}
+        ],
+        "icons": [
+          {
+            "x": 0.5,
+            "y": 0.0,
+            "type": "DEBUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:GauntletIronclad": {
+    "width": 4.0,
+    "height": 2.0,
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 4.0,
+        "height": 2.0,
+        "damages": [
+          {
+            "min": 6
+          },
+          {
+            "min": 8
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "percentage": 25,
+            "attackCount": 2
+          },
+          {
+            "x": 1.0,
+            "y": 0.0,
+            "type": "ATTACK_DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 0.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 1.0,
+            "y": 1.0,
+            "type": "ATTACK_DEBUFF",
+            "damageIndex": 1,
+            "percentage": 25,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "BUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "w": 2.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              2.0,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              3.5,
+              1.0,
+              1.5,
+              2.0
+            ]
+          }
+        ],
+        "labels": [
+          {
+            "x": 2.5,
+            "y": 0.2,
+            "label": "Turn 5",
+            "align": "middle"
+          }
+        ]
+      }
+    ]
+  },
+  "downfall:LooterAlt": {
+    "width": 5.5,
+    "height": 2.5,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 5.5,
+        "height": 2.5,
+        "damages": [
+          {
+            "min": 10
+          },
+          {
+            "min": 12
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "damageIndex": 1,
+            "percentage": 50,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 50,
+            "attackCount": 1
+          },
+          {
+            "x": 4.5,
+            "y": 0.0,
+            "type": "DEFEND",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.5,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.8,
+              0.5,
+              4.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.2,
+              1.5,
+              0.5,
+              1.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              5.0,
+              1.0,
+              2.5,
+              0.5,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      },
+      {
+        "condition": "ascension \u003e\u003d 2",
+        "ascensionLevel": 2,
+        "width": 5.5,
+        "height": 2.5,
+        "damages": [
+          {
+            "min": 11
+          },
+          {
+            "min": 14
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "ATTACK",
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "type": "ATTACK",
+            "damageIndex": 1,
+            "percentage": 50,
+            "attackCount": 1
+          },
+          {
+            "x": 3.0,
+            "y": 1.0,
+            "type": "DEFEND",
+            "percentage": 50,
+            "attackCount": 1
+          },
+          {
+            "x": 4.5,
+            "y": 0.0,
+            "type": "DEFEND",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [
+          {
+            "x": 3.0,
+            "y": 0.0,
+            "w": 1.0,
+            "h": 2.0
+          }
+        ],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.5,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              2.5,
+              0.5,
+              3.0
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.8,
+              0.5,
+              4.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              3.2,
+              1.5,
+              0.5,
+              1.0
+            ]
+          },
+          {
+            "path": [
+              1.0,
+              5.0,
+              1.0,
+              2.5,
+              0.5,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:Augmenter": {
+    "width": 2.5,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 2.5,
+        "height": 1.0,
+        "damages": [
+          {
+            "min": 18
+          },
+          {
+            "min": 12
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.0,
+            "y": 0.0,
+            "type": "ATTACK_DEBUFF",
+            "attackCount": 1
+          },
+          {
+            "x": 1.5,
+            "y": 0.0,
+            "type": "ATTACK_BUFF",
+            "damageIndex": 1,
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [
+          {
+            "path": [
+              0.0,
+              1.0,
+              0.3,
+              1.5
+            ]
+          },
+          {
+            "path": [
+              0.0,
+              1.5,
+              0.7,
+              1.0
+            ]
+          }
+        ],
+        "labels": []
+      }
+    ]
+  },
+  "downfall:ForgetfulTotem": {
+    "width": 2.0,
+    "height": 1.0,
+    "graphs": {},
+    "graphList": [
+      {
+        "condition": "true",
+        "width": 2.0,
+        "height": 1.0,
+        "damages": [
+          {
+            "min": 5
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.5,
+            "y": 0.0,
+            "type": "ATTACK_DEBUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [],
+        "labels": []
+      },
+      {
+        "condition": "ascension \u003e\u003d 4",
+        "ascensionLevel": 4,
+        "width": 2.0,
+        "height": 1.0,
+        "damages": [
+          {
+            "min": 6
+          }
+        ],
+        "icons": [
+          {
+            "x": 0.5,
+            "y": 0.0,
+            "type": "ATTACK_DEBUFF",
+            "attackCount": 1
+          }
+        ],
+        "iconGroups": [],
+        "arrows": [],
+        "labels": []
+      }
+    ]
+  }
+}

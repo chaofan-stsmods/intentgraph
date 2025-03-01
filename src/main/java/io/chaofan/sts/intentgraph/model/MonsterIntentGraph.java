@@ -10,6 +10,7 @@ import com.megacrit.cardcrawl.helpers.ImageMaster;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import io.chaofan.sts.intentgraph.GraphLibrary;
 import io.chaofan.sts.intentgraph.IntentGraphMod;
+import io.chaofan.sts.intentgraph.patches.TipHelperPatch;
 
 import java.util.*;
 
@@ -110,8 +111,31 @@ public class MonsterIntentGraph {
         }
 
         String name = monster.name;
-        float x = monster.hb.cX - 32 * Settings.scale - width * IntentGraphMod.GRID_SIZE * Settings.scale / 2;
         float y = Settings.HEIGHT - 80 * Settings.scale;
+        float x = monster.hb.cX - 32 * Settings.scale - width * IntentGraphMod.GRID_SIZE * Settings.scale / 2;
+        float bottom = y - 64 * Settings.scale - height * IntentGraphMod.GRID_SIZE * Settings.scale;
+        float boxWidth = width * IntentGraphMod.GRID_SIZE * Settings.scale + 64 * Settings.scale;
+        float right = x + boxWidth;
+        if (TipHelperPatch.rendered && TipHelperPatch.y > bottom) {
+            if (monster.hb.cX * 2 < TipHelperPatch.xMin + TipHelperPatch.xMax && x + boxWidth > TipHelperPatch.xMin) {
+                x = TipHelperPatch.xMin - boxWidth;
+                if (x < 0) {
+                    x = TipHelperPatch.xMax;
+                }
+            } else if (monster.hb.cX * 2 >= TipHelperPatch.xMin + TipHelperPatch.xMax && x < TipHelperPatch.xMax) {
+                x += TipHelperPatch.xMax - x;
+                if (x + boxWidth > Settings.WIDTH) {
+                    x = TipHelperPatch.xMin - boxWidth;
+                }
+            }
+        }
+        if (x < 0) {
+            x = 0;
+        }
+        if (right > Settings.WIDTH) {
+            x = Settings.WIDTH - width * IntentGraphMod.GRID_SIZE * Settings.scale - 64 * Settings.scale;
+        }
+
         MonsterGraphDetail graphDetail = graphLibrary.get(monster);
         if (graphDetail == null) {
             return;
@@ -127,6 +151,7 @@ public class MonsterIntentGraph {
         float width = graphDetail.width > 0 ? graphDetail.width : this.width;
         float height = graphDetail.height > 0 ? graphDetail.height : this.height;
 
+        renderBox(Settings.TOP_PANEL_SHADOW_COLOR, x + 9 * Settings.scale, y - 14 * Settings.scale, width * IntentGraphMod.GRID_SIZE * scale, (height * IntentGraphMod.GRID_SIZE + 32) * scale, sb);
         renderBox(boxColor, x, y, width * IntentGraphMod.GRID_SIZE * scale, (height * IntentGraphMod.GRID_SIZE + 32) * scale, sb);
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.tipHeaderFont, name, x + 20 * scale, y - 20 * scale, Color.WHITE);
 
