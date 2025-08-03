@@ -1,6 +1,5 @@
 package io.chaofan.sts.intentgraph;
 
-import basemod.ReflectionHacks;
 import com.megacrit.cardcrawl.dungeons.AbstractDungeon;
 import com.megacrit.cardcrawl.monsters.AbstractMonster;
 import io.chaofan.sts.intentgraph.model.MonsterGraphDetail;
@@ -101,10 +100,13 @@ public class GraphLibrary implements IRuleContext {
         if (variableName.startsWith("m.") && processingMonster != null) {
             String fieldName = variableName.substring(2);
             Class<?> clz = processingMonster.getClass();
-            Field field = ReflectionHacks.getCachedField(clz, fieldName);
-            while (field == null && clz != null) {
+            Field field = tryGetField(clz, fieldName);
+            while (field == null) {
                 clz = clz.getSuperclass();
-                field = ReflectionHacks.getCachedField(clz, fieldName);
+                if (clz == null) {
+                    break;
+                }
+                field = tryGetField(clz, fieldName);
             }
             if (field != null) {
                 field.setAccessible(true);
@@ -126,6 +128,14 @@ public class GraphLibrary implements IRuleContext {
         return 0;
     }
 
+    private Field tryGetField(Class<?> clz, String fieldName) {
+        try {
+            return clz.getDeclaredField(fieldName);
+        } catch (NoSuchFieldException ignored) {
+        }
+
+        return null;
+    }
 
     static class RuleGraphPair {
         public IRule rule;

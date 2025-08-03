@@ -11,5 +11,5 @@ expr:   '!' expr
 
 SPACE   : [ \t\r\n]+ -> skip;
 BOOL    : 'true' | 'false';
-INT     : [0-9]+ ;
+INT     : '-'? [0-9]+ ;
 VAR     : 'm.'?[a-zA-Z_][a-zA-Z_0-9]*;

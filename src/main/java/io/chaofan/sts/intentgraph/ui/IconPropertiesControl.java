@@ -19,6 +19,7 @@ import io.chaofan.sts.intentgraph.model.editor.UndoRedoHelper;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class IconPropertiesControl extends PropertiesControl implements DamageProvider {
@@ -78,8 +79,8 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
         this.attackCount.setOnChange(changeIntListener(() -> icon, (i) -> i.attackCount, (i, value) -> i.attackCount = value));
         this.attackCountString.setOnChange(changeStringListener(() -> icon, (i) -> i.attackCountString, (i, value) -> i.attackCountString = value.isEmpty() ? null : value));
         this.damage.setOnChange(this::onChangeDamage);
-        this.damageMin.setOnChange(changeIntListener(() -> graphDetail.damages.get(icon.damageIndex), (d) -> d.min, (d, value) -> { d.min = value; updateDamageList(); }));
-        this.damageMax.setOnChange(changeIntListener(() -> graphDetail.damages.get(icon.damageIndex), (d) -> d.max, (d, value) -> { d.max = value; updateDamageList(); }));
+        this.damageMin.setOnChange(this.onChangeDamageValue(true));
+        this.damageMax.setOnChange(this.onChangeDamageValue(false));
         this.damageString.setOnChange(changeStringListener(() -> graphDetail.damages.get(icon.damageIndex), (d) -> d.string, (d, value) -> { d.string = value.isEmpty() ? null : value; updateDamageList(); }));
         this.addDamage.setOnClick(this::onAddDamage);
         this.removeDamage.setOnClick(this::onRemoveDamage);
@@ -233,6 +234,47 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
             return String.valueOf(d.min);
         }
         return d.min + " ~ " + d.max;
+    }
+
+    private Consumer<TextField> onChangeDamageValue(boolean min) {
+        return (textField) -> {
+            Damage target = graphDetail.damages.get(icon.damageIndex);
+            if (target == null) {
+                return;
+            }
+            int oldMin = target.min;
+            int oldMax = target.max;
+            int newValue = textField.getInt();
+            undoRedoHelper.runAndPush(() -> {
+                int newMin, newMax;
+                if (min) {
+                    newMin = newValue;
+                    newMax = target.max;
+                    if (newValue != 0 && newValue > target.max) {
+                        newMax = newValue;
+                    }
+                } else {
+                    newMin = target.min;
+                    newMax = newValue;
+                    if (newValue != 0 && newValue < target.min) {
+                        newMin = newValue;
+                    }
+                }
+                target.min = newMin;
+                target.max = newMax;
+                if (target == graphDetail.damages.get(icon.damageIndex)) {
+                    damageMin.setText(String.valueOf(newMin));
+                    damageMax.setText(String.valueOf(newMax));
+                }
+            }, () -> {
+                target.min = oldMin;
+                target.max = oldMax;
+                if (target == graphDetail.damages.get(icon.damageIndex)) {
+                    damageMin.setText(String.valueOf(oldMin));
+                    damageMax.setText(String.valueOf(oldMax));
+                }
+            });
+        };
     }
 
     private void onChangeDamage(ComboBox comboBox) {

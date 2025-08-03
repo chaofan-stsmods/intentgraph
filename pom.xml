@@ -6,7 +6,7 @@
 
     <groupId>io.chaofan.sts.intentgraph</groupId>
     <artifactId>intentgraph</artifactId>
-    <version>1.1.9</version>
+    <version>1.1.10</version>
     <name>Intent Graph</name>
     <description>Monster intent as a state machine.</description>
 
@@ -16,7 +16,7 @@
         <SlayTheSpire.version>12-22-2020</SlayTheSpire.version>
         <ModTheSpire.version>3.8.0</ModTheSpire.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <Steam.path>C:\Program Files (x86)\Steam\steamapps</Steam.path>
+        <Steam.path>E:\Games\steamlib\steamapps</Steam.path>
     </properties>
 
     <dependencies>
