@@ -387,7 +387,11 @@ public class IntentGraphMod implements
     }
 
     private void renderIntentGraphForMonster(AbstractMonster monster, SpriteBatch sb) {
-        MonsterIntentGraph graph = intents.get(monster.id);
+        MonsterIntentGraph graph = intents.get(monster.getClass().getName());
+        if (graph == null) {
+            graph = intents.get(monster.id);
+        }
+
         if (graph == null) {
             return;
         }

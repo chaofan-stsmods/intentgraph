@@ -110,18 +110,20 @@ public class GraphLibrary implements IRuleContext {
             }
             if (field != null) {
                 field.setAccessible(true);
-                if (field.getType() == int.class) {
-                    try {
+                try {
+                    if (field.getType() == int.class) {
                         return field.getInt(processingMonster);
-                    } catch (IllegalAccessException e) {
-                        return 0;
-                    }
-                } else if (field.getType() == boolean.class) {
-                    try {
+                    } else if (field.getType() == short.class) {
+                        return field.getShort(processingMonster);
+                    } else if (field.getType() == byte.class) {
+                        return field.getByte(processingMonster);
+                    } else if (field.getType() == long.class) {
+                        return (int) field.getLong(processingMonster);
+                    } if (field.getType() == boolean.class) {
                         return field.getBoolean(processingMonster) ? 1 : 0;
-                    } catch (IllegalAccessException e) {
-                        return 0;
                     }
+                } catch (IllegalAccessException e) {
+                    return 0;
                 }
             }
         }
