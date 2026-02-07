@@ -5,7 +5,20 @@
 1. Create file at `intentgraph/intents/intents.json` in your resource folder.
    Make sure it's in that path of your `.jar` file after packaging.
 2. Add your intent graph info in that file.
-3. If needed, create `intentgraph/localization/{eng or zhs}/intents.json` for localization.
+3. If needed, create `intentgraph/localization/{eng or zhs, etc.}/intents.json` for localization.
+
+## Intent Graph Editor (Recommended)
+
+During game, you can open intent graph editor by following steps.
+
+1. Run game with intent graph mod enabled.
+2. Use `` ` `` opening console, then use command `fight <encounter id>` to fight the monster you want to edit.
+3. Use command `editintent <monster id>` to open editor.
+4. Edit, then save.
+   1. `Ctrl+Z`: Undo
+   2. `Ctrl+Y` or `Ctrl+Shift+Z`: Redo
+   3. `Ctrl+S`: Save
+5. Saved data will be stored in `intentgraph-intents-dev.json` and `intentgraph-intentStrings-dev.json`. They can be found in Slay the Spire root folder. You can move content to your mod after debug.
 
 ## Format of intents/intents.json
 
@@ -145,6 +158,8 @@
 
 ## Debug your change
 
+If you don't want to use editor, you can manually edit intent file and reload it in game.
+
 It takes much time to rebuild mod and reopen game. Instead of doing that, you can
 Create a dev version of intent graph and reload it during game running.
 
@@ -159,22 +174,9 @@ Create a dev version of intent graph and reload it during game running.
 7. Once debug is done, copy content of `*-dev.json` to `intents.json` file in your mod.
 8. Remove `*-dev.json`, rebuild your mod and test it.
 
-## Intent Graph Editor
-
-During game, you can open intent graph editor by following steps.
-
-1. Run game with intent graph mod enabled.
-2. Use `` ` `` opening console, then use command `fight <encounter id>` to fight the monster you want to edit.
-3. Use command `editintent <monster id>` to open editor.
-4. Edit, then save.
-   1. `Ctrl+Z`: Undo
-   2. `Ctrl+Y` or `Ctrl+Shift+Z`: Redo
-   3. `Ctrl+S`: Save
-5. Saved data will be stored in `intentgraph-intents-dev.json` and `intentgraph-intentStrings-dev.json`. You can move content to your mod after debug.
-
 ## Customize Intent Icon
 
 Use `IntentGraphMod.registerIconRenderer()` to customize intent icon rendering.
 
-See [Icon.renderIconImage](https://github.com/chaofan-stsmods/intentgraph/blob/intentgraph/src/main/java/io/chaofan/sts/intentgraph/model/Icon.java#L59) for details.
+See [Icon.renderIconImage](https://github.com/chaofan-stsmods/intentgraph/blob/intentgraph/src/main/java/io/chaofan/sts/intentgraph/model/Icon.java#L72) for details.
 
