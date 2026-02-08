@@ -39,12 +39,18 @@ public class EditorCanvas {
     private boolean isMultiSelecting;
     private float multiSelectX;
     private float multiSelectY;
+    private boolean isDragging;
+    private float dragStartX;
+    private float dragStartY;
+    private float dragLastX;
+    private float dragLastY;
     private final Color hoverItemColor = new Color(1, 1, 1, 0.2f);
     private final Color selectedItemColor = new Color(1, 1, 0.3f, 0.5f);
 
     private Toolbox.Tool lastTool;
 
     private Consumer<EditorCanvas> onSelectedItemChange;
+    private Consumer<EditorCanvas> onSelectedItemPositionChange;
 
     public EditorCanvas(float x, float top, float width, Toolbox toolbox, UndoRedoHelper undoHelper) {
         this.x = x;
@@ -75,16 +81,22 @@ public class EditorCanvas {
             lastTool = tool;
         }
         if (InputHelper.justClickedRight && mouseInCanvas()) {
+            this.completeDragging(false);
             this.setSingleSelectedItem(null);
+            this.isMultiSelecting = false;
         }
         if (this.graphDetail != null) {
-            switch (tool) {
-                case MOVE: updateMoveTool(); break;
-                case ICON: updateIconTool(); break;
-                case GROUP: updateGroupTool(); break;
-                case ARROW: updateArrowTool(); break;
-                case LABEL: updateLabelTool(); break;
-                case DELETE: updateDeleteTool(); break;
+            if (isDragging) {
+                updateDragging();
+            } else {
+                switch (tool) {
+                    case MOVE: updateMoveTool(); break;
+                    case ICON: updateIconTool(); break;
+                    case GROUP: updateGroupTool(); break;
+                    case ARROW: updateArrowTool(); break;
+                    case LABEL: updateLabelTool(); break;
+                    case DELETE: updateDeleteTool(); break;
+                }
             }
         }
         if (this.selectedItemsChanged && this.onSelectedItemChange != null) {
@@ -131,10 +143,10 @@ public class EditorCanvas {
         FontHelper.renderFontLeftTopAligned(sb, FontHelper.cardDescFont_N, "Y: " + DECIMAL_FORMAT.format(getGridY(mouseY)), this.x, this.top + 32 * scale, Color.LIGHT_GRAY);
 
         if (this.hoveredItem != null && !this.selectedItems.contains(this.hoveredItem)) {
-            this.renderItem(sb, this.hoveredItem, this.hoverItemColor);
+            this.renderItemHitBoxes(sb, this.hoveredItem, this.hoverItemColor);
         }
         for (EditableItem multiSelectedItem : this.selectedItems) {
-            this.renderItem(sb, multiSelectedItem, this.selectedItemColor);
+            this.renderItemHitBoxes(sb, multiSelectedItem, this.selectedItemColor);
         }
         if (this.isMultiSelecting) {
             sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
@@ -184,12 +196,22 @@ public class EditorCanvas {
         this.onSelectedItemChange = onSelectedItemChange;
     }
 
+    public void setOnSelectedItemPositionChange(Consumer<EditorCanvas> onSelectedItemPositionChange) {
+        this.onSelectedItemPositionChange = onSelectedItemPositionChange;
+    }
+
     public void moveSelected(float x, float y) {
+        if (isDragging) {
+            return;
+        }
         if (!this.selectedItems.isEmpty()) {
             List<EditableItem> targets = new ArrayList<>(this.selectedItems);
             this.undoHelper.runAndPush(
                     () -> targets.forEach(item -> item.move(x, y)),
                     () -> targets.forEach(item -> item.move(-x, -y)));
+            if (this.onSelectedItemPositionChange != null) {
+                this.onSelectedItemPositionChange.accept(this);
+            }
         }
     }
 
@@ -203,7 +225,7 @@ public class EditorCanvas {
         }
     }
 
-    private void renderItem(SpriteBatch sb, EditableItem item, Color color) {
+    private void renderItemHitBoxes(SpriteBatch sb, EditableItem item, Color color) {
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
         item.renderHitBoxes(sb, color);
         sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
@@ -225,34 +247,30 @@ public class EditorCanvas {
         return this.top - 64 * Settings.scale - y * IntentGraphMod.GRID_SIZE * Settings.scale;
     }
 
+    private void updateDragging() {
+        if (!InputHelper.isMouseDown) {
+            this.completeDragging(true);
+            return;
+        }
+
+        int currentX = InputHelper.mX;
+        int currentY = InputHelper.mY;
+        float currentGridX = Math.round((currentX - dragStartX) * 2 / (IntentGraphMod.GRID_SIZE * Settings.scale)) / 2f;
+        float currentGridY = -Math.round((currentY - dragStartY) * 2 / (IntentGraphMod.GRID_SIZE * Settings.scale)) / 2f;
+        float lastGridX = Math.round((dragLastX - dragStartX) * 2 / (IntentGraphMod.GRID_SIZE * Settings.scale)) / 2f;
+        float lastGridY = -Math.round((dragLastY - dragStartY) * 2 / (IntentGraphMod.GRID_SIZE * Settings.scale)) / 2f;
+        float deltaX = currentGridX - lastGridX;
+        float deltaY = currentGridY - lastGridY;
+        if (deltaX != 0 || deltaY != 0) {
+            // Move without undo-redo
+            this.selectedItems.forEach(item -> item.move(deltaX, deltaY));
+        }
+        this.dragLastX = currentX;
+        this.dragLastY = currentY;
+    }
+
     private void updateMoveTool() {
-        if (!isMultiSelecting) {
-            updateEditableItems(this.graphDetail.icons);
-            updateEditableItems(this.graphDetail.iconGroups);
-            updateEditableItems(this.graphDetail.arrows);
-            updateEditableItems(this.graphDetail.labels);
-            if (InputHelper.justClickedLeft && mouseInCanvas()) {
-                if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
-                    if (this.hoveredItem != null) {
-                        if (this.selectedItems.contains(this.hoveredItem)) {
-                            this.selectedItems.remove(this.hoveredItem);
-                        } else {
-                            this.selectedItems.add(this.hoveredItem);
-                        }
-                    }
-                } else {
-                    this.selectedItems.clear();
-                    if (hoveredItem == null) {
-                        this.isMultiSelecting = true;
-                        this.multiSelectX = InputHelper.mX;
-                        this.multiSelectY = InputHelper.mY;
-                    } else {
-                        this.selectedItems.add(this.hoveredItem);
-                    }
-                }
-                this.selectedItemsChanged = true;
-            }
-        } else {
+        if (isMultiSelecting) {
             if (InputHelper.isMouseDown) {
                 float currentX = InputHelper.mX;
                 float currentY = InputHelper.mY;
@@ -265,6 +283,37 @@ public class EditorCanvas {
             } else {
                 this.isMultiSelecting = false;
             }
+            return;
+        }
+
+        updateEditableItems(this.graphDetail.icons);
+        updateEditableItems(this.graphDetail.iconGroups);
+        updateEditableItems(this.graphDetail.arrows);
+        updateEditableItems(this.graphDetail.labels);
+        if (InputHelper.justClickedLeft && mouseInCanvas()) {
+            if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT) || Gdx.input.isKeyPressed(Input.Keys.CONTROL_RIGHT)) {
+                if (this.hoveredItem != null) {
+                    if (this.selectedItems.contains(this.hoveredItem)) {
+                        this.selectedItems.remove(this.hoveredItem);
+                    } else {
+                        this.selectedItems.add(this.hoveredItem);
+                    }
+                }
+                this.selectedItemsChanged = true;
+            } else if (this.hoveredItem != null && this.selectedItems.contains(this.hoveredItem)) {
+                startDragging();
+            } else {
+                this.selectedItems.clear();
+                if (hoveredItem == null) {
+                    this.isMultiSelecting = true;
+                    this.multiSelectX = InputHelper.mX;
+                    this.multiSelectY = InputHelper.mY;
+                } else {
+                    this.selectedItems.add(this.hoveredItem);
+                    startDragging();
+                }
+                this.selectedItemsChanged = true;
+            }
         }
     }
 
@@ -274,6 +323,7 @@ public class EditorCanvas {
             InputHelper.justClickedLeft = false;
             if (!this.selectedItems.isEmpty() || this.hoveredItem != null) {
                 setSingleSelectedItem(this.hoveredItem);
+                startDragging();
             } else {
                 this.insertItem(this.graphDetail.icons, (x, y) -> {
                     EditableIcon icon = new EditableIcon(getGraphRenderX(), getGraphRenderY());
@@ -293,6 +343,7 @@ public class EditorCanvas {
             InputHelper.justClickedLeft = false;
             if (!this.selectedItems.isEmpty() || this.hoveredItem != null) {
                 setSingleSelectedItem(this.hoveredItem);
+                startDragging();
             } else {
                 this.insertItem(this.graphDetail.iconGroups, (x, y) -> {
                     EditableIconGroup group = new EditableIconGroup(getGraphRenderX(), getGraphRenderY());
@@ -312,6 +363,7 @@ public class EditorCanvas {
             InputHelper.justClickedLeft = false;
             if (!this.selectedItems.isEmpty() || this.hoveredItem != null) {
                 setSingleSelectedItem(this.hoveredItem);
+                startDragging();
             } else {
                 this.insertItem(this.graphDetail.arrows, (x, y) -> {
                     EditableArrow arrow = new EditableArrow(getGraphRenderX(), getGraphRenderY());
@@ -328,6 +380,7 @@ public class EditorCanvas {
             InputHelper.justClickedLeft = false;
             if (!this.selectedItems.isEmpty() || this.hoveredItem != null) {
                 setSingleSelectedItem(this.hoveredItem);
+                startDragging();
             } else {
                 this.insertItem(this.graphDetail.labels, (x, y) -> {
                     EditableLabel label = new EditableLabel(getGraphRenderX(), getGraphRenderY());
@@ -347,6 +400,29 @@ public class EditorCanvas {
             this.selectedItems.add(item);
         }
         this.selectedItemsChanged = true;
+    }
+
+    private void startDragging() {
+        this.isDragging = true;
+        this.dragStartX = this.dragLastX = InputHelper.mX;
+        this.dragStartY = this.dragLastY = InputHelper.mY;
+    }
+
+    private void completeDragging(boolean apply) {
+        if (!isDragging) {
+            return;
+        }
+
+        isDragging = false;
+        float lastGridX = Math.round((dragLastX - dragStartX) * 2 / (IntentGraphMod.GRID_SIZE * Settings.scale)) / 2f;
+        float lastGridY = -Math.round((dragLastY - dragStartY) * 2 / (IntentGraphMod.GRID_SIZE * Settings.scale)) / 2f;
+        if (lastGridX != 0 || lastGridY != 0) {
+            // Reset item position and move with undo-redo
+            this.selectedItems.forEach(item -> item.move(-lastGridX, -lastGridY));
+            if (apply) {
+                this.moveSelected(lastGridX, lastGridY);
+            }
+        }
     }
 
     private <T extends EditableItem> void insertItem(ArrayList<T> list, BiFunction<Float, Float, T> constructor) {

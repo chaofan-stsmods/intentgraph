@@ -11,7 +11,6 @@ import java.util.Collection;
 
 public interface EditableItem {
     void update();
-    void updateSelected();
     void render(SpriteBatch sb, EditableMonsterGraphDetail graphDetail);
     Collection<Hitbox> getHitBoxes();
     void updateHitBoxesLocation();

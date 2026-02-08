@@ -72,6 +72,7 @@ public class EditIntentGraphScreen extends CustomScreen {
         editorControl.setOnUndo(undoHelper::undo);
         editorControl.setOnRedo(undoHelper::redo);
         editorCanvas.setOnSelectedItemChange(this::onCanvasSelectedItemChange);
+        editorCanvas.setOnSelectedItemPositionChange(this::onCanvasSelectedItemPositionChange);
     }
 
     @Override
@@ -164,10 +165,16 @@ public class EditIntentGraphScreen extends CustomScreen {
                     } else {
                         undoHelper.undo();
                     }
+                    if (propertyControl != null) {
+                        propertyControl.refresh();
+                    }
                 }
             } else if (input.isKeyJustPressed(Input.Keys.Y)) {
                 if (isTextFieldInactive) {
                     undoHelper.redo();
+                }
+                if (propertyControl != null) {
+                    propertyControl.refresh();
                 }
             } else if (input.isKeyJustPressed(Input.Keys.S)) {
                 save();
@@ -175,25 +182,16 @@ public class EditIntentGraphScreen extends CustomScreen {
         }
 
         if (isTextFieldInactive) {
-            boolean updated = false;
             if (input.isKeyJustPressed(Input.Keys.LEFT)) {
                 editorCanvas.moveSelected(-0.25f, 0);
-                updated = true;
             } else if (input.isKeyJustPressed(Input.Keys.RIGHT)) {
                 editorCanvas.moveSelected(0.25f, 0);
-                updated = true;
             } else if (input.isKeyJustPressed(Input.Keys.UP)) {
                 editorCanvas.moveSelected(0, -0.25f);
-                updated = true;
             } else if (input.isKeyJustPressed(Input.Keys.DOWN)) {
                 editorCanvas.moveSelected(0, 0.25f);
-                updated = true;
             } else if (input.isKeyJustPressed(Input.Keys.FORWARD_DEL)) {
                 editorCanvas.deleteSelected();
-                updated = true;
-            }
-            if (propertyControl != null && updated) {
-                propertyControl.refresh();
             }
         }
     }
@@ -356,6 +354,12 @@ public class EditIntentGraphScreen extends CustomScreen {
             propertyControl = arrowPropertiesControl;
         } else {
             propertyControl = null;
+        }
+    }
+
+    private void onCanvasSelectedItemPositionChange(EditorCanvas editorCanvas) {
+        if (propertyControl != null && editorCanvas.getSelectedItems().size() == 1) {
+            propertyControl.refresh();
         }
     }
 

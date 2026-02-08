@@ -43,11 +43,6 @@ public class EditableLabel extends Label implements EditableItem {
     }
 
     @Override
-    public void updateSelected() {
-
-    }
-
-    @Override
     public void render(SpriteBatch sb, EditableMonsterGraphDetail graphDetail) {
         this.render(renderX, renderY, sb);
     }

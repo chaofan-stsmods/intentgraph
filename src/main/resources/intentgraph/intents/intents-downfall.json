@@ -2214,8 +2214,8 @@
         ]
       },
       {
-        "condition": "ascension \u003e\u003d 2",
-        "ascensionLevel": 2,
+        "condition": "ascension \u003e\u003d 4",
+        "ascensionLevel": 4,
         "width": 5.0,
         "height": 6.7,
         "damages": [
@@ -2469,8 +2469,8 @@
         ]
       },
       {
-        "condition": "ascension \u003e\u003d 17",
-        "ascensionLevel": 17,
+        "condition": "ascension \u003e\u003d 19",
+        "ascensionLevel": 19,
         "width": 5.0,
         "height": 6.5,
         "damages": [

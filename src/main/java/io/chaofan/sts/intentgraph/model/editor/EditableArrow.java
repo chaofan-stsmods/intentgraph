@@ -37,11 +37,6 @@ public class EditableArrow extends Arrow implements EditableItem {
     }
 
     @Override
-    public void updateSelected() {
-
-    }
-
-    @Override
     public void render(SpriteBatch sb, EditableMonsterGraphDetail graphDetail) {
         this.render(this.renderX, this.renderY, sb);
     }

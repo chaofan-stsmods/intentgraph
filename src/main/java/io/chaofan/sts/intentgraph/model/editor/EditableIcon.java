@@ -43,11 +43,6 @@ public class EditableIcon extends Icon implements EditableItem {
     }
 
     @Override
-    public void updateSelected() {
-
-    }
-
-    @Override
     public void render(SpriteBatch sb, EditableMonsterGraphDetail graphDetail) {
         this.isAttack = this.render(graphDetail, renderX, renderY, sb);
     }
