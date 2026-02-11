@@ -326,7 +326,7 @@ public class IntentGraphMod implements
     }
 
     private void loadAdditionalIntents(ModInfo intentGraph) {
-        String[] mods = { "BattleTowers", "downfall" };
+        String[] mods = { "BattleTowers", "downfall", "TheJungle" };
         for (String mod : mods) {
             if (!Loader.isModLoadedOrSideloaded(mod)) {
                 continue;

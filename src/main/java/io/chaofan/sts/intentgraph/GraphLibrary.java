@@ -8,6 +8,7 @@ import io.chaofan.sts.intentgraph.rule.IRuleContext;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,6 +82,14 @@ public class GraphLibrary implements IRuleContext {
         return AbstractDungeon.actNum;
     }
 
+    private List<AbstractMonster> tryGetMonsters() {
+        if (AbstractDungeon.currMapNode != null && AbstractDungeon.getCurrRoom() != null &&
+                AbstractDungeon.getCurrRoom().monsters != null) {
+            return AbstractDungeon.getCurrRoom().monsters.monsters;
+        }
+        return Collections.emptyList();
+    }
+
     @Override
     public int getIntVariable(String variableName) {
         switch (variableName) {
@@ -89,12 +98,11 @@ public class GraphLibrary implements IRuleContext {
             case "act":
                 return getActNum();
             case "index":
-                if (AbstractDungeon.getCurrRoom() != null &&
-                        AbstractDungeon.getCurrRoom().monsters != null) {
-                    return AbstractDungeon.getCurrRoom().monsters.monsters.indexOf(processingMonster);
-                } else {
-                    return -1;
-                }
+                return tryGetMonsters().indexOf(processingMonster);
+            case "bossInRoom":
+                return tryGetMonsters().stream().anyMatch(m -> m.type == AbstractMonster.EnemyType.BOSS) ? 1 : 0;
+            case "eliteTrigger":
+                return !tryGetMonsters().isEmpty() && AbstractDungeon.getCurrRoom().eliteTrigger ? 1 : 0;
         }
 
         if (variableName.startsWith("m.") && processingMonster != null) {

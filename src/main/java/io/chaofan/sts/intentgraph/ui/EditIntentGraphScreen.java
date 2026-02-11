@@ -277,8 +277,8 @@ public class EditIntentGraphScreen extends CustomScreen {
                 }
             }
 
-            Gdx.files.local(IntentGraphMod.INTENTGRAPH_INTENTS_DEV_JSON).writeString(gson.toJson(intents), false);
-            Gdx.files.local(IntentGraphMod.INTENTGRAPH_INTENT_STRINGS_DEV_JSON).writeString(gson.toJson(intentStrings), false);
+            Gdx.files.local(IntentGraphMod.INTENTGRAPH_INTENTS_DEV_JSON).writeString(gson.toJson(intents), false, String.valueOf(StandardCharsets.UTF_8));
+            Gdx.files.local(IntentGraphMod.INTENTGRAPH_INTENT_STRINGS_DEV_JSON).writeString(gson.toJson(intentStrings), false, String.valueOf(StandardCharsets.UTF_8));
 
             IntentGraphMod.instance.loadIntents();
 

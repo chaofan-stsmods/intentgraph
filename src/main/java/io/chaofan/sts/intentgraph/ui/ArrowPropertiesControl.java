@@ -118,7 +118,7 @@ public class ArrowPropertiesControl extends PropertiesControl {
         for (TextField textField : textFields) {
             textField.update();
         }
-        if (removeButton != null) {
+        if (removeButton != null && arrow.path.length > 4) {
             removeButton.update();
         }
         if (addButton != null) {
@@ -147,7 +147,7 @@ public class ArrowPropertiesControl extends PropertiesControl {
             FontHelper.renderFontLeftTopAligned(sb, textFont, text, x + (isHorizontal ? 310 : 200) * Settings.scale, top - (i + 4) * TEXT_FIELD_HEIGHT + TEXT_Y_OFFSET, Color.LIGHT_GRAY);
             isHorizontal = !isHorizontal;
         }
-        if (removeButton != null) {
+        if (removeButton != null && arrow.path.length > 4) {
             removeButton.render(sb);
         }
         if (addButton != null) {

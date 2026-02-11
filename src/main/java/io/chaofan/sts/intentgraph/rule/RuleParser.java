@@ -37,6 +37,7 @@ public class RuleParser {
 
     private static IRule expr(ParseTree tree, IRuleContext ruleContext) {
         if (tree.getChildCount() == 1) {
+            // leaf node
             TerminalNode node = (TerminalNode) tree.getChild(0);
             Token token = node.getSymbol();
             if (token.getType() == RuleLexer.VAR) {
@@ -47,6 +48,7 @@ public class RuleParser {
                 return new ValueOperand(Boolean.parseBoolean(token.getText()));
             }
         } else if (tree.getChildCount() == 2) {
+            // '!' expr
             TerminalNode node = (TerminalNode) tree.getChild(0);
             if (node.getSymbol().getText().equals("!")) {
                 IRule expr = expr(tree.getChild(1), ruleContext);
@@ -58,11 +60,13 @@ public class RuleParser {
             ParseTree first = tree.getChild(0);
             ParseTree second = tree.getChild(1);
             if (first instanceof TerminalNode) {
+                // '(' expr ')'
                 TerminalNode node = (TerminalNode) first;
                 if (node.getSymbol().getText().equals("(")) {
                     return expr(tree.getChild(1), ruleContext);
                 }
             } else if (second instanceof TerminalNode) {
+                // expr operator expr
                 TerminalNode node = (TerminalNode) second;
                 IRule.Operator operator = operatorMap.get(node.getSymbol().getText());
                 if (operator != null) {

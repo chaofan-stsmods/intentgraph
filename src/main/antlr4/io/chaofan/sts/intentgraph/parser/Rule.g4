@@ -2,7 +2,8 @@ grammar Rule;
 prog:   expr EOF ;
 expr:   '!' expr
     |   expr ('>'|'<'|'>='|'<='|'=='|'!=') expr
-    |   expr ('&&'|'||') expr
+    |   expr '&&' expr
+    |   expr '||' expr
     |   BOOL
     |   INT
     |   VAR
