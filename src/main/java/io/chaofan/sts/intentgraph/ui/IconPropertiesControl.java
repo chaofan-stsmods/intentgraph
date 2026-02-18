@@ -266,6 +266,7 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
                     damageMin.setText(String.valueOf(newMin));
                     damageMax.setText(String.valueOf(newMax));
                 }
+                updateDamageList();
             }, () -> {
                 target.min = oldMin;
                 target.max = oldMax;
@@ -273,6 +274,7 @@ public class IconPropertiesControl extends PropertiesControl implements DamagePr
                     damageMin.setText(String.valueOf(oldMin));
                     damageMax.setText(String.valueOf(oldMax));
                 }
+                updateDamageList();
             });
         };
     }
