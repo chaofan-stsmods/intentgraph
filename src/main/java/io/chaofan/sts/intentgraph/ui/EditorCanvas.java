@@ -16,6 +16,7 @@ import io.chaofan.sts.intentgraph.model.editor.*;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.BiFunction;
@@ -44,6 +45,9 @@ public class EditorCanvas {
     private float dragStartY;
     private float dragLastX;
     private float dragLastY;
+    private EditableArrow addingArrow;
+    private Button addArrowButton;
+    private Button cancelArrowButton;
     private final Color hoverItemColor = new Color(1, 1, 1, 0.2f);
     private final Color selectedItemColor = new Color(1, 1, 0.3f, 0.5f);
 
@@ -77,8 +81,17 @@ public class EditorCanvas {
         this.hoveredItem = null;
         Toolbox.Tool tool = toolbox.getSelectedTool();
         if (tool != lastTool) {
+            this.completeDragging(false);
+            this.completeAddingArrow(false);
             this.setSingleSelectedItem(null);
+            this.isMultiSelecting = false;
             lastTool = tool;
+        }
+        if (addArrowButton != null) {
+            addArrowButton.update();
+        }
+        if (cancelArrowButton != null) {
+            cancelArrowButton.update();
         }
         if (InputHelper.justClickedRight && mouseInCanvas()) {
             this.completeDragging(false);
@@ -167,12 +180,44 @@ public class EditorCanvas {
                 (selectedTool == Toolbox.Tool.ICON || selectedTool == Toolbox.Tool.GROUP || selectedTool == Toolbox.Tool.ARROW || selectedTool == Toolbox.Tool.LABEL)) {
             sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
             sb.setColor(this.hoverItemColor);
-            float x = getScreenX(MathUtils.round(getGridX(mouseX) * 2) / 2f);
-            float y = getScreenY(MathUtils.round(getGridY(mouseY) * 2) / 2f);
-            float width = IntentGraphMod.GRID_SIZE * scale;
-            float height = selectedTool == Toolbox.Tool.ARROW ? IntentGraphMod.GRID_SIZE * scale / 2 : IntentGraphMod.GRID_SIZE * scale;
-            sb.draw(ImageMaster.WHITE_SQUARE_IMG, x - width / 2, y - height / 2, width, height);
+            if (selectedTool == Toolbox.Tool.ARROW) {
+                if (addingArrow == null) {
+                    float x = getScreenX(MathUtils.round(getGridX(mouseX) * 4) / 4f);
+                    float y = getScreenY(MathUtils.round(getGridY(mouseY) * 4) / 4f);
+                    float width = IntentGraphMod.GRID_SIZE * scale / 2;
+                    float height = IntentGraphMod.GRID_SIZE * scale / 2;
+                    sb.draw(ImageMaster.WHITE_SQUARE_IMG, x - width / 2, y - height / 2, width, height);
+                } else {
+                    float[] path = addingArrow.path;
+                    if (path.length % 2 != path[0]) { // horizontal
+                        float ex = getScreenX(MathUtils.round(getGridX(mouseX) * 4) / 4f);
+                        float sx = getScreenX(addingArrow.getLastX());
+                        float y = getScreenY(addingArrow.getLastY());
+                        float height = IntentGraphMod.GRID_SIZE * scale / 2;
+                        sb.draw(ImageMaster.WHITE_SQUARE_IMG, Math.min(sx, ex), y - height / 2, Math.abs(ex - sx), height);
+                    } else { // vertical
+                        float ey = getScreenY(MathUtils.round(getGridY(mouseY) * 4) / 4f);
+                        float sy = getScreenY(addingArrow.getLastY());
+                        float x = getScreenX(addingArrow.getLastX());
+                        float width = IntentGraphMod.GRID_SIZE * scale / 2;
+                        sb.draw(ImageMaster.WHITE_SQUARE_IMG, x - width / 2, Math.min(sy, ey), width, Math.abs(ey - sy));
+                    }
+                }
+            } else {
+                float x = getScreenX(MathUtils.round(getGridX(mouseX) * 2) / 2f);
+                float y = getScreenY(MathUtils.round(getGridY(mouseY) * 2) / 2f);
+                float width = IntentGraphMod.GRID_SIZE * scale;
+                float height = IntentGraphMod.GRID_SIZE * scale;
+                sb.draw(ImageMaster.WHITE_SQUARE_IMG, x - width / 2, y - height / 2, width, height);
+            }
             sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        }
+
+        if (addArrowButton != null) {
+            addArrowButton.render(sb);
+        }
+        if (cancelArrowButton != null) {
+            cancelArrowButton.render(sb);
         }
     }
 
@@ -358,6 +403,45 @@ public class EditorCanvas {
     }
 
     private void updateArrowTool() {
+        if (addingArrow != null) {
+            float x = MathUtils.round(getGridX(InputHelper.mX) * 4) / 4f;
+            float y = MathUtils.round(getGridY(InputHelper.mY) * 4) / 4f;
+
+            float[] path = addingArrow.path;
+            boolean canAddNewPoint = false;
+            float newValue = (path.length + 1) % 2 != path[0] ? y : x;
+            if (path.length < 4) {
+                float dx = Math.abs(x - path[1]);
+                float dy = Math.abs(y - path[2]);
+                if (dx >= dy && dx > 0) {
+                    path[0] = 0;
+                    canAddNewPoint = true;
+                } else if (dy > 0) {
+                    path[0] = 1;
+                    canAddNewPoint = true;
+                }
+            } else {
+                canAddNewPoint = newValue != path[path.length - 2];
+            }
+
+            if (InputHelper.justClickedLeft && mouseInCanvas()) {
+                InputHelper.justClickedLeft = false;
+                if (canAddNewPoint) {
+                    addingArrow.path = Arrays.copyOf(addingArrow.path, addingArrow.path.length + 1);
+                    addingArrow.path[addingArrow.path.length - 1] = newValue;
+                    setupAddingArrowButtons();
+                }
+            } else if (InputHelper.justClickedRight && mouseInCanvas()) {
+                if (path.length >= 4) {
+                    addingArrow.path = Arrays.copyOf(addingArrow.path, addingArrow.path.length - 1);
+                    setupAddingArrowButtons();
+                } else {
+                    completeAddingArrow(false);
+                }
+            }
+            return;
+        }
+
         updateEditableItems(this.graphDetail.arrows);
         if (InputHelper.justClickedLeft && mouseInCanvas()) {
             InputHelper.justClickedLeft = false;
@@ -365,11 +449,11 @@ public class EditorCanvas {
                 setSingleSelectedItem(this.hoveredItem);
                 startDragging();
             } else {
-                this.insertItem(this.graphDetail.arrows, (x, y) -> {
-                    EditableArrow arrow = new EditableArrow(getGraphRenderX(), getGraphRenderY());
-                    arrow.path = new float[] {0, x - 0.5f, y, x + 0.5f};
-                    return arrow;
-                });
+                float x = MathUtils.round(getGridX(InputHelper.mX) * 4) / 4f;
+                float y = MathUtils.round(getGridY(InputHelper.mY) * 4) / 4f;
+                addingArrow = new EditableArrow(getGraphRenderX(), getGraphRenderY());
+                addingArrow.path = new float[] {0, x, y};
+                graphDetail.arrows.add(addingArrow);
             }
         }
     }
@@ -423,6 +507,35 @@ public class EditorCanvas {
                 this.moveSelected(lastGridX, lastGridY);
             }
         }
+    }
+
+    private void setupAddingArrowButtons() {
+        addArrowButton = new Button(EditIntentGraphScreen.getButtonImage(13),
+                getScreenX(addingArrow.getLastX()) + 10 * Settings.scale,
+                getScreenY(addingArrow.getLastY()) - 52 * Settings.scale,
+                42 * Settings.scale,
+                42 * Settings.scale);
+        cancelArrowButton = new Button(EditIntentGraphScreen.getButtonImage(2),
+                getScreenX(addingArrow.getLastX()) + 60 * Settings.scale,
+                getScreenY(addingArrow.getLastY()) - 52 * Settings.scale,
+                42 * Settings.scale,
+                42 * Settings.scale);
+        addArrowButton.setOnClick(button -> completeAddingArrow(true));
+        cancelArrowButton.setOnClick(button -> completeAddingArrow(false));
+    }
+
+    private void completeAddingArrow(boolean apply) {
+        addArrowButton = null;
+        cancelArrowButton = null;
+        if (addingArrow == null) {
+            return;
+        }
+
+        graphDetail.arrows.remove(addingArrow);
+        if (apply) {
+            this.insertItem(this.graphDetail.arrows, (x, y) -> addingArrow);
+        }
+        addingArrow = null;
     }
 
     private <T extends EditableItem> void insertItem(ArrayList<T> list, BiFunction<Float, Float, T> constructor) {

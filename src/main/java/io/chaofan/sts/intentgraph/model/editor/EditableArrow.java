@@ -110,4 +110,14 @@ public class EditableArrow extends Arrow implements EditableItem {
         arrow.instant = this.instant;
         return arrow;
     }
+
+    public float getLastX() {
+        return path[0] == 0 ? path[path.length / 2 * 2 - 1] :
+                (path.length <= 4 ? path[1] : path[(path.length - 1) / 2 * 2]);
+    }
+
+    public float getLastY() {
+        return path[0] == 0 ? path[(path.length - 1) / 2 * 2] :
+                (path.length <= 3 ? path[2] : path[path.length / 2 * 2 - 1]);
+    }
 }
