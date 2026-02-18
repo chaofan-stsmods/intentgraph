@@ -54,10 +54,10 @@ public class EditorCanvas {
     public void setGraphDetail(String monsterId, EditableMonsterGraphDetail graphDetail) {
         this.monsterId = monsterId;
         if (this.graphDetail != graphDetail) {
+            this.toolInstance.onDeactivate();
             this.graphDetail = graphDetail;
-            if (this.onSelectedItemChange != null) {
-                this.onSelectedItemChange.accept(this);
-            }
+            this.toolInstance.onActivate();
+            this.notifySelectedItemsChanged();
         }
     }
 
@@ -65,6 +65,7 @@ public class EditorCanvas {
         this.selectedItemsChanged = false;
         Toolbox.Tool tool = toolbox.getSelectedTool();
         if (tool != lastTool) {
+            toolInstance.onDeactivate();
             toolInstance = tools.get(tool);
             toolInstance.onActivate();
             lastTool = tool;

@@ -27,6 +27,9 @@ public abstract class EditorCanvasTool {
         this.setSingleSelectedItem(null);
     }
 
+    public void onDeactivate() {
+    }
+
     public void update() {
         // hoveredItem will be updated in derived classes.
         this.hoveredItem = null;

@@ -26,8 +26,12 @@ public class ArrowEditorCanvasTool extends EditorCanvasTool {
     @Override
     public void onActivate() {
         super.onActivate();
-        this.completeAddingArrow(false);
         this.dragHandler.completeDragging(false);
+    }
+
+    @Override
+    public void onDeactivate() {
+        this.completeAddingArrow(false);
     }
 
     @Override
@@ -145,6 +149,10 @@ public class ArrowEditorCanvasTool extends EditorCanvasTool {
         }
     }
 
+    @Override
+    public boolean canMoveSelected() {
+        return !dragHandler.isDragging();
+    }
 
     private void setupAddingArrowButtons() {
         addArrowButton = new Button(EditIntentGraphScreen.getButtonImage(13),

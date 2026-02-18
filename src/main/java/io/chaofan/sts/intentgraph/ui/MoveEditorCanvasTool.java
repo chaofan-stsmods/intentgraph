@@ -28,6 +28,11 @@ public class MoveEditorCanvasTool extends EditorCanvasTool {
     public void onActivate() {
         super.onActivate();
         this.dragHandler.completeDragging(false);
+    }
+
+    @Override
+    public void onDeactivate() {
+        super.onDeactivate();
         this.isMultiSelecting = false;
     }
 
@@ -107,6 +112,11 @@ public class MoveEditorCanvasTool extends EditorCanvasTool {
             sb.draw(ImageMaster.WHITE_SQUARE_IMG, x + width - 1, y, 1, height);
             sb.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         }
+    }
+
+    @Override
+    public boolean canMoveSelected() {
+        return !dragHandler.isDragging();
     }
 
     private <T extends EditableItem> void addToMultiSelect(ArrayList<T> items, float currentX, float currentY) {
