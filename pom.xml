@@ -6,7 +6,7 @@
 
     <groupId>io.chaofan.sts.intentgraph</groupId>
     <artifactId>intentgraph</artifactId>
-    <version>1.1.14</version>
+    <version>1.1.15</version>
     <name>Intent Graph</name>
     <description>Monster intent as a state machine.</description>
 

@@ -34,7 +34,7 @@ public class LabelEditorCanvasTool extends EditorCanvasTool {
         }
 
         EditableMonsterGraphDetail graphDetail = this.canvas.getGraphDetail();
-        updateEditableItems(graphDetail.icons);
+        updateEditableItems(graphDetail.labels);
         if (InputHelper.justClickedLeft && canvas.mouseInCanvas()) {
             InputHelper.justClickedLeft = false;
             if (!this.selectedItems.isEmpty() || this.hoveredItem != null) {

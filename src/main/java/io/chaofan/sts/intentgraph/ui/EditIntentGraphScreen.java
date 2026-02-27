@@ -33,6 +33,7 @@ import java.io.FileNotFoundException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -223,6 +224,16 @@ public class EditIntentGraphScreen extends CustomScreen {
     @Override
     public void openingSettings() {
         AbstractDungeon.previousScreen = curScreen();
+    }
+
+    public void onLoadIntents() {
+        for (Iterator<Map.Entry<String, EditableMonsterIntentGraph>> iterator = intents.entrySet().iterator(); iterator.hasNext(); ) {
+            Map.Entry<String, EditableMonsterIntentGraph> entry = iterator.next();
+            MonsterIntentGraph intentGraph = IntentGraphMod.instance.getIntentGraph(entry.getKey());
+            if (intentGraph != null) {
+                iterator.remove();
+            }
+        }
     }
 
     public static TextureRegion getButtonImage(int index) {

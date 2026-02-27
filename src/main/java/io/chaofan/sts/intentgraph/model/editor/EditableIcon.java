@@ -77,7 +77,7 @@ public class EditableIcon extends Icon implements EditableItem {
         icon.percentage = percentage;
         icon.limit = limit;
         icon.limitType = limitType;
-        icon.attackCount = attackCount;
+        icon.attackCount = attackCount == 1 ? 0 : attackCount;
         icon.attackCountString = attackCountString;
         return icon;
     }

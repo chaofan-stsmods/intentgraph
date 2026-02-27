@@ -323,6 +323,10 @@ public class IntentGraphMod implements
                 logger.warn("Failed to load from intentgraph-intentStrings-dev.json.", ex);
             }
         }
+
+        if (editIntentGraphScreen != null) {
+            editIntentGraphScreen.onLoadIntents();
+        }
     }
 
     private void loadAdditionalIntents(ModInfo intentGraph) {

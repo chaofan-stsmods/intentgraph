@@ -67,6 +67,8 @@ public class ArrowEditorCanvasTool extends EditorCanvasTool {
                     path[0] = 1;
                     canAddNewPoint = true;
                 }
+            } else if (path[0] == 1 && path.length == 4) {
+                canAddNewPoint = newValue != path[1];
             } else {
                 canAddNewPoint = newValue != path[path.length - 2];
             }

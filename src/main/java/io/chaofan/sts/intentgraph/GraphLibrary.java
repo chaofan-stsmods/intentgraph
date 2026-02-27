@@ -127,8 +127,10 @@ public class GraphLibrary implements IRuleContext {
                         return field.getByte(processingMonster);
                     } else if (field.getType() == long.class) {
                         return (int) field.getLong(processingMonster);
-                    } if (field.getType() == boolean.class) {
+                    } else if (field.getType() == boolean.class) {
                         return field.getBoolean(processingMonster) ? 1 : 0;
+                    } else if (field.getType().isEnum()) {
+                        return ((Enum<?>) field.get(processingMonster)).ordinal();
                     }
                 } catch (IllegalAccessException e) {
                     return 0;

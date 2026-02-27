@@ -1,0 +1,10 @@
+{
+  "Turn 8": "第8回合",
+  "N +1 when attack, max 3": "N 攻击时+1，最多3",
+  "N +1 when attack, max 4": "N 攻击时+1，最多4",
+  "Damaged": "受伤",
+  "Chance increases by 15%": "每当没有被使用时概率增加15%",
+  "Turn 4+, or HP of an": "第4回合及之后或其他存活",
+  "whenever it\u0027s not used": "",
+  "alive other monster\u003e50%,": "怪物的HP\u003c\u003d50%，"
+}
